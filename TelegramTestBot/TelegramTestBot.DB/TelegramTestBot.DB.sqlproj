@@ -6,7 +6,7 @@
     <Name>TelegramTestBot.DB</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
-    <ProjectGuid>{706fcfa6-7d7b-4952-9ac4-dd60f54f015e}</ProjectGuid>
+    <ProjectGuid>{39fbff9a-e1a8-4558-8442-7df120065db4}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
