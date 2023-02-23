@@ -71,5 +71,6 @@
     <Build Include="dbo\Tables\Testing.sql" />
     <Build Include="dbo\Tables\Question.sql" />
     <Build Include="dbo\Tables\AnswerVariant.sql" />
+    <Build Include="dbo\Stored Procedures\Student_Add.sql" />
   </ItemGroup>
 </Project>
