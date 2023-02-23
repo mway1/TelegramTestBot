@@ -76,5 +76,10 @@
     <Build Include="dbo\Stored Procedures\Student_GetAll.sql" />
     <Build Include="dbo\Stored Procedures\Student_GetById.sql" />
     <Build Include="dbo\Stored Procedures\Student_UpdateById.sql" />
+    <Build Include="dbo\Stored Procedures\Group_Add.sql" />
+    <Build Include="dbo\Stored Procedures\Group_DeleteById.sql" />
+    <Build Include="dbo\Stored Procedures\Group_GetAll.sql" />
+    <Build Include="dbo\Stored Procedures\Group_GetById.sql" />
+    <Build Include="dbo\Stored Procedures\Group_UpdateById.sql" />
   </ItemGroup>
 </Project>
