@@ -106,5 +106,10 @@
     <Build Include="dbo\Stored Procedures\AnswerVariant_GetAll.sql" />
     <Build Include="dbo\Stored Procedures\AnswerVariant_GetById.sql" />
     <Build Include="dbo\Stored Procedures\AnswerVariant_UpdateById.sql" />
+    <Build Include="dbo\Stored Procedures\Testing_Add.sql" />
+    <Build Include="dbo\Stored Procedures\Testing_DeleteById.sql" />
+    <Build Include="dbo\Stored Procedures\Testing_GetAll.sql" />
+    <Build Include="dbo\Stored Procedures\Testing_GetById.sql" />
+    <Build Include="dbo\Stored Procedures\Testing_UpdateById.sql" />
   </ItemGroup>
 </Project>
