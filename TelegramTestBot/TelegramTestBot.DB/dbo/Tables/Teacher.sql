@@ -6,6 +6,7 @@
     [Email]     VARCHAR (30) NOT NULL,
     [Login]     VARCHAR (30) NOT NULL,
     [Password]  VARCHAR (30) NOT NULL,
+    [IsDeleted] BIT NOT NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 

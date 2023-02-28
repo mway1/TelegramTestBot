@@ -3,6 +3,7 @@
     [Content]       VARCHAR (50) NOT NULL,
     [QuestionId]    INT          NOT NULL,
     [CorrectAnswer] BIT          NULL,
+    [IsDeleted] BIT NOT NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC),
     FOREIGN KEY ([QuestionId]) REFERENCES [dbo].[Question] ([Id])
 );
