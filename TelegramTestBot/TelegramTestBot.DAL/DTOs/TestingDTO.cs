@@ -4,8 +4,8 @@
     {
         public int Id { get; set; }
         public DateOnly Date { get; set; }
-        public TimeOnly Start { get; set; }
-        public TimeOnly End { get; set; }
+        public TimeSpan Start { get; set; }
+        public TimeSpan End { get; set; }
         public GroupDTO Group { get; set; }
         public TestDTO Test { get; set; }
 
