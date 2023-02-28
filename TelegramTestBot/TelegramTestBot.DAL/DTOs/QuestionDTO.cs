@@ -1,12 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TelegramTestBot.DAL.DTOs
+﻿namespace TelegramTestBot.DAL.DTOs
 {
-    internal class QuestionDTO
+    public class QuestionDTO
     {
+        public int Id { get; set; }
+        public string Content { get; set; }
+        public TestDTO Test { get; set; }
+        public TypeOfQuestionDTO TypeOfQuestion { get; set; }
+
+        public QuestionDTO()
+        {
+
+        }
+
+        public override bool Equals(object? obj)
+        {
+            bool flag = true;
+
+            if (obj == null || !(obj is QuestionDTO))
+            {
+                flag = false;
+            }
+
+            QuestionDTO questionDTO = (QuestionDTO)obj!;
+
+            if (questionDTO.Id != this.Id ||
+                questionDTO.Content != this.Content ||
+                questionDTO.Test!.Id != this.Test!.Id ||
+                questionDTO.TypeOfQuestion!.Id != this.TypeOfQuestion!.Id)
+            {
+                flag = false;
+            }
+
+            return flag;
+        }
     }
 }
