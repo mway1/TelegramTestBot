@@ -7,6 +7,22 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <TabControl>
+            <TabItem x:Name="Auth" Header="Авторизация">
+                <Grid Background="#FFE5E5E5">
+                    <TextBox x:Name="TB_login" HorizontalAlignment="Center" Margin="0,145,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="170" Height="26"/>
+                    <Label Content="Введите логин:" HorizontalAlignment="Left" Margin="312,119,0,0" VerticalAlignment="Top" Width="97"/>
+                    <TextBox x:Name="TB_password" HorizontalAlignment="" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="170" Height="26"/>
+                    <Button x:Name="B_signin" Content="Вход" HorizontalAlignment="Left" Margin="312,222,0,0" VerticalAlignment="Top" Width="68"/>
+                    <Button x:Name="B_reg" Content="Регистрация" HorizontalAlignment="Left" Margin="385,222,0,0" VerticalAlignment="Top" Width="97"/>
+                    <Label Content="Введите пароль:" HorizontalAlignment="Left" Margin="312,164,0,0" VerticalAlignment="Top" Width="111"/>
+                </Grid>
+
+            </TabItem>
+            <TabItem Header="TabItem">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
 
     </Grid>
 </Window>
