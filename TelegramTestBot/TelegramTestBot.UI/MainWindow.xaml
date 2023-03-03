@@ -32,7 +32,7 @@
             <TabItem x:Name="Reg" Header="Регистрация">
                 <Grid>
                     <Label Grid.Column="1" Content="Форма регистрации" HorizontalAlignment="Center" Margin="0,28,0,0" VerticalAlignment="Top" Width="188" FontSize="16" FontWeight="Bold"/>
-                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="31,85,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="259" Height="25"/>
+                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="31,85,0,0" TextWrapping="Wrap" Text="Введите логин" VerticalAlignment="Top" Width="259" Height="25"/>
                     <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="31,123,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="259" Height="25"/>
                     <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="31,160,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="259" Height="25"/>
                     <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="31,197,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="259" Height="25"/>
