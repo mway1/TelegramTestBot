@@ -38,8 +38,8 @@
                     <TextBox Grid.Column="1" x:Name="Login" HorizontalAlignment="Left" Margin="31,197,0,0" TextWrapping="Wrap" Text="Введите логин" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
                     <TextBox Grid.Column="1" x:Name="Email" HorizontalAlignment="Left" Margin="31,235,0,0" TextWrapping="Wrap" Text="Введите email" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
                     <TextBox Grid.Column="1" x:Name="Password" HorizontalAlignment="Left" Margin="31,272,0,0" TextWrapping="Wrap" Text="Введите пароль" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
-                    <Button Grid.Column="1" Content="Зарегистрироваться" HorizontalAlignment="Left" Margin="31,312,0,0" VerticalAlignment="Top" Height="26" Width="147"/>
-                    <Button Grid.Column="1" Content="Вход" HorizontalAlignment="Left" Margin="192,312,0,0" VerticalAlignment="Top" Height="26" Width="98"/>
+                    <Button Grid.Column="1" x:Name="Button_Reg" Content="Зарегистрироваться" HorizontalAlignment="Left" Margin="31,312,0,0" VerticalAlignment="Top" Height="26" Width="147"/>
+                    <Button Grid.Column="1" x:Name="Button_SignIn" Content="Вход" HorizontalAlignment="Left" Margin="192,312,0,0" VerticalAlignment="Top" Height="26" Width="98"/>
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="219*" />
