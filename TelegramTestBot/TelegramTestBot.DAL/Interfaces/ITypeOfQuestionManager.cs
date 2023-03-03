@@ -8,6 +8,6 @@ namespace TelegramTestBot.DAL.Interfaces
         void DeleteTypeOfQuestionById(int typeOfQuestionId);
         void UpdateTypeOfQuestionById(TypeOfQuestionDTO newTypeOfQuestion);
         List<TypeOfQuestionDTO> GetAllTypeOfQuestions();
-        GroupDTO GetTypeOfQuestionById(int typeOfQuestionId);
+        TypeOfQuestionDTO GetTypeOfQuestionById(int typeOfQuestionId);
     }
 }
