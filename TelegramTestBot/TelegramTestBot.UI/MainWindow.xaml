@@ -29,8 +29,9 @@
                 </Grid>
 
             </TabItem>
-            <TabItem Header="TabItem">
-                <Grid Background="#FFE5E5E5"/>
+            <TabItem x:Name="Reg" Header="Регистрация">
+                
+                <Grid />
             </TabItem>
         </TabControl>
 
