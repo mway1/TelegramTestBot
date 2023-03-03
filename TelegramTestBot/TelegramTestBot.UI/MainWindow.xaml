@@ -48,6 +48,11 @@
                     </Grid.ColumnDefinitions>
                 </Grid>
             </TabItem>
+            <TabItem x:Name="Groups" Header="Создание Групп">
+                <Grid>
+                    
+                </Grid>
+            </TabItem>
         </TabControl>
 
     </Grid>
