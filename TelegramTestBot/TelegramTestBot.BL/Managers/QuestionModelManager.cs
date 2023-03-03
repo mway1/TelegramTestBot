@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using TelegramTestBot.BL.Interfaces;
+using TelegramTestBot.BL.Models;
+using TelegramTestBot.DAL.DTOs;
+using TelegramTestBot.DAL.Managers;
+using TelegramTestBot.DAL.Interfaces;
 
 namespace TelegramTestBot.BL.Managers
 {
-    internal class QuestionModelManager
+    public class QuestionModelManager
     {
     }
 }

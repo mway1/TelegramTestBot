@@ -3,7 +3,6 @@ using TelegramTestBot.BL.Models;
 using TelegramTestBot.DAL.DTOs;
 using TelegramTestBot.DAL.Managers;
 using TelegramTestBot.DAL.Interfaces;
-using AutoMapper;
 
 namespace TelegramTestBot.BL.Managers
 {
