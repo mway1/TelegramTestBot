@@ -45,8 +45,8 @@ namespace TelegramTestBot.BL.Managers
 
         public AnswerVariantModel GetAnswerVariantById(int answerVariantId)
         {
-            AnswerVariantDTO answerVariants = _answerVariantManager.GetAnswerVariantById(answerVariantId);
-            return MapperConfigStorage.GetInstance().Map<AnswerVariantModel>(answerVariants);
+            AnswerVariantDTO answerVariant = _answerVariantManager.GetAnswerVariantById(answerVariantId);
+            return MapperConfigStorage.GetInstance().Map<AnswerVariantModel>(answerVariant);
         }
     }
 }
