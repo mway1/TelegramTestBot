@@ -6,6 +6,8 @@
         public DateOnly Date { get; set; }
         public TimeSpan Start { get; set; }
         public TimeSpan End { get; set; }
+        public int GroupId { get; set; }
+        public int TestId { get; set; }
         public GroupDTO Group { get; set; }
         public TestDTO Test { get; set; }
 

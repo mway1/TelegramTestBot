@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int StudentId { get; set; }
         public StudentDTO Student { get; set; }
 
         public GroupDTO()
