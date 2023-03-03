@@ -30,8 +30,14 @@
 
             </TabItem>
             <TabItem x:Name="Reg" Header="Регистрация">
-                
-                <Grid />
+                <Grid>
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="219*" />
+                        <ColumnDefinition Width="329*" />
+                        <ColumnDefinition Width="246*" />
+                    </Grid.ColumnDefinitions>
+                </Grid>
             </TabItem>
         </TabControl>
 
