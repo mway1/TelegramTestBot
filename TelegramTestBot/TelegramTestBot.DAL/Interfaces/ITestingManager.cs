@@ -2,7 +2,12 @@
 
 namespace TelegramTestBot.DAL.Interfaces
 {
-    internal interface ITestingManager
+    public interface ITestingManager
     {
+        void AddTesting(TestingDTO newTesting);
+        void DeleteTestingById(int testingId);
+        void UpdateTestingById(TestingDTO newTesting);
+        List<TestingDTO> GetAllTestings();
+        TestingDTO GetTestingById(int testingId);
     }
 }

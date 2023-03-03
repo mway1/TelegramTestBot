@@ -2,7 +2,12 @@
 
 namespace TelegramTestBot.DAL.Interfaces
 {
-    internal interface ITeacherManager
+    public interface ITeacherManager
     {
+        void AddTeacher(TeacherDTO newTeacher);
+        void DeleteTeacherById(int teacherId);
+        void UpdateTeacherById(TeacherDTO newTeacher);
+        List<TeacherDTO> GetAllTeachers();
+        TeacherDTO GetTeacherById(int teacherId);
     }
 }

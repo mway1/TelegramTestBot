@@ -2,7 +2,12 @@
 
 namespace TelegramTestBot.DAL.Interfaces
 {
-    internal interface ITypeOfQuestionManager
+    public interface ITypeOfQuestionManager
     {
+        void AddTypeOfQuestion(TypeOfQuestionDTO newTypeOfQuestion);
+        void DeleteTypeOfQuestionById(int typeOfQuestionId);
+        void UpdateTypeOfQuestionById(TypeOfQuestionDTO newTypeOfQuestion);
+        List<TypeOfQuestionDTO> GetAllTypeOfQuestions();
+        GroupDTO GetTypeOfQuestionById(int typeOfQuestionId);
     }
 }
