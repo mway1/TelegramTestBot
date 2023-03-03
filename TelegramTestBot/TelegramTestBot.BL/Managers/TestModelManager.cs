@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TelegramTestBot.BL.Managers
 {
-    internal class TypeOfQuestionManager
+    internal class TestModelManager
     {
     }
 }
