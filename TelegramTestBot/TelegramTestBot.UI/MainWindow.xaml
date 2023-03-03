@@ -32,14 +32,14 @@
             <TabItem x:Name="Reg" Header="Регистрация">
                 <Grid>
                     <Label Grid.Column="1" Content="Форма регистрации" HorizontalAlignment="Center" Margin="0,28,0,0" VerticalAlignment="Top" Width="188" FontSize="16" FontWeight="Bold"/>
-                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="31,85,0,0" TextWrapping="Wrap" Text="Введите логин" VerticalAlignment="Top" Width="259" Height="25"/>
-                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="31,123,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="259" Height="25"/>
-                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="31,160,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="259" Height="25"/>
-                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="31,197,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="259" Height="25"/>
-                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="31,235,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="259" Height="25"/>
-                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="31,272,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="259" Height="25"/>
-                    <Button Grid.Column="1" Content="Button" HorizontalAlignment="Left" Margin="31,312,0,0" VerticalAlignment="Top" Height="26" Width="147"/>
-                    <Button Grid.Column="1" Content="Button" HorizontalAlignment="Left" Margin="192,312,0,0" VerticalAlignment="Top" Height="26" Width="98"/>
+                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="31,85,0,0" TextWrapping="Wrap" Text="Введите Фамилию" Foreground="#FFAFAFAF" VerticalAlignment="Top" Width="259" Height="25" AcceptsReturn="True"/>
+                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="31,123,0,0" TextWrapping="Wrap" Text="Введите Имя" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
+                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="31,160,0,0" TextWrapping="Wrap" Text="Введите Отчество" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
+                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="31,197,0,0" TextWrapping="Wrap" Text="Введите логин" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
+                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="31,235,0,0" TextWrapping="Wrap" Text="Введите email" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
+                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="31,272,0,0" TextWrapping="Wrap" Text="Введите пароль" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
+                    <Button Grid.Column="1" Content="Зарегистрироваться" HorizontalAlignment="Left" Margin="31,312,0,0" VerticalAlignment="Top" Height="26" Width="147"/>
+                    <Button Grid.Column="1" Content="Вход" HorizontalAlignment="Left" Margin="192,312,0,0" VerticalAlignment="Top" Height="26" Width="98"/>
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="219*" />
