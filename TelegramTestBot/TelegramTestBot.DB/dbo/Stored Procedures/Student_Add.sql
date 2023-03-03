@@ -3,7 +3,7 @@
 	@LastName nvarchar(30),
 	@SurName nvarchar(30),
 	@Username nvarchar(30),
-	@Attendance BIT
+	@IsAttendance BIT
 AS
 BEGIN
 INSERT INTO [dbo].[Student](
@@ -11,12 +11,12 @@ INSERT INTO [dbo].[Student](
 	LastName,
 	SurName,
 	Username,
-	Attendance)
+	IsAttendance)
 VALUES(
 	@FirstName,
 	@LastName,
 	@SurName,
 	@Username,
-	@Attendance)
+	@IsAttendance)
 SELECT @@IDENTITY
 END

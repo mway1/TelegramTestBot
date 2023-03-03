@@ -22,7 +22,7 @@ namespace TelegramTestBot.DAL.Managers
                             LastName = newStudent.LastName,
                             SurName = newStudent.SurName,
                             Username = newStudent.Username,
-                            Attendance = newStudent.Attendance
+                            IsAttendance = newStudent.IsAttendance
                         },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
@@ -60,7 +60,7 @@ namespace TelegramTestBot.DAL.Managers
                             newStudent.LastName,
                             newStudent.SurName,
                             newStudent.Username,
-                            newStudent.Attendance
+                            newStudent.IsAttendance
                         },
                         commandType: System.Data.CommandType.StoredProcedure
                     );

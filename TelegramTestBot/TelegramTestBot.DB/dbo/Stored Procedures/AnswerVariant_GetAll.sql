@@ -3,7 +3,7 @@
 AS
 BEGIN
 
-	SELECT Id, Content, CorrectAnswer, QuestionId
+	SELECT Id, Content, IsCorrectAnswer, QuestionId
 	FROM dbo.[AnswerVariant]
 	WHERE (IsDeleted = 0)
 

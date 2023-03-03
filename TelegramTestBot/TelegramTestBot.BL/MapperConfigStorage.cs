@@ -22,7 +22,7 @@ namespace TelegramTestBot.BL
                 cfg.CreateMap<AnswerVariantDTO, AnswerVariantModel>()
                 .ForMember("Id", opt => opt.MapFrom(a => a.Id))
                 .ForMember("Content", opt => opt.MapFrom(a => a.Content))
-                .ForMember("CorrectAnswer", opt => opt.MapFrom(a => a.CorrectAnswer))
+                .ForMember("IsCorrectAnswer", opt => opt.MapFrom(a => a.IsCorrectAnswer))
                 .ForMember("QuestionId", opt => opt.MapFrom(a => a.QuestionId))
                 .ReverseMap();
 
@@ -45,7 +45,7 @@ namespace TelegramTestBot.BL
                 .ForMember("LastName", opt => opt.MapFrom(s => s.LastName))
                 .ForMember("SurName", opt => opt.MapFrom(s => s.SurName))
                 .ForMember("Username", opt => opt.MapFrom(s => s.Username))
-                .ForMember("Attendance", opt => opt.MapFrom(s => s.Attendance))
+                .ForMember("IsAttendance", opt => opt.MapFrom(s => s.IsAttendance))
                 .ReverseMap();
 
                 cfg.CreateMap<TeacherDTO, TeacherModel>()

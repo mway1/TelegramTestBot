@@ -7,7 +7,7 @@
         public string LastName { get; set; }
         public string SurName { get; set; }
         public string Username { get; set; }
-        public bool Attendance { get; set; }
+        public bool IsAttendance { get; set; }
 
         public StudentModel()
         {
@@ -31,7 +31,7 @@
                     studentDTO.LastName != this.LastName ||
                     studentDTO.SurName != this.SurName ||
                     studentDTO.Username != this.Username ||
-                    studentDTO.Attendance != this.Attendance)
+                    studentDTO.IsAttendance != this.IsAttendance)
                 {
                     flag = false;
                 }

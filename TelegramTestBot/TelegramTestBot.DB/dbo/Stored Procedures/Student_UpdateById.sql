@@ -4,7 +4,7 @@
 	@LastName nvarchar(30),
 	@SurName nvarchar(30),
 	@Username nvarchar(30),
-	@Attendance BIT
+	@IsAttendance BIT
 
 AS
 BEGIN
@@ -14,7 +14,7 @@ SET FirstName = @FirstName,
     LastName = @LastName,
     SurName = @SurName,
     Username = @Username,
-	Attendance = @Attendance
+	IsAttendance = @IsAttendance
 WHERE Id = @Id
 
 END

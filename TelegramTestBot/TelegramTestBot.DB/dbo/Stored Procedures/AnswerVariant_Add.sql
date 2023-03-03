@@ -1,16 +1,16 @@
 ﻿CREATE PROCEDURE [dbo].[AnswerVariant_Add]
 	@Content nvarchar(50),
-	@CorrectAnswer bit,
+	@IsCorrectAnswer bit,
 	@QuestionId int
 AS
 BEGIN
 INSERT INTO dbo.[AnswerVariant](
 	[Content],
-	CorrectAnswer,
+	IsCorrectAnswer,
 	QuestionId)
 VALUES(
 	@Content,
-	@CorrectAnswer,
+	@IsCorrectAnswer,
 	@QuestionId)
 SELECT @@IDENTITY
 END

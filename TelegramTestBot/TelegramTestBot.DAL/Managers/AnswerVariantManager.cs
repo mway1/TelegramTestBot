@@ -19,7 +19,7 @@ namespace TelegramTestBot.DAL.Managers
                         param: new
                         {
                             Content = newAnswerVariant.Content,
-                            CorrectAnswer = newAnswerVariant.CorrectAnswer,
+                            IsCorrectAnswer = newAnswerVariant.IsCorrectAnswer,
                             QuestionId = newAnswerVariant.Question!.Id
                         },
                         commandType: System.Data.CommandType.StoredProcedure
@@ -55,7 +55,7 @@ namespace TelegramTestBot.DAL.Managers
                         {
                             newAnswerVariant.Id,
                             newAnswerVariant.Content,
-                            newAnswerVariant.CorrectAnswer,
+                            newAnswerVariant.IsCorrectAnswer,
                             QuestionId = newAnswerVariant.Question!.Id
                         },
                         commandType: System.Data.CommandType.StoredProcedure

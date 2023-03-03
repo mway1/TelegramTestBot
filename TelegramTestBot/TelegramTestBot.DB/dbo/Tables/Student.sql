@@ -4,7 +4,7 @@
     [LastName]   VARCHAR (30) NULL,
     [SurName]    VARCHAR (30) NOT NULL,
     [Username]   VARCHAR (30) NOT NULL,
-    [Attendance] BIT          NOT NULL,
+    [IsAttendance] BIT          NOT NULL,
     [IsDeleted] BIT NOT NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );

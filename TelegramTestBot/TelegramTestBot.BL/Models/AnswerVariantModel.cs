@@ -4,14 +4,14 @@
     {
         public int Id { get; set; }
         public string Content { get; set; }
-        public bool CorrectAnswer { get; set; }
+        public bool IsCorrectAnswer { get; set; }
         public QuestionModel Question { get; set; }
 
-        public AnswerVariantModel(int id, string content, bool correctAnswer, QuestionModel question)
+        public AnswerVariantModel(int id, string content, bool isCorrectAnswer, QuestionModel question)
         {
             Id = id;
             Content = content;
-            CorrectAnswer = correctAnswer;
+            IsCorrectAnswer = isCorrectAnswer;
             Question = question;
         }
 
@@ -29,7 +29,7 @@
 
                 if (answerVariantDTO.Id != this.Id ||
                     answerVariantDTO.Content != this.Content ||
-                    answerVariantDTO.CorrectAnswer != this.CorrectAnswer ||
+                    answerVariantDTO.IsCorrectAnswer != this.IsCorrectAnswer ||
                     answerVariantDTO.Question!.Id != this.Question!.Id)
                 {
                     flag = false;
