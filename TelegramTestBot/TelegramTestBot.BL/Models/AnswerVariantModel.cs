@@ -7,9 +7,12 @@
         public bool CorrectAnswer { get; set; }
         public QuestionModel Question { get; set; }
 
-        public AnswerVariantModel()
+        public AnswerVariantModel(int id, string content, bool correctAnswer, QuestionModel question)
         {
-
+            Id = id;
+            Content = content;
+            CorrectAnswer = correctAnswer;
+            Question = question;
         }
 
         public override bool Equals(object? obj)
