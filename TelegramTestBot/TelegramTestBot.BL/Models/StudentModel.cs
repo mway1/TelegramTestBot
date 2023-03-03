@@ -1,12 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TelegramTestBot.BL.Models
+﻿namespace TelegramTestBot.BL.Models
 {
-    internal class StudentModel
+    public class StudentModel
     {
+        public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string SurName { get; set; }
+        public string Username { get; set; }
+        public bool Attendance { get; set; }
+
+        public StudentModel()
+        {
+
+        }
+
+        public override bool Equals(object? obj)
+        {
+            bool flag = true;
+
+            if (obj == null || !(obj is StudentModel))
+            {
+                flag = false;
+            }
+            else
+            {
+                StudentModel studentDTO = (StudentModel)obj!;
+
+                if (studentDTO.Id != this.Id ||
+                    studentDTO.FirstName != this.FirstName ||
+                    studentDTO.LastName != this.LastName ||
+                    studentDTO.SurName != this.SurName ||
+                    studentDTO.Username != this.Username ||
+                    studentDTO.Attendance != this.Attendance)
+                {
+                    flag = false;
+                }
+            }
+
+            return flag;
+        }
     }
 }

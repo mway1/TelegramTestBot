@@ -1,12 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TelegramTestBot.BL.Models
+﻿namespace TelegramTestBot.BL.Models
 {
-    internal class AnswerVariantModel
+    public class AnswerVariantModel
     {
+        public int Id { get; set; }
+        public string Content { get; set; }
+        public bool CorrectAnswer { get; set; }
+        public QuestionModel Question { get; set; }
+
+        public AnswerVariantModel()
+        {
+
+        }
+
+        public override bool Equals(object? obj)
+        {
+            bool flag = true;
+
+            if (obj == null || !(obj is AnswerVariantModel))
+            {
+                flag = false;
+            }
+            else
+            {
+                AnswerVariantModel answerVariantDTO = (AnswerVariantModel)obj!;
+
+                if (answerVariantDTO.Id != this.Id ||
+                    answerVariantDTO.Content != this.Content ||
+                    answerVariantDTO.CorrectAnswer != this.CorrectAnswer ||
+                    answerVariantDTO.Question!.Id != this.Question!.Id)
+                {
+                    flag = false;
+                }
+            }
+
+            return flag;
+        }
     }
 }
