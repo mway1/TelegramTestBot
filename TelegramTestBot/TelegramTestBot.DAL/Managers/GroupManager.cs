@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Dapper;
+using System.Data.SqlClient;
+using TelegramTestBot.DAL.DTOs;
+using TelegramTestBot.DAL.Interfaces;
 
 namespace TelegramTestBot.DAL.Managers
 {
