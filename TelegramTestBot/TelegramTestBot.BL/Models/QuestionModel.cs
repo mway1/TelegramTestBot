@@ -1,11 +1,13 @@
-﻿namespace TelegramTestBot.BL.Models
+﻿using TelegramTestBot.BL;
+
+namespace TelegramTestBot.BL.Models
 {
     public class QuestionModel
     {
         public int Id { get; set; }
         public string Content { get; set; }
+        public QuestionType TypeOfQuestion { get; set; }
         public TestModel Test { get; set; }
-        public TypeOfQuestionModel TypeOfQuestion { get; set; }
 
         public QuestionModel()
         {
@@ -27,7 +29,7 @@
                 if (questionDTO.Id != this.Id ||
                     questionDTO.Content != this.Content ||
                     questionDTO.Test!.Id != this.Test!.Id ||
-                    questionDTO.TypeOfQuestion!.Id != this.TypeOfQuestion!.Id)
+                    questionDTO.TypeOfQuestion != this.TypeOfQuestion)
                 {
                     flag = false;
                 }

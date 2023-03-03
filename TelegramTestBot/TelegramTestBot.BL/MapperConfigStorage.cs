@@ -72,11 +72,6 @@ namespace TelegramTestBot.BL
                 .ForMember("GroupId", opt => opt.MapFrom(tg => tg.GroupId))
                 .ForMember("TestId", opt => opt.MapFrom(tg => tg.TestId))
                 .ReverseMap();
-
-                cfg.CreateMap<TypeOfQuestionDTO, TypeOfQuestionModel>()
-                .ForMember("Id", opt => opt.MapFrom(toq => toq.Id))
-                .ForMember("Name", opt => opt.MapFrom(toq => toq.Name))
-                .ReverseMap();
             }));
         }
     }

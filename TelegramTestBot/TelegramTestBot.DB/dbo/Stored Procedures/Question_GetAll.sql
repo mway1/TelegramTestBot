@@ -3,7 +3,7 @@
 AS
 BEGIN
 
-	SELECT Id, Content, TestId, TypeOfQuestionId
+	SELECT Id, Content, TypeOfQuestion, TestId
 	FROM dbo.[Question]
 	WHERE (IsDeleted = 0)
 
