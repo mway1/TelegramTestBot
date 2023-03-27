@@ -50,7 +50,25 @@
             </TabItem>
             <TabItem x:Name="Groups" Header="Создание Групп">
                 <Grid>
-                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="205*" />
+                        <ColumnDefinition Width="589*" />
+                    </Grid.ColumnDefinitions>
+                    <TabControl Grid.Column="1">
+                        <TabItem x:Name="AboutStudent"  Header="О Студенте">
+                            <Grid/>
+                        </TabItem>
+                        <TabItem x:Name="TestOfStudent" Header="История">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="11*"/>
+                                    <ColumnDefinition Width="281*"/>
+                                </Grid.ColumnDefinitions>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                    <ComboBox x:Name="CB_Groups" HorizontalAlignment="Center" VerticalAlignment="Top" Width="205" Height="26"/>
+                    <ListBox x:Name="LB_StudentsInGroup" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="2,26,3,203"/>
                 </Grid>
             </TabItem>
         </TabControl>
