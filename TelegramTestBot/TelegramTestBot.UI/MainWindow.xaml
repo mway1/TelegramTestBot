@@ -68,7 +68,11 @@
                         </TabItem>
                     </TabControl>
                     <ComboBox x:Name="CB_Groups" HorizontalAlignment="Center" VerticalAlignment="Top" Width="205" Height="26"/>
-                    <ListBox x:Name="LB_StudentsInGroup" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="2,26,3,203"/>
+                    <ListBox x:Name="LB_StudentsInGroup" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="2,49,3,203"/>
+                    <ListBox x:Name="LB_NewUsers" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="2,229,3,60"/>
+                    <ComboBox x:Name="CB_GroupsForUser" HorizontalAlignment="Center" VerticalAlignment="Top" Width="205" Height="26" Margin="0,346,0,0"/>
+                    <Button x:Name="Button_AddUserInGroup" Content="Button" HorizontalAlignment="Center" Margin="0,372,0,0" VerticalAlignment="Top" Width="205"/>
+                    <TextBox HorizontalAlignment="Center" Margin="0,26,0,0" TextWrapping="Wrap" Text="Список студентов:" VerticalAlignment="Top" Width="205" Height="23"/>
                 </Grid>
             </TabItem>
         </TabControl>
