@@ -75,6 +75,9 @@
                     <TextBox HorizontalAlignment="Center" Margin="0,26,0,0" TextWrapping="Wrap" Text="Список студентов:" VerticalAlignment="Top" Width="205" Height="23"/>
                 </Grid>
             </TabItem>
+            <TabItem x:Name="Test" Header="Создание Теста">
+                
+            </TabItem>
         </TabControl>
 
     </Grid>
