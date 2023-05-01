@@ -4,10 +4,10 @@ namespace TelegramTestBot.DAL.Interfaces
 {
     public interface IAnswerVariantManager
     {
-        void AddAnswerVariant(AnswerVariantDTO newAnswerVariant);
+        void AddAnswerVariant(AnswerDTO newAnswerVariant);
         void DeleteAnswerVariantById(int answerVariantId);
-        void UpdateAnswerVariantById(AnswerVariantDTO newAnswerVariant);
-        List<AnswerVariantDTO> GetAllAnswerVariants();
-        AnswerVariantDTO GetAnswerVariantById(int answerVariantId);
+        void UpdateAnswerVariantById(AnswerDTO newAnswerVariant);
+        List<AnswerDTO> GetAllAnswerVariants();
+        AnswerDTO GetAnswerVariantById(int answerVariantId);
     }
 }

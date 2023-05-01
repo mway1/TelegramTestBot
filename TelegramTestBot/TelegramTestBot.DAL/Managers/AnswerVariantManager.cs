@@ -7,13 +7,13 @@ namespace TelegramTestBot.DAL.Managers
 {
     public class AnswerVariantManager : IAnswerVariantManager
     {
-        public void AddAnswerVariant(AnswerVariantDTO newAnswerVariant)
+        public void AddAnswerVariant(AnswerDTO newAnswerVariant)
         {
             using (var connection = new SqlConnection(ServerSettings._connectionString))
             {
                 connection.Open();
 
-                connection.QuerySingle<AnswerVariantDTO>
+                connection.QuerySingle<AnswerDTO>
                     (
                         StoredProcedures.AnswerVariant_Add,
                         param: new
@@ -33,7 +33,7 @@ namespace TelegramTestBot.DAL.Managers
             {
                 connection.Open();
 
-                connection.QuerySingle<AnswerVariantDTO>
+                connection.QuerySingle<AnswerDTO>
                     (
                         StoredProcedures.AnswerVariant_DeleteById,
                         param: new { id = answerVariantId },
@@ -42,13 +42,13 @@ namespace TelegramTestBot.DAL.Managers
             }
         }
 
-        public void UpdateAnswerVariantById(AnswerVariantDTO newAnswerVariant)
+        public void UpdateAnswerVariantById(AnswerDTO newAnswerVariant)
         {
             using (var connection = new SqlConnection(ServerSettings._connectionString))
             {
                 connection.Open();
 
-                connection.QuerySingleOrDefault<AnswerVariantDTO>
+                connection.QuerySingleOrDefault<AnswerDTO>
                     (
                         StoredProcedures.AnswerVariant_UpdateById,
                         param: new
@@ -63,13 +63,13 @@ namespace TelegramTestBot.DAL.Managers
             }
         }
 
-        public List<AnswerVariantDTO> GetAllAnswerVariants()
+        public List<AnswerDTO> GetAllAnswerVariants()
         {
             using (var connection = new SqlConnection(ServerSettings._connectionString))
             {
                 connection.Open();
 
-                return connection.Query<AnswerVariantDTO>
+                return connection.Query<AnswerDTO>
                     (
                         StoredProcedures.AnswerVariant_GetAll,
                         commandType: System.Data.CommandType.StoredProcedure
@@ -77,13 +77,13 @@ namespace TelegramTestBot.DAL.Managers
             }
         }
 
-        public AnswerVariantDTO GetAnswerVariantById(int answerVariantId)
+        public AnswerDTO GetAnswerVariantById(int answerVariantId)
         {
             using (var connection = new SqlConnection(ServerSettings._connectionString))
             {
                 connection.Open();
 
-                return connection.QuerySingle<AnswerVariantDTO>
+                return connection.QuerySingle<AnswerDTO>
                     (
                         StoredProcedures.AnswerVariant_GetById,
                         param: new { id = answerVariantId },

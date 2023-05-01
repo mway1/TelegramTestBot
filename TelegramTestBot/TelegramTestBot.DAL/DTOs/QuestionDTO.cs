@@ -5,7 +5,6 @@
         public int Id { get; set; }
         public string Content { get; set; }
         public int TestId { get; set; }
-        public string TypeOfQuestion { get; set; }
         public TestDTO Test { get; set; }
 
         public QuestionDTO()
@@ -26,8 +25,7 @@
 
             if (questionDTO.Id != this.Id ||
                 questionDTO.Content != this.Content ||
-                questionDTO.Test!.Id != this.Test!.Id ||
-                questionDTO.TypeOfQuestion != this.TypeOfQuestion)
+                questionDTO.Test!.Id != this.Test!.Id)
             {
                 flag = false;
             }

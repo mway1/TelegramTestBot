@@ -1,13 +1,14 @@
 ﻿namespace TelegramTestBot.DAL.DTOs
 {
-    public class TestingDTO
+    public class Teacher_TestDTO
     {
         public int Id { get; set; }
-        public DateOnly Date { get; set; }
         public int TestId { get; set; }
+        public int TeacherId { get; set; }
         public TestDTO Test { get; set; }
+        public TeacherDTO Teacher { get; set; }
 
-        public TestingDTO()
+        public Teacher_TestDTO()
         {
 
         }
@@ -16,16 +17,16 @@
         {
             bool flag = true;
 
-            if (obj == null || !(obj is TestingDTO))
+            if (obj == null || !(obj is Teacher_TestDTO))
             {
                 flag = false;
             }
 
-            TestingDTO testingDTO = (TestingDTO)obj!;
+            Teacher_TestDTO testDTO = (Teacher_TestDTO)obj!;
 
-            if (testingDTO.Id != this.Id ||
-                testingDTO.Date != this.Date ||
-                testingDTO.Test!.Id != this.Test!.Id)
+            if (testDTO.Id != this.Id ||
+                testDTO.Test!.Id != this.Test!.Id ||
+                testDTO.Teacher!.Id != this.Teacher!.Id)
             {
                 flag = false;
             }
