@@ -56,14 +56,21 @@
                     </Grid.ColumnDefinitions>
                     <TabControl Grid.Column="1">
                         <TabItem x:Name="AboutStudent"  Header="О Студенте">
-                            <Grid/>
+                            <Grid>
+                                <TextBox x:Name="TB_LastName_Student" HorizontalAlignment="Left" Margin="172,27,0,0" TextWrapping="Wrap" Text="Введите Фамилию" Foreground="#FFAFAFAF" VerticalAlignment="Top" Width="259" Height="25" AcceptsReturn="True"/>
+                                <TextBox x:Name="TB_FirstName_Student" HorizontalAlignment="Left" Margin="172,65,0,0" TextWrapping="Wrap" Text="Введите Имя" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
+                                <TextBox x:Name="TB_SurName_Student" HorizontalAlignment="Left" Margin="172,102,0,0" TextWrapping="Wrap" Text="Введите Отчество" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
+                                <TextBox x:Name="TB_Username_Student" HorizontalAlignment="Left" Margin="172,139,0,0" TextWrapping="Wrap" Text="Введите Username" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
+                                <TextBox x:Name="TB_Group_Student" HorizontalAlignment="Left" Margin="172,0,0,0" TextWrapping="Wrap" Text="Введите группу" VerticalAlignment="Center" Foreground="#FFAFAFAF" Width="259" Height="25"/>
+                            </Grid>
                         </TabItem>
                         <TabItem x:Name="TestOfStudent" Header="История">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="11*"/>
-                                    <ColumnDefinition Width="281*"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="582*"/>
                                 </Grid.ColumnDefinitions>
+                                <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,22,0" Grid.ColumnSpan="2"/>
                             </Grid>
                         </TabItem>
                     </TabControl>
@@ -76,7 +83,7 @@
                 </Grid>
             </TabItem>
             <TabItem x:Name="Test" Header="Создание Теста">
-                
+
             </TabItem>
         </TabControl>
 
