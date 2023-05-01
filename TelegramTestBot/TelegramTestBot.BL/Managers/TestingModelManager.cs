@@ -6,7 +6,7 @@ using TelegramTestBot.DAL.Interfaces;
 
 namespace TelegramTestBot.BL.Managers
 {
-    public class TestingModelManager
+    public class TestingModelManager : ITestingModelManager
     {
         private ITestingManager _testingManager;
 

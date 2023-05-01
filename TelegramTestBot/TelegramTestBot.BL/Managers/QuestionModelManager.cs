@@ -6,7 +6,7 @@ using TelegramTestBot.DAL.Interfaces;
 
 namespace TelegramTestBot.BL.Managers
 {
-    public class QuestionModelManager
+    public class QuestionModelManager : IQuestionModelManager
     {
         private IQuestionManager _questionManager;
 

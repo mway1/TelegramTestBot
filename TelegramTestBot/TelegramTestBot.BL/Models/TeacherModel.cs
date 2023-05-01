@@ -3,9 +3,9 @@
     public class TeacherModel
     {
         public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string SurName { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
+        public string Surname { get; set; }
         public string Email { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
@@ -28,9 +28,9 @@
                 TeacherModel teacherDTO = (TeacherModel)obj!;
 
                 if (teacherDTO.Id != this.Id ||
-                    teacherDTO.FirstName != this.FirstName ||
-                    teacherDTO.LastName != this.LastName ||
-                    teacherDTO.SurName != this.SurName ||
+                    teacherDTO.Firstname != this.Firstname ||
+                    teacherDTO.Lastname != this.Lastname ||
+                    teacherDTO.Surname != this.Surname ||
                     teacherDTO.Email != this.Email ||
                     teacherDTO.Login != this.Login ||
                     teacherDTO.Password != this.Password)
