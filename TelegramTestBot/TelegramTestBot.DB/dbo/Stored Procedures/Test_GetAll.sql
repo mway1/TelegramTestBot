@@ -3,7 +3,7 @@
 AS
 BEGIN
 
-	SELECT Id, [Name]
+	SELECT Id, [Name], TeacherId
 	FROM dbo.[Test]
 	WHERE (IsDeleted = 0)
 
