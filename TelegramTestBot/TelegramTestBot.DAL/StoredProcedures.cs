@@ -49,11 +49,5 @@
         public const string Testing_Student_GetAll = "Testing_Student_GetAll";
         public const string Testing_Student_GetById = "Testing_Student_GetById";
         public const string Testing_Student_UpdateById = "Testing_Student_UpdateById";
-
-        public const string Teacher_Test_Add = "Teacher_Test_Add";
-        public const string Teacher_Test_DeleteById = "Teacher_Test_DeleteById";
-        public const string Teacher_Test_GetAll = "Teacher_Test_GetAll";
-        public const string Teacher_Test_GetById = "Teacher_Test_GetById";
-        public const string Teacher_Test_UpdateById = "Teacher_Test_UpdateById";
     }
 }
