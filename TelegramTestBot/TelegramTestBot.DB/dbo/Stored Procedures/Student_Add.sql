@@ -1,22 +1,20 @@
 ﻿CREATE PROCEDURE [dbo].[Student_Add]
-	@FirstName nvarchar(30),
-	@LastName nvarchar(30),
-	@SurName nvarchar(30),
-	@Username nvarchar(30),
-	@IsAttendance BIT
+	@Firstname nvarchar(30),
+	@Lastname nvarchar(30),
+	@Surname nvarchar(30),
+	@Username nvarchar(30)
+
 AS
 BEGIN
 INSERT INTO [dbo].[Student](
-	FirstName,
-	LastName,
-	SurName,
-	Username,
-	IsAttendance)
+	Firstname,
+	Lastname,
+	Surname,
+	Username)
 VALUES(
-	@FirstName,
-	@LastName,
-	@SurName,
-	@Username,
-	@IsAttendance)
+	@Firstname,
+	@Lastname,
+	@Surname,
+	@Username)
 SELECT @@IDENTITY
 END

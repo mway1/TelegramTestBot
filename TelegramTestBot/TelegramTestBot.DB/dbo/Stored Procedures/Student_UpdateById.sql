@@ -1,20 +1,19 @@
 ﻿CREATE PROCEDURE [dbo].[Student_UpdateById]
 	@Id int,
-	@FirstName nvarchar(30),
-	@LastName nvarchar(30),
-	@SurName nvarchar(30),
-	@Username nvarchar(30),
-	@IsAttendance BIT
+	@Firstname nvarchar(30),
+	@Lastname nvarchar(30),
+	@Surname nvarchar(30),
+	@Username nvarchar(30)
 
 AS
 BEGIN
 
 UPDATE dbo.[Student]
-SET FirstName = @FirstName,
-    LastName = @LastName,
-    SurName = @SurName,
-    Username = @Username,
-	IsAttendance = @IsAttendance
+SET Firstname = @Firstname,
+    Lastname = @Lastname,
+    Surname = @Surname,
+    Username = @Username
+
 WHERE Id = @Id
 
 END
