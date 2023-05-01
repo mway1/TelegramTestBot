@@ -3,7 +3,7 @@
 AS
 BEGIN
 
-	SELECT Id, [Date], [Start], [End], GroupId, TestId
+	SELECT Id, [Date], TestId
 	FROM dbo.[Testing]
 	WHERE (IsDeleted = 0)
 
