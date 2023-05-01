@@ -1,8 +1,8 @@
-﻿CREATE TABLE [dbo].[AnswerVariant] (
+﻿CREATE TABLE [dbo].[Answer] (
     [Id]            INT          IDENTITY (1, 1) NOT NULL,
     [Content]       VARCHAR (50) NOT NULL,
     [QuestionId]    INT          NOT NULL,
-    [IsCorrectAnswer] BIT          NULL,
+    [IsCorrect] BIT          NULL,
     [IsDeleted] BIT NOT NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC),
     FOREIGN KEY ([QuestionId]) REFERENCES [dbo].[Question] ([Id])

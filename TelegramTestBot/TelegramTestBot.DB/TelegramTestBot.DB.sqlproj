@@ -69,7 +69,7 @@
     <Build Include="dbo\Tables\Test.sql" />
     <Build Include="dbo\Tables\Testing.sql" />
     <Build Include="dbo\Tables\Question.sql" />
-    <Build Include="dbo\Tables\AnswerVariant.sql" />
+    <Build Include="dbo\Tables\Answer.sql" />
     <Build Include="dbo\Stored Procedures\Student_Add.sql" />
     <Build Include="dbo\Stored Procedures\Student_DeleteById.sql" />
     <Build Include="dbo\Stored Procedures\Student_GetAll.sql" />
@@ -105,5 +105,7 @@
     <Build Include="dbo\Stored Procedures\Testing_GetAll.sql" />
     <Build Include="dbo\Stored Procedures\Testing_GetById.sql" />
     <Build Include="dbo\Stored Procedures\Testing_UpdateById.sql" />
+    <Build Include="dbo\Tables\Teacher_Test.sql" />
+    <Build Include="dbo\Tables\Testing_Student.sql" />
   </ItemGroup>
 </Project>
