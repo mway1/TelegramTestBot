@@ -3,7 +3,7 @@
 AS
 BEGIN
 
-	SELECT Id, Content, TypeOfQuestion, TestId
+	SELECT Id, Content, TestId
 	FROM dbo.[Question]
 	WHERE Id=@Id
 
