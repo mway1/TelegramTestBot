@@ -16,6 +16,7 @@
                     <Button x:Name="B_signin" Content="Вход" HorizontalAlignment="Left" Margin="35,115,0,0" VerticalAlignment="Top" Width="68" Height="23" Grid.Row="1" Grid.Column="1"/>
                     <Button x:Name="B_reg" Content="Регистрация" HorizontalAlignment="Left" Margin="108,115,0,0" VerticalAlignment="Top" Width="96" Height="23" Grid.Row="1" Grid.Column="1"/>
                     <Label Content="Введите пароль:" HorizontalAlignment="Left" Margin="35,64,0,0" VerticalAlignment="Top" Width="112" Height="25" Grid.Row="1" Grid.Column="1"/>
+                    <Grid Grid.Column="1" Grid.Row="1"/>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -86,15 +87,15 @@
             <TabItem x:Name="Test" Header="Создание Теста">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="265*"/>
-                        <ColumnDefinition Width="263*"/>
-                        <ColumnDefinition Width="266*"/>
+                        <ColumnDefinition Width="213*"/>
+                        <ColumnDefinition Width="581*"/>
                     </Grid.ColumnDefinitions>
+                    <Label Content="Создать новый тест:" HorizontalAlignment="Left" Margin="16,138,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold"/>
+                    <Label Content="Созданные тесты:" HorizontalAlignment="Left" Margin="16,3,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold"/>
+                    <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,28,0,273"/>
+                    <TextBox HorizontalAlignment="Center" Margin="0,169,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="213" Height="22"/>
                 </Grid>
 
             </TabItem>
