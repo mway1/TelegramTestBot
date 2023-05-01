@@ -3,7 +3,7 @@
 AS
 BEGIN
 
-	SELECT Id, FirstName, LastName, SurName, Email, [Login], [Password]
+	SELECT Id, Firstname, Lastname, Surname, Email, [Login], [Password]
 	FROM dbo.[Teacher]
 	WHERE (IsDeleted = 0)
 

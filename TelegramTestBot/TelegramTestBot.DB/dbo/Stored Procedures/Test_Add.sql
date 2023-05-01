@@ -1,13 +1,13 @@
 ﻿CREATE PROCEDURE [dbo].[Test_Add]
-	@Name nvarchar(50),
-	@TeacherId int
+	@Name nvarchar(50)
+
 AS
 BEGIN
 INSERT INTO dbo.[Test](
-	[Name],
-	TeacherId)
+	[Name])
+
 VALUES(
-	@Name,
-	@TeacherId)
+	@Name)
+
 SELECT @@IDENTITY
 END

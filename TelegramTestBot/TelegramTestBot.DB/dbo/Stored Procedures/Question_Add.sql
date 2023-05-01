@@ -1,16 +1,13 @@
 ﻿CREATE PROCEDURE [dbo].[Question_Add]
 	@Content nvarchar(100),
-	@TestId int,
-	@TypeOfQuestionId int
+	@TestId int
 AS
 BEGIN
 INSERT INTO dbo.[Question](
 	Content,
-	TestId,
-	TypeOfQuestionId)
+	TestId)
 VALUES(
 	@Content,
-	@TestId,
-	@TypeOfQuestionId)
+	@TestId)
 SELECT @@IDENTITY
 END

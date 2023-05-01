@@ -19,11 +19,11 @@ namespace TelegramTestBot.DAL.Managers
                         param: new
                         {
                             Content = newQuestion.Content,
+                            TypeOfQuestion = newQuestion.TypeOfQuestion,
                             TestId = newQuestion.Test!.Id,
-                            TypeOfQuestionId = newQuestion.TypeOfQuestion!.Id
                         },
                         commandType: System.Data.CommandType.StoredProcedure
-                    );
+                    ); ;
             }
         }
 
@@ -55,8 +55,8 @@ namespace TelegramTestBot.DAL.Managers
                         {
                             newQuestion.Id,
                             newQuestion.Content,
+                            TypeOfQuestion = newQuestion.TypeOfQuestion,
                             TestId = newQuestion.Test!.Id,
-                            TypeOfQuestionId = newQuestion.TypeOfQuestion!.Id
                         },
                         commandType: System.Data.CommandType.StoredProcedure
                     );

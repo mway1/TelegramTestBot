@@ -1,16 +1,14 @@
 ﻿CREATE PROCEDURE [dbo].[Question_UpdateById]
 	@Id int,
 	@Content nvarchar(100),
-	@TestId int,
-	@TypeOfQuestionId int
+	@TestId int
 
 AS
 BEGIN
 
 UPDATE dbo.[Question]
 SET Content = @Content,
-    TestId = @TestId,
-	TypeOfQuestionId = @TypeOfQuestionId
+    TestId = @TestId
 
 WHERE Id = @Id
 

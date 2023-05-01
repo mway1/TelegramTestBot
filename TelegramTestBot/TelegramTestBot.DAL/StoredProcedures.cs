@@ -44,10 +44,5 @@
         public const string Testing_GetById = "Testing_GetById";
         public const string Testing_UpdateById = "Testing_UpdateById";
 
-        public const string TypeOfQuestion_Add = "TypeOfQuestion_Add";
-        public const string TypeOfQuestion_DeleteById = "TypeOfQuestion_DeleteById";
-        public const string TypeOfQuestion_GetAll = "TypeOfQuestion_GetAll";
-        public const string TypeOfQuestion_GetById = "TypeOfQuestion_GetById";
-        public const string TypeOfQuestion_UpdateById = "TypeOfQuestion_UpdateById";
     }
 }
