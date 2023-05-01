@@ -105,13 +105,7 @@
     <Build Include="dbo\Stored Procedures\Testing_GetAll.sql" />
     <Build Include="dbo\Stored Procedures\Testing_GetById.sql" />
     <Build Include="dbo\Stored Procedures\Testing_UpdateById.sql" />
-    <Build Include="dbo\Tables\Teacher_Test.sql" />
     <Build Include="dbo\Tables\Testing_Student.sql" />
-    <Build Include="dbo\Stored Procedures\Teacher_Test_Add.sql" />
-    <Build Include="dbo\Stored Procedures\Teacher_Test_DeleteById.sql" />
-    <Build Include="dbo\Stored Procedures\Teacher_Test_GetAll.sql" />
-    <Build Include="dbo\Stored Procedures\Teacher_Test_GetById.sql" />
-    <Build Include="dbo\Stored Procedures\Teacher_Test_UpdateById.sql" />
     <Build Include="dbo\Stored Procedures\Testing_Student_Add.sql" />
     <Build Include="dbo\Stored Procedures\Testing_Student_DeleteById.sql" />
     <Build Include="dbo\Stored Procedures\Testing_Student_GetAll.sql" />
