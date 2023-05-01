@@ -62,7 +62,7 @@
                                 <TextBox x:Name="TB_FirstName_Student" HorizontalAlignment="Left" Margin="172,65,0,0" TextWrapping="Wrap" Text="Введите Имя" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
                                 <TextBox x:Name="TB_SurName_Student" HorizontalAlignment="Left" Margin="172,102,0,0" TextWrapping="Wrap" Text="Введите Отчество" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
                                 <TextBox x:Name="TB_Username_Student" HorizontalAlignment="Left" Margin="172,139,0,0" TextWrapping="Wrap" Text="Введите Username" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
-                                <ComboBox x:Name="CB_GroupsForStudent" HorizontalAlignment="Left" VerticalAlignment="Center" Width="258" Height="26" Margin="172,0,0,0"/>
+                                <ComboBox x:Name="CB_GroupsForStudent" HorizontalAlignment="Left" VerticalAlignment="Top" Width="258" Height="26" Margin="173,173,0,0" />
                                 <Button x:Name="Button_EditStudent" Content="Сохранить изменения" HorizontalAlignment="Left" Margin="172,207,0,0" VerticalAlignment="Top" Width="259"/>
                             </Grid>
                         </TabItem>
@@ -92,10 +92,13 @@
                         <ColumnDefinition Width="213*"/>
                         <ColumnDefinition Width="581*"/>
                     </Grid.ColumnDefinitions>
-                    <Label Content="Создать новый тест:" HorizontalAlignment="Left" Margin="16,138,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold"/>
+                    <Label Content="Создать новый тест:" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold" Margin="10,170,0,0"/>
                     <Label Content="Созданные тесты:" HorizontalAlignment="Left" Margin="16,3,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold"/>
-                    <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,28,0,273"/>
-                    <TextBox HorizontalAlignment="Center" Margin="0,169,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="213" Height="22"/>
+                    <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,28,10,261" SelectionChanged="ListBox_SelectionChanged" />
+                    <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="203" Height="23" Margin="0,195,0,0" />
+                    <Button x:Name="jjj"  Content="Изменить название" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="116" Margin="0,150,0,0"/>
+                    <Button x:Name="kk"  Content="Редактировать" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="87" Margin="116,150,0,0"/>
+                    <Button Content="Сохранить" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="203" Height="21" Margin="0,218,0,0"/>
                 </Grid>
 
             </TabItem>
