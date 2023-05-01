@@ -4,9 +4,7 @@
     {
         public int Id { get; set; }
         public DateOnly Date { get; set; }
-        public TimeSpan Start { get; set; }
-        public TimeSpan End { get; set; }
-        public GroupModel Group { get; set; }
+        public int TestId { get; set; }
         public TestModel Test { get; set; }
 
         public TestingModel()
@@ -28,9 +26,6 @@
 
                 if (testingDTO.Id != this.Id ||
                     testingDTO.Date != this.Date ||
-                    testingDTO.Start != this.Start ||
-                    testingDTO.End != this.End ||
-                    testingDTO.Group!.Id != this.Group!.Id ||
                     testingDTO.Test!.Id != this.Test!.Id)
                 {
                     flag = false;
