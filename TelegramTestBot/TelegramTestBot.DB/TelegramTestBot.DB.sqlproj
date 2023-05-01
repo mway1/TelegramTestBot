@@ -112,5 +112,10 @@
     <Build Include="dbo\Stored Procedures\Teacher_Test_GetAll.sql" />
     <Build Include="dbo\Stored Procedures\Teacher_Test_GetById.sql" />
     <Build Include="dbo\Stored Procedures\Teacher_Test_UpdateById.sql" />
+    <Build Include="dbo\Stored Procedures\Testing_Student_Add.sql" />
+    <Build Include="dbo\Stored Procedures\Testing_Student_DeleteById.sql" />
+    <Build Include="dbo\Stored Procedures\Testing_Student_GetAll.sql" />
+    <Build Include="dbo\Stored Procedures\Testing_Student_GetById.sql" />
+    <Build Include="dbo\Stored Procedures\Testing_Student_UpdateById.sql" />
   </ItemGroup>
 </Project>
