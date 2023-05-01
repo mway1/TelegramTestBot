@@ -1,23 +1,23 @@
 ﻿CREATE PROCEDURE [dbo].[Teacher_Add]
-	@FirstName nvarchar(30),
-	@LastName nvarchar(30),
-	@SurName nvarchar(30),
+	@Firstname nvarchar(30),
+	@Lastname nvarchar(30),
+	@Surname nvarchar(30),
 	@Email nvarchar(30),
 	@Login nvarchar(30),
 	@Password nvarchar(30)
 AS
 BEGIN
 INSERT INTO dbo.[Teacher](
-	FirstName,
-	LastName,
-	SurName,
+	Firstname,
+	Lastname,
+	Surname,
 	Email,
 	[Login],
 	[Password])
 VALUES(
-	@FirstName,
-	@LastName,
-	@SurName,
+	@Firstname,
+	@Lastname,
+	@Surname,
 	@Email,
 	@Login,
 	@Password)
