@@ -95,11 +95,11 @@
     <Build Include="dbo\Stored Procedures\Question_GetAll.sql" />
     <Build Include="dbo\Stored Procedures\Question_GetById.sql" />
     <Build Include="dbo\Stored Procedures\Question_UpdateById.sql" />
-    <Build Include="dbo\Stored Procedures\AnswerVariant_Add.sql" />
-    <Build Include="dbo\Stored Procedures\AnswerVariant_DeleteById.sql" />
-    <Build Include="dbo\Stored Procedures\AnswerVariant_GetAll.sql" />
-    <Build Include="dbo\Stored Procedures\AnswerVariant_GetById.sql" />
-    <Build Include="dbo\Stored Procedures\AnswerVariant_UpdateById.sql" />
+    <Build Include="dbo\Stored Procedures\Answer_Add.sql" />
+    <Build Include="dbo\Stored Procedures\Answer_DeleteById.sql" />
+    <Build Include="dbo\Stored Procedures\Answer_GetAll.sql" />
+    <Build Include="dbo\Stored Procedures\Answer_GetById.sql" />
+    <Build Include="dbo\Stored Procedures\Answer_UpdateById.sql" />
     <Build Include="dbo\Stored Procedures\Testing_Add.sql" />
     <Build Include="dbo\Stored Procedures\Testing_DeleteById.sql" />
     <Build Include="dbo\Stored Procedures\Testing_GetAll.sql" />
