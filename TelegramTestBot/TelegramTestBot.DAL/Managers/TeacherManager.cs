@@ -18,9 +18,9 @@ namespace TelegramTestBot.DAL.Managers
                         StoredProcedures.Teacher_Add,
                         param: new
                         {
-                            FirstName = newTeacher.FirstName,
-                            LastName = newTeacher.LastName,
-                            SurName = newTeacher.SurName,
+                            FirstName = newTeacher.Firstname,
+                            LastName = newTeacher.Lastname,
+                            SurName = newTeacher.Surname,
                             Email = newTeacher.Email,
                             Login = newTeacher.Login,
                             Password = newTeacher.Password
@@ -57,9 +57,9 @@ namespace TelegramTestBot.DAL.Managers
                         param: new
                         {
                             newTeacher.Id,
-                            newTeacher.FirstName,
-                            newTeacher.LastName,
-                            newTeacher.SurName,
+                            newTeacher.Firstname,
+                            newTeacher.Lastname,
+                            newTeacher.Surname,
                             newTeacher.Email,
                             newTeacher.Login,
                             newTeacher.Password

@@ -2,11 +2,11 @@
 {
     public class StoredProcedures
     {
-        public const string AnswerVariant_Add = "AnswerVariant_Add";
-        public const string AnswerVariant_DeleteById = "AnswerVariant_DeleteById";
-        public const string AnswerVariant_GetAll = "AnswerVariant_GetAll";
-        public const string AnswerVariant_GetById = "AnswerVariant_GetById";
-        public const string AnswerVariant_UpdateById = "AnswerVariant_UpdateById";
+        public const string Answer_Add = "Answer_Add";
+        public const string Answer_DeleteById = "Answer_DeleteById";
+        public const string Answer_GetAll = "Answer_GetAll";
+        public const string Answer_GetById = "Answer_GetById";
+        public const string Answer_UpdateById = "Answer_UpdateById";
 
         public const string Group_Add = "Group_Add";
         public const string Group_DeleteById = "Group_DeleteById";
@@ -44,5 +44,16 @@
         public const string Testing_GetById = "Testing_GetById";
         public const string Testing_UpdateById = "Testing_UpdateById";
 
+        public const string Testing_Student_Add = "Testing_Student_Add";
+        public const string Testing_Student_DeleteById = "Testing_Student_DeleteById";
+        public const string Testing_Student_GetAll = "Testing_Student_GetAll";
+        public const string Testing_Student_GetById = "Testing_Student_GetById";
+        public const string Testing_Student_UpdateById = "Testing_Student_UpdateById";
+
+        public const string Teacher_Test_Add = "Teacher_Test_Add";
+        public const string Teacher_Test_DeleteById = "Teacher_Test_DeleteById";
+        public const string Teacher_Test_GetAll = "Teacher_Test_GetAll";
+        public const string Teacher_Test_GetById = "Teacher_Test_GetById";
+        public const string Teacher_Test_UpdateById = "Teacher_Test_UpdateById";
     }
 }

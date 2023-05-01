@@ -19,7 +19,7 @@ namespace TelegramTestBot.BL
         {
             _instance = new Mapper(new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<AnswerVariantDTO, AnswerVariantModel>()
+                cfg.CreateMap<AnswerDTO, AnswerVariantModel>()
                 .ForMember("Id", opt => opt.MapFrom(a => a.Id))
                 .ForMember("Content", opt => opt.MapFrom(a => a.Content))
                 .ForMember("IsCorrectAnswer", opt => opt.MapFrom(a => a.IsCorrectAnswer))

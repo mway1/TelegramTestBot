@@ -5,88 +5,86 @@ using TelegramTestBot.DAL.Interfaces;
 
 namespace TelegramTestBot.DAL.Managers
 {
-    public class AnswerVariantManager : IAnswerVariantManager
+    public class TeacherTestManager : ITeacherTestManager
     {
-        public void AddAnswerVariant(AnswerVariantDTO newAnswerVariant)
+        public void AddTeacherTest(TeacherTestDTO newTeacherTest)
         {
             using (var connection = new SqlConnection(ServerSettings._connectionString))
             {
                 connection.Open();
 
-                connection.QuerySingle<AnswerVariantDTO>
+                connection.QuerySingle<TeacherTestDTO>
                     (
-                        StoredProcedures.AnswerVariant_Add,
+                        StoredProcedures.Teacher_Test_Add,
                         param: new
                         {
-                            Content = newAnswerVariant.Content,
-                            IsCorrectAnswer = newAnswerVariant.IsCorrectAnswer,
-                            QuestionId = newAnswerVariant.Question!.Id
+                            TeacherId = newTeacherTest.Teacher!.Id,
+                            TestId = newTeacherTest.Test!.Id
                         },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
             }
         }
 
-        public void DeleteAnswerVariantById(int answerVariantId)
+        public void DeleteTeacherTestById(int teacherTestId)
         {
             using (var connection = new SqlConnection(ServerSettings._connectionString))
             {
                 connection.Open();
 
-                connection.QuerySingle<AnswerVariantDTO>
+                connection.QuerySingle<TeacherTestDTO>
                     (
-                        StoredProcedures.AnswerVariant_DeleteById,
-                        param: new { id = answerVariantId },
+                        StoredProcedures.Teacher_Test_DeleteById,
+                        param: new { id = teacherTestId },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
             }
         }
 
-        public void UpdateAnswerVariantById(AnswerVariantDTO newAnswerVariant)
+        public void UpdateTeacherTestById(TeacherTestDTO newTeacherTest)
         {
             using (var connection = new SqlConnection(ServerSettings._connectionString))
             {
                 connection.Open();
 
-                connection.QuerySingleOrDefault<AnswerVariantDTO>
+                connection.QuerySingleOrDefault<TeacherTestDTO>
                     (
-                        StoredProcedures.AnswerVariant_UpdateById,
+                        StoredProcedures.Teacher_Test_UpdateById,
                         param: new
                         {
-                            newAnswerVariant.Id,
-                            newAnswerVariant.Content,
-                            newAnswerVariant.IsCorrectAnswer,
-                            QuestionId = newAnswerVariant.Question!.Id
+                            newTeacherTest.Id,
+                            TeacherId = newTeacherTest.Teacher!.Id,
+                            TestId = newTeacherTest.Test!.Id
                         },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
             }
         }
 
-        public List<AnswerVariantDTO> GetAllAnswerVariants()
+        public List<TeacherTestDTO> GetAllTeacherTests()
         {
             using (var connection = new SqlConnection(ServerSettings._connectionString))
             {
                 connection.Open();
 
-                return connection.Query<AnswerVariantDTO>
+                return connection.Query<TeacherTestDTO>
                     (
-                        StoredProcedures.AnswerVariant_GetAll,
+                        StoredProcedures.Teacher_Test_GetAll,
                         commandType: System.Data.CommandType.StoredProcedure
                     ).ToList();
             }
         }
 
-        public AnswerVariantDTO GetAnswerVariantById(int answerVariantId)
+        public TeacherTestDTO GetTeacherTestById(int teacherTestId)
         {
             using (var connection = new SqlConnection(ServerSettings._connectionString))
             {
                 connection.Open();
 
-                return connection.QuerySingle<AnswerVariantDTO>
+                return connection.QuerySingle<TeacherTestDTO>
                     (
-                        StoredProcedures.AnswerVariant_GetById,
-                        param: new { id = answerVariantId },
+                        StoredProcedures.Teacher_Test_GetById,
+                        param: new { id = teacherTestId },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
             }

@@ -3,11 +3,10 @@
     public class StudentDTO
     {
         public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string SurName { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
+        public string Surname { get; set; }
         public string Username { get; set; }
-        public bool IsAttendance { get; set; }
 
         public StudentDTO()
         {
@@ -26,11 +25,10 @@
             StudentDTO studentDTO = (StudentDTO)obj!;
 
             if (studentDTO.Id != this.Id ||
-                studentDTO.FirstName != this.FirstName ||
-                studentDTO.LastName != this.LastName ||
-                studentDTO.SurName != this.SurName ||
-                studentDTO.Username != this.Username ||
-                studentDTO.IsAttendance != this.IsAttendance)
+                studentDTO.Firstname != this.Firstname ||
+                studentDTO.Lastname != this.Lastname ||
+                studentDTO.Surname != this.Surname ||
+                studentDTO.Username != this.Username)
             {
                 flag = false;
             }

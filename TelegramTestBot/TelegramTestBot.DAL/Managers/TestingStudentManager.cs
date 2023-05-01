@@ -5,86 +5,90 @@ using TelegramTestBot.DAL.Interfaces;
 
 namespace TelegramTestBot.DAL.Managers
 {
-    public class TestingManager : ITestingManager
+    public class TestingStudentManager : ITestingStudentManager
     {
-        public void AddTesting(TestingDTO newTesting)
+        public void AddTestingStudent(TestingStudentDTO newTestingStudent)
         {
             using (var connection = new SqlConnection(ServerSettings._connectionString))
             {
                 connection.Open();
 
-                connection.QuerySingle<TestingDTO>
+                connection.QuerySingle<TestingStudentDTO>
                     (
-                        StoredProcedures.Testing_Add,
+                        StoredProcedures.Testing_Student_Add,
                         param: new
                         {
-                            Date = newTesting.Date,
-                            TestId = newTesting.Test!.Id
+                            CountAnswers = newTestingStudent.CountAnswers,
+                            IsAttendance = newTestingStudent.IsAttendance,
+                            StudentId = newTestingStudent.Student!.Id,
+                            TestingId = newTestingStudent.Testing!.Id
                         },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
             }
         }
 
-        public void DeleteTestingById(int testingId)
+        public void DeleteTestingStudentById(int testingStudentId)
         {
             using (var connection = new SqlConnection(ServerSettings._connectionString))
             {
                 connection.Open();
 
-                connection.QuerySingle<TestingDTO>
+                connection.QuerySingle<TestingStudentDTO>
                     (
-                        StoredProcedures.Testing_DeleteById,
-                        param: new { id = testingId },
+                        StoredProcedures.Testing_Student_DeleteById,
+                        param: new { id = testingStudentId },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
             }
         }
 
-        public void UpdateTestingById(TestingDTO newTesting)
+        public void UpdateTestingStudentById(TestingStudentDTO newTestingStudent)
         {
             using (var connection = new SqlConnection(ServerSettings._connectionString))
             {
                 connection.Open();
 
-                connection.QuerySingleOrDefault<TestingDTO>
+                connection.QuerySingleOrDefault<TestingStudentDTO>
                     (
-                        StoredProcedures.Testing_UpdateById,
+                        StoredProcedures.Testing_Student_UpdateById,
                         param: new
                         {
-                            newTesting.Id,
-                            newTesting.Date,
-                            TestId = newTesting.Test!.Id
+                            newTestingStudent.Id,
+                            newTestingStudent.CountAnswers,
+                            newTestingStudent.IsAttendance,
+                            StudentId = newTestingStudent.Student!.Id,
+                            TestingId = newTestingStudent.Testing!.Id
                         },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
             }
         }
 
-        public List<TestingDTO> GetAllTestings()
+        public List<TestingStudentDTO> GetAllTestingStudents()
         {
             using (var connection = new SqlConnection(ServerSettings._connectionString))
             {
                 connection.Open();
 
-                return connection.Query<TestingDTO>
+                return connection.Query<TestingStudentDTO>
                     (
-                        StoredProcedures.Testing_GetAll,
+                        StoredProcedures.Testing_Student_GetAll,
                         commandType: System.Data.CommandType.StoredProcedure
                     ).ToList();
             }
         }
 
-        public TestingDTO GetTestingById(int testingId)
+        public TestingStudentDTO GetTestingStudentById(int testingStudentId)
         {
             using (var connection = new SqlConnection(ServerSettings._connectionString))
             {
                 connection.Open();
 
-                return connection.QuerySingle<TestingDTO>
+                return connection.QuerySingle<TestingStudentDTO>
                     (
-                        StoredProcedures.Testing_GetById,
-                        param: new { id = testingId },
+                        StoredProcedures.Testing_Student_GetById,
+                        param: new { id = testingStudentId },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
             }
