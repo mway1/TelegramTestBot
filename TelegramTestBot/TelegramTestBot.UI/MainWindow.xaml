@@ -61,7 +61,8 @@
                                 <TextBox x:Name="TB_FirstName_Student" HorizontalAlignment="Left" Margin="172,65,0,0" TextWrapping="Wrap" Text="Введите Имя" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
                                 <TextBox x:Name="TB_SurName_Student" HorizontalAlignment="Left" Margin="172,102,0,0" TextWrapping="Wrap" Text="Введите Отчество" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
                                 <TextBox x:Name="TB_Username_Student" HorizontalAlignment="Left" Margin="172,139,0,0" TextWrapping="Wrap" Text="Введите Username" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
-                                <TextBox x:Name="TB_Group_Student" HorizontalAlignment="Left" Margin="172,0,0,0" TextWrapping="Wrap" Text="Введите группу" VerticalAlignment="Center" Foreground="#FFAFAFAF" Width="259" Height="25"/>
+                                <ComboBox x:Name="CB_GroupsForStudent" HorizontalAlignment="Left" VerticalAlignment="Center" Width="258" Height="26" Margin="172,0,0,0"/>
+                                <Button x:Name="Button_EditStudent" Content="Сохранить изменения" HorizontalAlignment="Left" Margin="172,207,0,0" VerticalAlignment="Top" Width="259"/>
                             </Grid>
                         </TabItem>
                         <TabItem x:Name="TestOfStudent" Header="История">
@@ -74,12 +75,12 @@
                             </Grid>
                         </TabItem>
                     </TabControl>
-                    <ComboBox x:Name="CB_Groups" HorizontalAlignment="Center" VerticalAlignment="Top" Width="205" Height="26"/>
-                    <ListBox x:Name="LB_StudentsInGroup" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="2,49,3,203"/>
-                    <ListBox x:Name="LB_NewUsers" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="2,229,3,60"/>
-                    <ComboBox x:Name="CB_GroupsForUser" HorizontalAlignment="Center" VerticalAlignment="Top" Width="205" Height="26" Margin="0,346,0,0"/>
-                    <Button x:Name="Button_AddUserInGroup" Content="Button" HorizontalAlignment="Center" Margin="0,372,0,0" VerticalAlignment="Top" Width="205"/>
-                    <TextBox HorizontalAlignment="Center" Margin="0,26,0,0" TextWrapping="Wrap" Text="Список студентов:" VerticalAlignment="Top" Width="205" Height="23"/>
+                    <ComboBox x:Name="CB_Groups" HorizontalAlignment="Center" VerticalAlignment="Top" Width="205" Height="26" Margin="0,22,0,0"/>
+                    <ListBox x:Name="LB_StudentsInGroup" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="2,71,3,181"/>
+                    <ListBox x:Name="LB_NewUsers" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="2,251,3,38"/>
+                    <Label Content="Студенты:" HorizontalAlignment="Center" Margin="0,43,0,0" VerticalAlignment="Top" Width="200"/>
+                    <Label Content="Подключенные пользователи:" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Margin="0,225,0,0"/>
+                    <Label Content="Группы:" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Margin="0,-3,0,0"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="Test" Header="Создание Теста">
