@@ -8,14 +8,14 @@ namespace TelegramTestBot.BL.Managers
 {
     public class AnswerVariantModelManager : IAnswerVariantModelManager
     {
-        private IAnswerVariantManager _answerVariantManager;
+        private IAnswerManager _answerVariantManager;
 
         public AnswerVariantModelManager()
         {
-            _answerVariantManager = new AnswerVariantManager();
+            _answerVariantManager = new AnswerManager();
         }
 
-        public AnswerVariantModelManager(IAnswerVariantManager answerVariantManager)
+        public AnswerVariantModelManager(IAnswerManager answerVariantManager)
         {
             _answerVariantManager = answerVariantManager;
         }

@@ -5,86 +5,88 @@ using TelegramTestBot.DAL.Interfaces;
 
 namespace TelegramTestBot.DAL.Managers
 {
-    public class TestingManager : ITestingManager
+    public class AnswerManager : IAnswerManager
     {
-        public void AddTesting(TestingDTO newTesting)
+        public void AddAnswer(AnswerDTO newAnswer)
         {
             using (var connection = new SqlConnection(ServerSettings._connectionString))
             {
                 connection.Open();
 
-                connection.QuerySingle<TestingDTO>
+                connection.QuerySingle<AnswerDTO>
                     (
-                        StoredProcedures.Testing_Add,
+                        StoredProcedures.Answer_Add,
                         param: new
                         {
-                            Date = newTesting.Date,
-                            TestId = newTesting.Test!.Id
+                            Content = newAnswer.Content,
+                            IsCorrect = newAnswer.IsCorrect,
+                            QuestionId = newAnswer.Question!.Id
                         },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
             }
         }
 
-        public void DeleteTestingById(int testingId)
+        public void DeleteAnswerById(int answerId)
         {
             using (var connection = new SqlConnection(ServerSettings._connectionString))
             {
                 connection.Open();
 
-                connection.QuerySingle<TestingDTO>
+                connection.QuerySingle<AnswerDTO>
                     (
-                        StoredProcedures.Testing_DeleteById,
-                        param: new { id = testingId },
+                        StoredProcedures.Answer_DeleteById,
+                        param: new { id = answerId },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
             }
         }
 
-        public void UpdateTestingById(TestingDTO newTesting)
+        public void UpdateAnswerById(AnswerDTO newAnswer)
         {
             using (var connection = new SqlConnection(ServerSettings._connectionString))
             {
                 connection.Open();
 
-                connection.QuerySingleOrDefault<TestingDTO>
+                connection.QuerySingleOrDefault<AnswerDTO>
                     (
-                        StoredProcedures.Testing_UpdateById,
+                        StoredProcedures.Answer_UpdateById,
                         param: new
                         {
-                            newTesting.Id,
-                            newTesting.Date,
-                            TestId = newTesting.Test!.Id
+                            newAnswer.Id,
+                            newAnswer.Content,
+                            newAnswer.IsCorrect,
+                            QuestionId = newAnswer.Question!.Id
                         },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
             }
         }
 
-        public List<TestingDTO> GetAllTestings()
+        public List<AnswerDTO> GetAllAnswers()
         {
             using (var connection = new SqlConnection(ServerSettings._connectionString))
             {
                 connection.Open();
 
-                return connection.Query<TestingDTO>
+                return connection.Query<AnswerDTO>
                     (
-                        StoredProcedures.Testing_GetAll,
+                        StoredProcedures.Answer_GetAll,
                         commandType: System.Data.CommandType.StoredProcedure
                     ).ToList();
             }
         }
 
-        public TestingDTO GetTestingById(int testingId)
+        public AnswerDTO GetAnswerById(int answerId)
         {
             using (var connection = new SqlConnection(ServerSettings._connectionString))
             {
                 connection.Open();
 
-                return connection.QuerySingle<TestingDTO>
+                return connection.QuerySingle<AnswerDTO>
                     (
-                        StoredProcedures.Testing_GetById,
-                        param: new { id = testingId },
+                        StoredProcedures.Answer_GetById,
+                        param: new { id = answerId },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
             }

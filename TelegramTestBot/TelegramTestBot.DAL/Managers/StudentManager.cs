@@ -18,11 +18,10 @@ namespace TelegramTestBot.DAL.Managers
                         StoredProcedures.Student_Add,
                         param: new
                         {
-                            FirstName = newStudent.FirstName,
-                            LastName = newStudent.LastName,
-                            SurName = newStudent.SurName,
+                            FirstName = newStudent.Firstname,
+                            LastName = newStudent.Lastname,
+                            SurName = newStudent.Surname,
                             Username = newStudent.Username,
-                            IsAttendance = newStudent.IsAttendance
                         },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
@@ -56,11 +55,10 @@ namespace TelegramTestBot.DAL.Managers
                         param: new
                         {
                             newStudent.Id,
-                            newStudent.FirstName,
-                            newStudent.LastName,
-                            newStudent.SurName,
+                            newStudent.Firstname,
+                            newStudent.Lastname,
+                            newStudent.Surname,
                             newStudent.Username,
-                            newStudent.IsAttendance
                         },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
