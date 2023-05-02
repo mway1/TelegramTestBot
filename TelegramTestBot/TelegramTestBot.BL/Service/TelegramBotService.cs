@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
+using TelegramTestBot.BL.Models;
+using TelegramTestBot.BL.Managers;
 using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types;
@@ -10,15 +13,15 @@ using Telegram.Bot.Types.Enums;
 
 namespace TelegramTestBot.BL.Service
 {
-    public class TelegramBotSettings : TelegramBotClient
+    public class TelegramBotService
     {
-        protected readonly string token = "6237629540:AAErGQgxalLVu5W9RKenTd9UYGpx4tnqVNE";
         protected readonly TelegramBotClient _botClient;
         protected Action<string> _onMessage;
+        private readonly Data _date = new Data();
 
-        public TelegramBotSettings(string token, Action<string> onMessage) : base(token)
+        public TelegramBotService(Action<string> onMessage)
         {
-            _botClient = new TelegramBotClient(token);
+            _botClient = new TelegramBotClient(_date!.GetHashedToken(0));
             _onMessage = onMessage;
         }
 
