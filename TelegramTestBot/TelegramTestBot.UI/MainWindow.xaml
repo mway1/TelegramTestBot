@@ -100,16 +100,16 @@
                     <Button x:Name="Button_SaveNameOfTest"  Content="Сохранить" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="203" Height="21" Margin="0,218,0,0"/>
                     <Label Content="Созданные тесты:" HorizontalAlignment="Left" Margin="16,3,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold"/>
                     <Label Content="Введите вопрос" HorizontalAlignment="Left" Margin="50,56,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold" Grid.Column="1"/>
-                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="36,78,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="139" Height="19"/>
+                    <TextBox  x:Name="Tb_ContentQuestuon" Grid.Column="1" HorizontalAlignment="Left" Margin="36,78,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="139" Height="19"/>
                     <Label Content="Вид вопроса:" HorizontalAlignment="Left" Margin="340,55,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold" Grid.Column="1"/>
-                    <ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="342,75,0,0" VerticalAlignment="Top" Width="120"/>
-                    <Button Grid.Column="1" Content="Сохранить/изменить" HorizontalAlignment="Left" Margin="36,97,0,0" VerticalAlignment="Top" Width="139"/>
+                    <ComboBox x:Name="CB_TypeOfQuestion"  Grid.Column="1" HorizontalAlignment="Left" Margin="342,75,0,0" VerticalAlignment="Top" Width="120"/>
+                    <Button x:Name="Button_SaveEditQuestion"  Grid.Column="1" Content="Сохранить/изменить" HorizontalAlignment="Left" Margin="36,97,0,0" VerticalAlignment="Top" Width="139"/>
                     <Label Content="Созданные вопросы:" HorizontalAlignment="Left" Margin="50,142,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold" Grid.Column="1"/>
-                    <ListBox Grid.Column="1" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="24,173,352,123"/>
-                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="342,133,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="342,162,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="342,214,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="342,189,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+                    <ListBox x:Name="LB_CreatedQuestion"  Grid.Column="1" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="24,173,352,123"/>
+                    <TextBox x:Name="TB_FirstAnswer" Grid.Column="1" HorizontalAlignment="Left" Margin="342,133,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+                    <TextBox x:Name="TB_SecondAnswer" Grid.Column="1" HorizontalAlignment="Left" Margin="342,162,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+                    <TextBox x:Name="TB_FourthAnswer"  Grid.Column="1" HorizontalAlignment="Left" Margin="342,214,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+                    <TextBox x:Name="TB_ThirdAnswer" Grid.Column="1" HorizontalAlignment="Left" Margin="342,189,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
                     <RadioButton Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="327,136,0,0" VerticalAlignment="Top" Width="15"/>
                     <RadioButton Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="327,164,0,0" VerticalAlignment="Top" Width="15"/>
                     <RadioButton Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="327,191,0,0" VerticalAlignment="Top" Width="15"/>
@@ -118,6 +118,9 @@
                     <CheckBox Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="464,164,0,0" VerticalAlignment="Top" Width="15"/>
                     <CheckBox Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="464,191,0,0" VerticalAlignment="Top" Width="15"/>
                     <CheckBox Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="464,216,0,0" VerticalAlignment="Top" Width="15"/>
+                    <Label Content="Правильный ответ:" HorizontalAlignment="Left" Margin="340,247,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold" Grid.Column="1"/>
+                    <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="342,278,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+                    <Button Grid.Column="1" Content="Изменить ответ" HorizontalAlignment="Left" Margin="342,295,0,0" VerticalAlignment="Top" Width="120"/>
                 </Grid>
 
             </TabItem>
