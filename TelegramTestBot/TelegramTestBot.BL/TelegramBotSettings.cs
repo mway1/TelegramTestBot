@@ -10,13 +10,13 @@ using Telegram.Bot.Types.Enums;
 
 namespace TelegramTestBot.BL
 {
-    public class TelegramBotManager : TelegramBotClient
+    public class TelegramBotSettings : TelegramBotClient
     {
         protected readonly string token = "6237629540:AAErGQgxalLVu5W9RKenTd9UYGpx4tnqVNE";
         protected readonly TelegramBotClient _botClient;
         protected Action<string> _onMessage;
 
-        public TelegramBotManager(string token, Action<string> onMessage) : base(token) 
+        public TelegramBotSettings(string token, Action<string> onMessage) : base(token) 
         {
             _botClient = new TelegramBotClient(token);
             _onMessage = onMessage;

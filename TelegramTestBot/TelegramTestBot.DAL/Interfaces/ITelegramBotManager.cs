@@ -5,7 +5,7 @@ namespace TelegramTestBot.DAL.Interfaces
     public interface ITelegramBotManager
     {
         void AddTelegramBot(TelegramBotDTO newTelegramBot);
-        void DeleteByIdTelegramBot(int telegramBotId);
+        void DeleteTelegramBotById(int telegramBotId);
         TelegramBotDTO GetTelegramBotById(int telegramBotId);
     }
 }

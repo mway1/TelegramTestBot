@@ -12,7 +12,7 @@ namespace TelegramTestBot.BL
         {
             if(_instance == null)            
                 InitializeInstance();
-            return _instance;
+            return _instance!;
         }
 
         private static void InitializeInstance()
@@ -69,11 +69,16 @@ namespace TelegramTestBot.BL
                 .ReverseMap();
 
                 cfg.CreateMap<TestingStudentDTO, TestingStudentModel>()
-                .ForMember("Id", opt => opt.MapFrom(tg => tg.Id))
-                .ForMember("CountAnswers", opt => opt.MapFrom(tg => tg.CountAnswers))
-                .ForMember("IsAttendance", opt => opt.MapFrom(tg => tg.IsAttendance))
-                .ForMember("StudentId", opt => opt.MapFrom(tg => tg.StudentId))
-                .ForMember("TestingId", opt => opt.MapFrom(tg => tg.TestingId))
+                .ForMember("Id", opt => opt.MapFrom(ts => ts.Id))
+                .ForMember("CountAnswers", opt => opt.MapFrom(ts => ts.CountAnswers))
+                .ForMember("IsAttendance", opt => opt.MapFrom(ts => ts.IsAttendance))
+                .ForMember("StudentId", opt => opt.MapFrom(ts => ts.StudentId))
+                .ForMember("TestingId", opt => opt.MapFrom(ts => ts.TestingId))
+                .ReverseMap();
+
+                cfg.CreateMap<TelegramBotDTO, TelegramBotModel>()
+                .ForMember("Id", opt => opt.MapFrom(tb => tb.Id))
+                .ForMember("HashToken", opt => opt.MapFrom(tb => tb.HashToken))
                 .ReverseMap();
             }));
         }
