@@ -7,6 +7,124 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <TabControl>
+            <TabItem x:Name="Auth" Header="Авторизация">
+                <Grid >
+                    <TextBox x:Name="TB_login" HorizontalAlignment="Left" Margin="35,38,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="170" Height="26" Grid.Column="1" Grid.Row="1"/>
+                    <Label Content="Введите логин:" HorizontalAlignment="Left" Margin="35,12,0,0" VerticalAlignment="Top" Width="97" Grid.Column="1" Grid.Row="1" Height="26"/>
+                    <Button x:Name="B_signin" Content="Вход" HorizontalAlignment="Left" Margin="35,115,0,0" VerticalAlignment="Top" Width="68" Height="23" Grid.Row="1" Grid.Column="1"/>
+                    <Button x:Name="B_reg" Content="Регистрация" HorizontalAlignment="Left" Margin="108,115,0,0" VerticalAlignment="Top" Width="96" Height="23" Grid.Row="1" Grid.Column="1"/>
+                    <Label Content="Введите пароль:" HorizontalAlignment="Left" Margin="35,64,0,0" VerticalAlignment="Top" Width="112" Height="25" Grid.Row="1" Grid.Column="1"/>
+                    <PasswordBox  x:Name="Password_login" Grid.Column="1" HorizontalAlignment="Left" Margin="35,87,0,0" Grid.Row="1" VerticalAlignment="Top" Width="169" Height="26"/>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="107*" />
+                        <RowDefinition Height="164*" />
+                        <RowDefinition Height="135*" />
+                    </Grid.RowDefinitions>
+                </Grid>
+
+            </TabItem>
+            <TabItem x:Name="Reg" Header="Регистрация">
+                <Grid>
+                    <Label Grid.Column="1" Content="Форма регистрации" HorizontalAlignment="Center" Margin="0,28,0,0" VerticalAlignment="Top" Width="188" FontSize="16" FontWeight="Bold"/>
+                    <TextBox Grid.Column="1" x:Name="TB_LastName" HorizontalAlignment="Left" Margin="31,85,0,0" TextWrapping="Wrap" Text="Введите Фамилию" Foreground="#FFAFAFAF" VerticalAlignment="Top" Width="259" Height="25" AcceptsReturn="True"/>
+                    <TextBox Grid.Column="1" x:Name="TB_FirstName" HorizontalAlignment="Left" Margin="31,123,0,0" TextWrapping="Wrap" Text="Введите Имя" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
+                    <TextBox Grid.Column="1" x:Name="TB_SurName" HorizontalAlignment="Left" Margin="31,160,0,0" TextWrapping="Wrap" Text="Введите Отчество" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
+                    <TextBox Grid.Column="1" x:Name="Login" HorizontalAlignment="Left" Margin="31,197,0,0" TextWrapping="Wrap" Text="Введите логин" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
+                    <TextBox Grid.Column="1" x:Name="Email" HorizontalAlignment="Left" Margin="31,235,0,0" TextWrapping="Wrap" Text="Введите email" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
+                    <TextBox Grid.Column="1" x:Name="Password" HorizontalAlignment="Left" Margin="31,272,0,0" TextWrapping="Wrap" Text="Введите пароль" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
+                    <Button Grid.Column="1" x:Name="Button_Reg" Content="Зарегистрироваться" HorizontalAlignment="Left" Margin="31,312,0,0" VerticalAlignment="Top" Height="26" Width="147"/>
+                    <Button Grid.Column="1" x:Name="Button_SignIn" Content="Вход" HorizontalAlignment="Left" Margin="192,312,0,0" VerticalAlignment="Top" Height="26" Width="98"/>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="219*" />
+                        <ColumnDefinition Width="329*" />
+                        <ColumnDefinition Width="246*" />
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="Groups" Header="Создание Групп">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="205*" />
+                        <ColumnDefinition Width="589*" />
+                    </Grid.ColumnDefinitions>
+                    <TabControl Grid.Column="1">
+                        <TabItem x:Name="AboutStudent"  Header="О Студенте">
+                            <Grid>
+                                <TextBox x:Name="TB_LastName_Student" HorizontalAlignment="Left" Margin="172,27,0,0" TextWrapping="Wrap" Text="Введите Фамилию" Foreground="#FFAFAFAF" VerticalAlignment="Top" Width="259" Height="25" AcceptsReturn="True"/>
+                                <TextBox x:Name="TB_FirstName_Student" HorizontalAlignment="Left" Margin="172,65,0,0" TextWrapping="Wrap" Text="Введите Имя" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
+                                <TextBox x:Name="TB_SurName_Student" HorizontalAlignment="Left" Margin="172,102,0,0" TextWrapping="Wrap" Text="Введите Отчество" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
+                                <TextBox x:Name="TB_Username_Student" HorizontalAlignment="Left" Margin="172,139,0,0" TextWrapping="Wrap" Text="Введите Username" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
+                                <ComboBox x:Name="CB_GroupsForStudent" HorizontalAlignment="Left" VerticalAlignment="Top" Width="258" Height="26" Margin="173,173,0,0" />
+                                <Button x:Name="Button_EditStudent" Content="Сохранить изменения" HorizontalAlignment="Left" Margin="172,207,0,0" VerticalAlignment="Top" Width="259"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem x:Name="TestOfStudent" Header="История">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="582*"/>
+                                </Grid.ColumnDefinitions>
+                                <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,22,0" Grid.ColumnSpan="2"/>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                    <ComboBox x:Name="CB_Groups" HorizontalAlignment="Center" VerticalAlignment="Top" Width="205" Height="26" Margin="0,22,0,0"/>
+                    <ListBox x:Name="LB_StudentsInGroup" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="2,71,3,181"/>
+                    <ListBox x:Name="LB_NewUsers" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="2,251,3,38"/>
+                    <Label Content="Студенты:" HorizontalAlignment="Center" Margin="0,43,0,0" VerticalAlignment="Top" Width="200"/>
+                    <Label Content="Подключенные пользователи:" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Margin="0,225,0,0"/>
+                    <Label Content="Группы:" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Margin="0,-3,0,0"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="Test" Header="Создание Теста">
+                <Grid>
+                    <Grid.RowDefinitions>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="213*"/>
+                        <ColumnDefinition Width="581*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Создать новый тест:" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold" Margin="10,170,0,0"/>
+                    <Label Content="Созданные тесты:" HorizontalAlignment="Left" Margin="16,3,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold"/>
+                    <ListBox x:Name="LB_CreatedTest"  d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,28,10,261" />
+                    <TextBox x:Name="TB_NewTestorEditName"  HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="203" Height="23" Margin="0,195,0,0" />
+                    <Button x:Name="Button_EditNameOfTest"  Content="Изменить название" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="116" Margin="0,150,0,0"/>
+                    <Button x:Name="Button_EditTest"  Content="Редактировать" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="87" Margin="116,150,0,0"/>
+                    <Button x:Name="Button_SaveNameOfTest"  Content="Сохранить" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="203" Height="21" Margin="0,218,0,0"/>
+                    <Label Content="Созданные тесты:" HorizontalAlignment="Left" Margin="16,3,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold"/>
+                    <Label Content="Введите вопрос" HorizontalAlignment="Left" Margin="50,56,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold" Grid.Column="1"/>
+                    <TextBox  x:Name="Tb_ContentQuestuon" Grid.Column="1" HorizontalAlignment="Left" Margin="36,78,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="139" Height="19"/>
+                    <Label Content="Вид вопроса:" HorizontalAlignment="Left" Margin="340,55,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold" Grid.Column="1"/>
+                    <ComboBox x:Name="CB_TypeOfQuestion"  Grid.Column="1" HorizontalAlignment="Left" Margin="342,75,0,0" VerticalAlignment="Top" Width="120"/>
+                    <Button x:Name="Button_SaveEditQuestion"  Grid.Column="1" Content="Сохранить/изменить" HorizontalAlignment="Left" Margin="36,97,0,0" VerticalAlignment="Top" Width="139"/>
+                    <Label Content="Созданные вопросы:" HorizontalAlignment="Left" Margin="50,142,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold" Grid.Column="1"/>
+                    <ListBox x:Name="LB_CreatedQuestion"  Grid.Column="1" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="24,173,352,123"/>
+                    <TextBox x:Name="TB_FirstAnswer" Grid.Column="1" HorizontalAlignment="Left" Margin="342,133,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+                    <TextBox x:Name="TB_SecondAnswer" Grid.Column="1" HorizontalAlignment="Left" Margin="342,162,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+                    <TextBox x:Name="TB_FourthAnswer"  Grid.Column="1" HorizontalAlignment="Left" Margin="342,214,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+                    <TextBox x:Name="TB_ThirdAnswer" Grid.Column="1" HorizontalAlignment="Left" Margin="342,189,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+                    <RadioButton x:Name="RB_RightAnswer1" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="327,136,0,0" VerticalAlignment="Top" Width="15"/>
+                    <RadioButton x:Name="RB_RightAnswer2" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="327,164,0,0" VerticalAlignment="Top" Width="15"/>
+                    <RadioButton x:Name="RB_RightAnswer3" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="327,191,0,0" VerticalAlignment="Top" Width="15"/>
+                    <RadioButton x:Name="RB_RightAnswer4" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="327,215,0,0" VerticalAlignment="Top" Width="15"/>
+                    <CheckBox x:Name="CheckB_RightAnswer1" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="464,134,0,0" VerticalAlignment="Top" Width="15"/>
+                    <CheckBox x:Name="CheckB_RightAnswer2" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="464,164,0,0" VerticalAlignment="Top" Width="15"/>
+                    <CheckBox x:Name="CheckB_RightAnswer3"  Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="464,191,0,0" VerticalAlignment="Top" Width="15"/>
+                    <CheckBox x:Name="CheckB_RightAnswer4" Grid.Column="1" Content="" HorizontalAlignment="Left" Margin="464,216,0,0" VerticalAlignment="Top" Width="15"/>
+                    <Label Content="Правильный ответ:" HorizontalAlignment="Left" Margin="340,247,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold" Grid.Column="1"/>
+                    <TextBox x:Name="TB_RightAnswerForQuest" Grid.Column="1" HorizontalAlignment="Left" Margin="342,278,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+                    <Button x:Name="Button_EditRightAnswer"  Grid.Column="1" Content="Изменить ответ" HorizontalAlignment="Left" Margin="342,295,0,0" VerticalAlignment="Top" Width="120"/>
+                </Grid>
+
+            </TabItem>
+        </TabControl>
 
     </Grid>
 </Window>
