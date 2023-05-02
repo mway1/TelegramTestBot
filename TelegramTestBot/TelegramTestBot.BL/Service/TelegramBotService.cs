@@ -17,7 +17,7 @@ namespace TelegramTestBot.BL.Service
     {
         protected readonly TelegramBotClient _botClient;
         protected Action<string> _onMessage;
-        private readonly Data _date = new Data();
+        private Data _date = new Data();
 
         public TelegramBotService(Action<string> onMessage)
         {

@@ -2,17 +2,25 @@
 using System.Security.Cryptography;
 using TelegramTestBot.BL.Managers;
 using TelegramTestBot.BL.Models;
+using TelegramTestBot.BL.Interfaces;
 
 namespace TelegramTestBot.BL.Service
 {
-    public class Data
+    public class Data : IData
     {
         protected readonly string token = "6237629540:AAErGQgxalLVu5W9RKenTd9UYGpx4tnqVNE";
+        private IData _data;
         private TelegramBotModelManager _telegramBotModelManager = new TelegramBotModelManager();
+        private TeacherModelManager _teacherModelManager = new TeacherModelManager();
 
         public Data()
         {
-            string hashToken = HashedToken(token);
+            _data = new Data();
+        }
+
+        public void AddHashedToken(string token)
+        {
+            string hashToken = HashedValue(token);
 
             TelegramBotModel telegramBot = new TelegramBotModel()
             {
@@ -29,11 +37,11 @@ namespace TelegramTestBot.BL.Service
             return hashedToken;
         }
 
-        private string HashedToken(string token)
+        public string HashedValue(string value)
         {
             using (var sha256 = SHA256.Create())
             {
-                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(token));
+                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(value));
                 var hash = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
                 return hash;
             }
