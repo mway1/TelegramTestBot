@@ -24,6 +24,5 @@ namespace TelegramTestBot.UI
         {
             InitializeComponent();
         }
-
     }
 }

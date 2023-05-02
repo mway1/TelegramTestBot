@@ -12,11 +12,10 @@
                 <Grid >
                     <TextBox x:Name="TB_login" HorizontalAlignment="Left" Margin="35,38,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="170" Height="26" Grid.Column="1" Grid.Row="1"/>
                     <Label Content="Введите логин:" HorizontalAlignment="Left" Margin="35,12,0,0" VerticalAlignment="Top" Width="97" Grid.Column="1" Grid.Row="1" Height="26"/>
-                    <TextBox x:Name="TB_password" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="170" Height="26" Grid.Column="1" Margin="35,89,0,0" Grid.Row="1"/>
                     <Button x:Name="B_signin" Content="Вход" HorizontalAlignment="Left" Margin="35,115,0,0" VerticalAlignment="Top" Width="68" Height="23" Grid.Row="1" Grid.Column="1"/>
                     <Button x:Name="B_reg" Content="Регистрация" HorizontalAlignment="Left" Margin="108,115,0,0" VerticalAlignment="Top" Width="96" Height="23" Grid.Row="1" Grid.Column="1"/>
                     <Label Content="Введите пароль:" HorizontalAlignment="Left" Margin="35,64,0,0" VerticalAlignment="Top" Width="112" Height="25" Grid.Row="1" Grid.Column="1"/>
-                    <Grid Grid.Column="1" Grid.Row="1"/>
+                    <PasswordBox  x:Name="Password_login" Grid.Column="1" HorizontalAlignment="Left" Margin="35,87,0,0" Grid.Row="1" VerticalAlignment="Top" Width="169" Height="26"/>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -94,7 +93,7 @@
                     </Grid.ColumnDefinitions>
                     <Label Content="Создать новый тест:" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold" Margin="10,170,0,0"/>
                     <Label Content="Созданные тесты:" HorizontalAlignment="Left" Margin="16,3,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold"/>
-                    <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,28,10,261" SelectionChanged="ListBox_SelectionChanged" />
+                    <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,28,10,261" />
                     <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="203" Height="23" Margin="0,195,0,0" />
                     <Button x:Name="jjj"  Content="Изменить название" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="116" Margin="0,150,0,0"/>
                     <Button x:Name="kk"  Content="Редактировать" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="87" Margin="116,150,0,0"/>
