@@ -3,7 +3,7 @@
 AS
 BEGIN
 
-	SELECT Id, HashToken
+	SELECT Id, [Name], HashToken
 	FROM dbo.[TelegramBot]
 	WHERE Id=@Id
 

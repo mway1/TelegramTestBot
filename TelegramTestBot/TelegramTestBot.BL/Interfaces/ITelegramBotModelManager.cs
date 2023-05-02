@@ -6,6 +6,6 @@ namespace TelegramTestBot.BL.Interfaces
     {
         void AddTelegramBot(TelegramBotModel newTelegramBot);
         void DeleteTelegramBotById(int telegramBotId);
-        void GetTelegramBotById(int telegramBotId);
+        TelegramBotModel GetTelegramBotById(int telegramBotId);
     }
 }

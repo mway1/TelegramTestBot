@@ -78,6 +78,7 @@ namespace TelegramTestBot.BL
 
                 cfg.CreateMap<TelegramBotDTO, TelegramBotModel>()
                 .ForMember("Id", opt => opt.MapFrom(tb => tb.Id))
+                .ForMember("Name", opt => opt.MapFrom(tb => tb.Name))
                 .ForMember("HashToken", opt => opt.MapFrom(tb => tb.HashToken))
                 .ReverseMap();
             }));

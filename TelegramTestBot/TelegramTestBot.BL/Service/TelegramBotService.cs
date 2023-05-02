@@ -8,7 +8,7 @@ using Telegram.Bot.Args;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 
-namespace TelegramTestBot.BL
+namespace TelegramTestBot.BL.Service
 {
     public class TelegramBotSettings : TelegramBotClient
     {
@@ -16,12 +16,12 @@ namespace TelegramTestBot.BL
         protected readonly TelegramBotClient _botClient;
         protected Action<string> _onMessage;
 
-        public TelegramBotSettings(string token, Action<string> onMessage) : base(token) 
+        public TelegramBotSettings(string token, Action<string> onMessage) : base(token)
         {
             _botClient = new TelegramBotClient(token);
             _onMessage = onMessage;
         }
-        
+
         public void StartBot()
         {
             _botClient.StartReceiving(HandleUpdateAsync, HandleErrorAsync);
@@ -39,13 +39,13 @@ namespace TelegramTestBot.BL
 
         // protected override async void OnMessage(Message message)
         //{
-            //if (message.Type == MessageType.Text)
-            //{
-                //if (message.Text == "/start")
-                //{
-                    //await _botClient.SendTextMessageAsync(message.Chat.Id, "Hello," + message.Chat.Username);
-                //}
-            //}
+        //if (message.Type == MessageType.Text)
+        //{
+        //if (message.Text == "/start")
+        //{
+        //await _botClient.SendTextMessageAsync(message.Chat.Id, "Hello," + message.Chat.Username);
+        //}
+        //}
         //}
     }
 }

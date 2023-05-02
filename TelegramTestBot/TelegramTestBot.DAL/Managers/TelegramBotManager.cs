@@ -18,6 +18,7 @@ namespace TelegramTestBot.DAL.Managers
                         StoredProcedures.TelegramBot_Add,
                         param: new
                         {
+                            Name = newTelegramBot.Name,
                             HashToken = newTelegramBot.HashToken
                         },
                         commandType: System.Data.CommandType.StoredProcedure
