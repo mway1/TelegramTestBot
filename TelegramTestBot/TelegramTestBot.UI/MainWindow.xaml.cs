@@ -23,5 +23,28 @@ namespace TelegramTestBot.UI
         {
             InitializeComponent();
         }
+
+        private void B_signin_Click(object sender, RoutedEventArgs e)
+        {
+            if (TB_login.Text.Length > 0)     
+            {
+                if (Password_login.Password.Length > 0)         
+                {             // ищем в базе данных пользователя с такими данными         
+                    //DataTable dt_user = mainWindow.Select("SELECT * FROM [dbo].[users] WHERE [login] = '" + textBox_login.Text + "' AND [password] = '" + password.Password + "'");
+                    //if (dt_user.Rows.Count > 0)    
+                   // {
+                       // MessageBox.Show("Пользователь авторизовался");       
+                   // }
+                    //else MessageBox.Show("Пользователя не найден"); 
+                }
+                else MessageBox.Show("Введите пароль");    
+            }
+            else MessageBox.Show("Введите логин"); 
+        }
+
+        private void B_reg_Click(object sender, RoutedEventArgs e)
+        {
+            TabControl_Main.SelectedItem = Reg;
+        }
     }
 }
