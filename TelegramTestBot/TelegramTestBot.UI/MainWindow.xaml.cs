@@ -52,5 +52,39 @@ namespace TelegramTestBot.UI
         {
             TabControl_Main.SelectedItem = Reg;
         }
+
+        private void Button_Reg_Click(object sender, RoutedEventArgs e)
+        {
+            if (TB_LastName_Teacher.Text.Length > 0)
+            {
+                if (TB_FirstName_Teacher.Text.Length > 0)
+                {
+                    if (TB_SurName_Teacher.Text.Length > 0)
+                    {
+                        if(TB_Email_Teacher.Text.Length > 0)
+                        {
+                            if(TB_Login_Teacher.Text.Length > 0)
+                            {
+                               if(PasswordForRegister.Password.Length > 0)
+                               {
+                                    if(PasswordForRegister_Copy.Password.Length > 0)
+                                    {
+
+                                    }
+                                    else MessageBox.Show("Повторите пароль");
+                                }
+                               else MessageBox.Show("Укажите пароль");
+                            }
+                            else MessageBox.Show("Укажите Login");
+                        }
+                        else MessageBox.Show("Укажите Email");
+                    }
+                    else MessageBox.Show("Укажите Отчество");
+                }
+                else MessageBox.Show("Укажите Имя");
+            }
+            else MessageBox.Show("Укажите Фамилию");
+                
+        }
     }
 }
