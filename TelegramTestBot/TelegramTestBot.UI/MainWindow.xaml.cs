@@ -97,7 +97,9 @@ namespace TelegramTestBot.UI
                                                         Login = TB_Login_Teacher.Text,
                                                         Password = PasswordForRegister.Password
                                                     };
+                                                    _teacherModelManager.AddTeacher(teacher);
                                                     MessageBox.Show("Пользователь зарегистрирован");
+                                                    TabControl_Main.SelectedItem = Auth;
                                                 }
                                                 else MessageBox.Show("Пароли не совподают");
                                         }
