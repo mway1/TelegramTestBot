@@ -111,5 +111,6 @@
     <Build Include="dbo\Stored Procedures\Testing_Student_GetAll.sql" />
     <Build Include="dbo\Stored Procedures\Testing_Student_GetById.sql" />
     <Build Include="dbo\Stored Procedures\Testing_Student_UpdateById.sql" />
+    <Build Include="dbo\Stored Procedures\Teacher_GetByLogin.sql" />
   </ItemGroup>
 </Project>

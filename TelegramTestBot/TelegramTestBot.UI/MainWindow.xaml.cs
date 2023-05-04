@@ -35,9 +35,18 @@ namespace TelegramTestBot.UI
             if (TB_login.Text.Length > 0)     
             {
                 if (Password_login.Password.Length > 0)         
-                {             // ищем в базе данных пользователя с такими данными         
-                    //DataTable dt_user = mainWindow.Select("SELECT * FROM [dbo].[users] WHERE [login] = '" + textBox_login.Text + "' AND [password] = '" + password.Password + "'");
-                    //if (dt_user.Rows.Count > 0)    
+                {
+                    var EnteredLogin=TB_login.Text;
+                    var EnteredPassword = Password_login.Password;
+                     //_teacherModelManager.GetTeacherByLogin(EnteredLogin, EnteredPassword).Login;  
+                    if (TB_login.Text==_teacherModelManager.GetTeacherByLogin(EnteredLogin, EnteredPassword).Login)
+                    {
+                        if(TB_login.Text==_teacherModelManager.GetTeacherByLogin(EnteredLogin, EnteredPassword).Password)
+                        {
+                            int authorizedTeacher = _teacherModelManager.GetTeacherByLogin(EnteredLogin, EnteredPassword).Id;
+                            MessageBox.Show("Авторизация пройдена");
+                        }
+                    }    
                    // {
                        // MessageBox.Show("Пользователь авторизовался");       
                    // }
