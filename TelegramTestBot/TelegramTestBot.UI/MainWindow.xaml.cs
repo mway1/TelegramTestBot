@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TelegramTestBot.BL.Models;
+using TelegramTestBot.BL.Managers;
 
 namespace TelegramTestBot.UI
 {
@@ -23,6 +25,10 @@ namespace TelegramTestBot.UI
         {
             InitializeComponent();
         }
+
+        private TeacherModelManager _teacherModelManager = new TeacherModelManager();  
+
+       
 
         private void B_signin_Click(object sender, RoutedEventArgs e)
         {
