@@ -67,10 +67,43 @@ namespace TelegramTestBot.UI
                             {
                                if(PasswordForRegister.Password.Length > 0)
                                {
-                                    if(PasswordForRegister_Copy.Password.Length > 0)
-                                    {
+                                    if (PasswordForRegister_Copy.Password.Length > 0)
+                                     {
+                                        if (PasswordForRegister.Password.Length >= 6)
+{
+                                            bool en = true;
+                                            bool number = false; 
 
-                                    }
+                                            for (int i = 0; i < PasswordForRegister.Password.Length; i++) 
+                                            {
+                                                if (PasswordForRegister.Password[i] >= 'А' && PasswordForRegister.Password[i] <= 'Я') en = false; 
+                                            if (PasswordForRegister.Password[i] >= '0' && PasswordForRegister.Password[i] <= '9') number = true; 
+                                        }
+
+                                        if (!en)
+                                            MessageBox.Show("Доступна только английская раскладка");
+                                        else if (!number)
+                                            MessageBox.Show("Добавьте хотя бы одну цифру");
+                                        if (en && number)
+                                        {
+                                                if (PasswordForRegister.Password == PasswordForRegister_Copy.Password) 
+                                                {
+                                                    TeacherModel teacher = new TeacherModel()
+                                                    {
+                                                        Lastname = TB_LastName_Teacher.Text,
+                                                        Firstname = TB_FirstName_Teacher.Text,
+                                                        Surname = TB_SurName_Teacher.Text,
+                                                        Email = TB_Email_Teacher.Text,
+                                                        Login = TB_Login_Teacher.Text,
+                                                        Password = PasswordForRegister.Password
+                                                    };
+                                                    MessageBox.Show("Пользователь зарегистрирован");
+                                                }
+                                                else MessageBox.Show("Пароли не совподают");
+                                        }
+                                      }
+                                      else MessageBox.Show("пароль слишком короткий, минимум 6 символов");
+                                }
                                     else MessageBox.Show("Повторите пароль");
                                 }
                                else MessageBox.Show("Укажите пароль");
@@ -84,7 +117,7 @@ namespace TelegramTestBot.UI
                 else MessageBox.Show("Укажите Имя");
             }
             else MessageBox.Show("Укажите Фамилию");
-                
+           }     
         }
     }
-}
+
