@@ -40,7 +40,7 @@ namespace TelegramTestBot.UI
                     var EnteredPassword = Password_login.Password;
                     if (TB_login.Text == _teacherModelManager.GetTeacherByLogin(EnteredLogin, EnteredPassword).Login)
                     {
-                        if (TB_login.Text == _teacherModelManager.GetTeacherByLogin(EnteredLogin, EnteredPassword).Password)
+                        if (Password_login.Password == _teacherModelManager.GetTeacherByLogin(EnteredLogin, EnteredPassword).Password)
                         {
                             int authorizedTeacher = _teacherModelManager.GetTeacherByLogin(EnteredLogin, EnteredPassword).Id;
                             MessageBox.Show("Авторизация пройдена");
