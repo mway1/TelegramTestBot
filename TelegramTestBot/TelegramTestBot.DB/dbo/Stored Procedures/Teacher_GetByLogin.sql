@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[Teacher_GetByLogin]
 	@Login VARCHAR (30),
-	@Password VARCHAR (30)
+	@Password VARCHAR (256)
 AS
 BEGIN
 

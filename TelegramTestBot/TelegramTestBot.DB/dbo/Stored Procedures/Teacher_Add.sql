@@ -4,7 +4,7 @@
 	@Surname nvarchar(30),
 	@Email nvarchar(30),
 	@Login nvarchar(30),
-	@Password nvarchar(30)
+	@Password nvarchar(256)
 AS
 BEGIN
 INSERT INTO dbo.[Teacher](
