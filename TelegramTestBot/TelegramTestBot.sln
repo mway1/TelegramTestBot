@@ -4,12 +4,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.2.32519.379
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TelegramTestBot.UI", "TelegramTestBot.UI\TelegramTestBot.UI.csproj", "{089D937F-EDFF-4942-A2F4-2AD1E850A3BF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F6BAD262-3660-4D11-9EDA-413D49F4DD39} = {F6BAD262-3660-4D11-9EDA-413D49F4DD39}
+	EndProjectSection
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TelegramTestBot.DB", "TelegramTestBot.DB\TelegramTestBot.DB.sqlproj", "{39FBFF9A-E1A8-4558-8442-7DF120065DB4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TelegramTestBot.DAL", "TelegramTestBot.DAL\TelegramTestBot.DAL.csproj", "{7FCFD01B-ADE0-42A6-B0B1-250250AE546D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelegramTestBot.BL", "TelegramTestBot.BL\TelegramTestBot.BL.csproj", "{F6BAD262-3660-4D11-9EDA-413D49F4DD39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TelegramTestBot.BL", "TelegramTestBot.BL\TelegramTestBot.BL.csproj", "{F6BAD262-3660-4D11-9EDA-413D49F4DD39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
