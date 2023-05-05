@@ -37,14 +37,16 @@ namespace TelegramTestBot.UI
             {
                 if (Password_login.Password.Length > 0)         
                 {
-                    string EnteredLogin=TB_login.Text;
-                    string EnteredPassword = _data.HashedValue(Password_login.Password);
-                    TeacherModel aprovedPassword = _teacherModelManager.GetTeacherByLogin(EnteredLogin, EnteredPassword);
-                    if (EnteredLogin == aprovedPassword.Login)
+                    string enteredLogin = TB_login.Text;
+                    string enteredPassword = _data.HashedValue(Password_login.Password);
+                    
+                    TeacherModel aprovedTeacher = _teacherModelManager.GetTeacherByLogin(enteredLogin);
+                  
+                    if (enteredLogin == aprovedTeacher.Login)
                     {
-                        if (EnteredPassword == aprovedPassword.Password)
+                        if (enteredPassword == aprovedTeacher.Password)
                         {
-                            int authorizedTeacher = aprovedPassword.Id;
+                            int authorizedTeacher = aprovedTeacher.Id;
                             MessageBox.Show("Авторизация пройдена");
                         }
                         else MessageBox.Show("Неверный пароль");
