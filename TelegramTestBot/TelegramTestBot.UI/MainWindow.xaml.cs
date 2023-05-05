@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TelegramTestBot.BL.Models;
 using TelegramTestBot.BL.Managers;
+using TelegramTestBot.BL.Service;
 
 namespace TelegramTestBot.UI
 {
@@ -26,9 +27,9 @@ namespace TelegramTestBot.UI
             InitializeComponent();
         }
 
-        private TeacherModelManager _teacherModelManager = new TeacherModelManager();  
+        private TeacherModelManager _teacherModelManager = new TeacherModelManager();
 
-       
+        private Data _data = new Data();
 
         private void B_signin_Click(object sender, RoutedEventArgs e)
         {
@@ -37,7 +38,7 @@ namespace TelegramTestBot.UI
                 if (Password_login.Password.Length > 0)         
                 {
                     var EnteredLogin=TB_login.Text;
-                    var EnteredPassword = Password_login.Password;
+                    var EnteredPassword = _data.HashedValue(Password_login.Password); 
                     if (TB_login.Text == _teacherModelManager.GetTeacherByLogin(EnteredLogin, EnteredPassword).Login)
                     {
                         if (Password_login.Password == _teacherModelManager.GetTeacherByLogin(EnteredLogin, EnteredPassword).Password)
@@ -94,6 +95,7 @@ namespace TelegramTestBot.UI
                                         {
                                                 if (PasswordForRegister.Password == PasswordForRegister_Copy.Password) 
                                                 {
+                                                    string hashPassword = _data.HashedValue(PasswordForRegister.Password);
                                                     TeacherModel teacher = new TeacherModel()
                                                     {
                                                         Lastname = TB_LastName_Teacher.Text,
@@ -101,7 +103,7 @@ namespace TelegramTestBot.UI
                                                         Surname = TB_SurName_Teacher.Text,
                                                         Email = TB_Email_Teacher.Text,
                                                         Login = TB_Login_Teacher.Text,
-                                                        Password = PasswordForRegister.Password
+                                                        Password = hashPassword
                                                     };
                                                     _teacherModelManager.AddTeacher(teacher);
                                                     MessageBox.Show("Пользователь зарегистрирован");
