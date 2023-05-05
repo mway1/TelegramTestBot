@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Security.Cryptography;
 using TelegramTestBot.BL.Models;
 using TelegramTestBot.BL.Managers;
 using Telegram.Bot;
@@ -21,7 +20,7 @@ namespace TelegramTestBot.BL.Service
 
         public TelegramBotService(Action<string> onMessage)
         {
-            _botClient = new TelegramBotClient(_date!.GetHashedToken(0));
+            _botClient = new TelegramBotClient(_date.token);
             _onMessage = onMessage;
         }
 
@@ -32,7 +31,11 @@ namespace TelegramTestBot.BL.Service
 
         private async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
-            await botClient.SendTextMessageAsync(update.Message!.Chat.Id, "Hello," + update.Message.Chat.Username);
+            if (update.Message!.Text == "/start")
+            {
+
+                await botClient.SendTextMessageAsync(update.Message!.Chat.Id, "Hello, " + update.Message.Chat.Username);
+            }
         }
 
         private async Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)

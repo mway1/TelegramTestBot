@@ -8,14 +8,12 @@ namespace TelegramTestBot.BL.Service
 {
     public class Data : IData
     {
-        protected readonly string token = "6237629540:AAErGQgxalLVu5W9RKenTd9UYGpx4tnqVNE";
-        private IData _data;
+        public readonly string token = "6237629540:AAErGQgxalLVu5W9RKenTd9UYGpx4tnqVNE";
         private TelegramBotModelManager _telegramBotModelManager = new TelegramBotModelManager();
-        private TeacherModelManager _teacherModelManager = new TeacherModelManager();
 
         public Data()
         {
-            _data = new Data();
+            
         }
 
         public void AddHashedToken(string token)
