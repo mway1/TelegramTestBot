@@ -30,6 +30,7 @@
         public const string Teacher_DeleteById = "Teacher_DeleteById";
         public const string Teacher_GetAll = "Teacher_GetAll";
         public const string Teacher_GetById = "Teacher_GetById";
+        public const string Teacher_GetByLogin = "Teacher_GetByLogin";
         public const string Teacher_UpdateById = "Teacher_UpdateById";
 
         public const string Test_Add = "Test_Add";

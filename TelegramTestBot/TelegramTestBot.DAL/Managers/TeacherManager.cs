@@ -97,5 +97,20 @@ namespace TelegramTestBot.DAL.Managers
                     );
             }
         }
+
+        public TeacherDTO GetTeacherByLogin(string login)
+        {
+            using (var connection = new SqlConnection(ServerSettings._connectionString))
+            {
+                connection.Open();
+
+                return connection.QuerySingle<TeacherDTO>
+                    (
+                        StoredProcedures.Teacher_GetByLogin,
+                        param: new { Login = login },
+                        commandType: System.Data.CommandType.StoredProcedure
+                    );
+            }
+        }
     }
 }
