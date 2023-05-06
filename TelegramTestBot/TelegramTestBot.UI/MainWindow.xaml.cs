@@ -49,9 +49,8 @@ namespace TelegramTestBot.UI
                         TeacherModel aprovedTeacher = _teacherModelManager.GetTeacherByLogin(enteredLogin);
 
                         if (enteredLogin == aprovedTeacher.Login && enteredPassword == aprovedTeacher.Password)
-                        {                            
+                        {
                             authorizedTeacher = aprovedTeacher.Id;
-
                             MessageBox.Show("Авторизация пройдена");                            
                         }
                         else MessageBox.Show("Неверный логин или пароль");
@@ -151,10 +150,12 @@ namespace TelegramTestBot.UI
                 };
                 _testModelManager.AddTest(test);
                 MessageBox.Show("");
-                LB_CreatedTest.Items.Add(test.Name);
+                LB_CreatedTest.Items.Refresh();
             }
             else MessageBox.Show("Введите название теста");
         }
+
+
     }
     }
 
