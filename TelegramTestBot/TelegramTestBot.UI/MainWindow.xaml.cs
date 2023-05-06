@@ -25,9 +25,13 @@ namespace TelegramTestBot.UI
         public MainWindow()
         {
             InitializeComponent();
+
         }
 
+        private int authorizedTeacher;
+
         private TeacherModelManager _teacherModelManager = new TeacherModelManager();
+        private TestModelManager _testModelManager = new TestModelManager();
 
         private Data _data = new Data();
 
@@ -46,7 +50,7 @@ namespace TelegramTestBot.UI
 
                         if (enteredLogin == aprovedTeacher.Login && enteredPassword == aprovedTeacher.Password)
                         {                            
-                            int authorizedTeacher = aprovedTeacher.Id;
+                            authorizedTeacher = aprovedTeacher.Id;
 
                             MessageBox.Show("Авторизация пройдена");                            
                         }
@@ -134,7 +138,23 @@ namespace TelegramTestBot.UI
                 else MessageBox.Show("Укажите Имя");
             }
             else MessageBox.Show("Укажите Фамилию");
-           }     
+           }
+
+        private void Button_SaveNameOfTest_Click(object sender, RoutedEventArgs e)
+        {
+            if (TB_NewTestorEditName.Text.Length > 0)
+            {
+                TestModel test = new TestModel()
+                {
+                    Name = TB_NewTestorEditName.Text,
+                    TeacherId = authorizedTeacher
+                };
+                _testModelManager.AddTest(test);
+                MessageBox.Show("");
+                LB_CreatedTest.Items.Add(test.Name);
+            }
+            else MessageBox.Show("Введите название теста");
         }
+    }
     }
 
