@@ -6,14 +6,14 @@ using TelegramTestBot.BL.Interfaces;
 
 namespace TelegramTestBot.BL.Service
 {
-    public class Data : IData
+    public class DataService : IDataService
     {
         public readonly string token = "6237629540:AAErGQgxalLVu5W9RKenTd9UYGpx4tnqVNE";
         private TelegramBotModelManager _telegramBotModelManager = new TelegramBotModelManager();
         private TeacherModelManager _teacherModelManager = new TeacherModelManager();
 
 
-        public Data()
+        public DataService()
         {
             
         }

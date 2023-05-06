@@ -25,7 +25,7 @@ namespace TelegramTestBot.UI
         private List<string> _labels;
         private TeacherModelManager _teacherModelManager = new TeacherModelManager();
         private TelegramBotService _telegramBotService;
-        private Data _data = new Data();
+        private DataService _dataService = new DataService();
 
         public MainWindow()
         {
@@ -47,7 +47,7 @@ namespace TelegramTestBot.UI
                 if (Password_login.Password.Length > 0)         
                 {
                     string enteredLogin = TB_login.Text;
-                    string enteredPassword = _data.HashedValue(Password_login.Password);
+                    string enteredPassword = _dataService.HashedValue(Password_login.Password);
 
                     try
                     {
@@ -88,7 +88,7 @@ namespace TelegramTestBot.UI
                         {
                             if(TB_Login_Teacher.Text.Length > 0)
                             {
-                                if (_data.CheckTeacherLoginForUnique(TB_Login_Teacher.Text) == true)
+                                if (_dataService.CheckTeacherLoginForUnique(TB_Login_Teacher.Text) == true)
                                 {
                                     if (PasswordForRegister.Password.Length > 0)
                                     {
@@ -113,7 +113,7 @@ namespace TelegramTestBot.UI
                                                 {
                                                     if (PasswordForRegister.Password == PasswordForRegister_Copy.Password)
                                                     {
-                                                        string hashPassword = _data.HashedValue(PasswordForRegister.Password);
+                                                        string hashPassword = _dataService.HashedValue(PasswordForRegister.Password);
                                                         TeacherModel teacher = new TeacherModel()
                                                         {
                                                             Lastname = TB_LastName_Teacher.Text,

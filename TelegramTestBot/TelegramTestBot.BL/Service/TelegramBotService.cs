@@ -16,12 +16,12 @@ namespace TelegramTestBot.BL.Service
     {
         protected readonly TelegramBotClient _botClient;
         protected Action<string> _onMessage;
-        private Data _date = new Data();
+        private DataService _dateService = new DataService();
         private StudentModelManager _studentModelManager = new StudentModelManager();
 
         public TelegramBotService(Action<string> onMessage)
         {
-            _botClient = new TelegramBotClient(_date.token);
+            _botClient = new TelegramBotClient(_dateService.token);
             _onMessage = onMessage;
         }
 
