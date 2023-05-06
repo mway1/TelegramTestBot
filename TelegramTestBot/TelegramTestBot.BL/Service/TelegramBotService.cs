@@ -17,6 +17,7 @@ namespace TelegramTestBot.BL.Service
         protected readonly TelegramBotClient _botClient;
         protected Action<string> _onMessage;
         private Data _date = new Data();
+        private StudentModelManager _studentModelManager = new StudentModelManager();
 
         public TelegramBotService(Action<string> onMessage)
         {
@@ -24,9 +25,15 @@ namespace TelegramTestBot.BL.Service
             _onMessage = onMessage;
         }
 
-        public void StartBot()
+        public void StartBot(string pass)
         {
+            if (pass == "12345")
             _botClient.StartReceiving(HandleUpdateAsync, HandleErrorAsync);
+        }
+
+        private async void RegisterOfStudent()
+        {
+            
         }
 
         private async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
