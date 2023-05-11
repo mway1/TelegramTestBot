@@ -141,20 +141,22 @@ namespace TelegramTestBot.UI
 
         private void Button_SaveNameOfTest_Click(object sender, RoutedEventArgs e)
         {
+            var nameOfNewTest = TB_NewTestorEditName.Text;
             if (TB_NewTestorEditName.Text.Length > 0)
             {
-                TestModel test = new TestModel()
-                {
-                    Name = TB_NewTestorEditName.Text,
-                    TeacherId = authorizedTeacher
-                };
-                _testModelManager.AddTest(test);
-                MessageBox.Show("");
-                LB_CreatedTest.Items.Refresh();
+                TBox_CreateEdittTest.Text = nameOfNewTest;
+                //TestModel test = new TestModel()
+                //{
+                //Name = TB_NewTestorEditName.Text,
+                //TeacherId = authorizedTeacher
+                //};
+                //_testModelManager.AddTest(test);
+                //MessageBox.Show("");
+                //LB_CreatedTest.Items.Refresh();
+                TB_NewTestorEditName.Clear();
             }
             else MessageBox.Show("Введите название теста");
         }
-
 
     }
     }
