@@ -40,6 +40,7 @@ namespace TelegramTestBot.BL
 
                 cfg.CreateMap<StudentDTO, StudentModel>()
                 .ForMember("Id", opt => opt.MapFrom(s => s.Id))
+                .ForMember("UserChatId", opt => opt.MapFrom(s => s.UserChatId))
                 .ForMember("Firstname", opt => opt.MapFrom(s => s.Firstname))
                 .ForMember("Lastname", opt => opt.MapFrom(s => s.Lastname))
                 .ForMember("Surname", opt => opt.MapFrom(s => s.Surname))

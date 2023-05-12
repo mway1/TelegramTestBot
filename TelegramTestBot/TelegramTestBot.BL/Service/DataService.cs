@@ -11,11 +11,29 @@ namespace TelegramTestBot.BL.Service
         public readonly string token = "6237629540:AAErGQgxalLVu5W9RKenTd9UYGpx4tnqVNE";
         private TelegramBotModelManager _telegramBotModelManager = new TelegramBotModelManager();
         private TeacherModelManager _teacherModelManager = new TeacherModelManager();
+        private StudentModelManager _studentModelManager = new StudentModelManager();
 
 
         public DataService()
         {
             
+        }
+
+        public bool CheckStudentChatIdForUnique(long studentChatId)
+        {
+            bool IsUnique;
+
+            try
+            {
+                StudentModel checkedStudent = _studentModelManager.GetStudentByChatId(studentChatId);
+                IsUnique = false;
+            }
+            catch (Exception)
+            {
+                IsUnique = true;
+            }
+
+            return IsUnique;
         }
 
         public bool CheckTeacherLoginForUnique(string enterredLogin)

@@ -18,6 +18,7 @@ namespace TelegramTestBot.DAL.Managers
                         StoredProcedures.Student_Add,
                         param: new
                         {
+                            UserChatId = newStudent.UserChatId,
                             FirstName = newStudent.Firstname,
                             LastName = newStudent.Lastname,
                             SurName = newStudent.Surname,
@@ -55,6 +56,7 @@ namespace TelegramTestBot.DAL.Managers
                         param: new
                         {
                             newStudent.Id,
+                            newStudent.UserChatId,
                             newStudent.Firstname,
                             newStudent.Lastname,
                             newStudent.Surname,
