@@ -32,6 +32,7 @@ namespace TelegramTestBot.UI
 
         private TeacherModelManager _teacherModelManager = new TeacherModelManager();
         private TestModelManager _testModelManager = new TestModelManager();
+        private QuestionModelManager _questionModelManager = new QuestionModelManager();
 
         private Data _data = new Data();
 
@@ -162,6 +163,20 @@ namespace TelegramTestBot.UI
         {
             List<TestModel> test = _testModelManager.GetAllTests();
             LB_CreatedTest.ItemsSource = test;
+        }
+
+        private void LB_CreatedTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            TestModel selectedTest = (TestModel)LB_CreatedTest.SelectedItem;
+            
+            TBox_CreateEdittTest.Text = selectedTest.Name;
+
+            if (Tb_ContentQuestuon.Text.Length > 0)
+            {
+
+            }
+            else MessageBox.Show("");
+            
         }
     }
     }
