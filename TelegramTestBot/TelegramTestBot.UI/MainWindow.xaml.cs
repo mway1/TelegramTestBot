@@ -28,7 +28,7 @@ namespace TelegramTestBot.UI
 
         }
 
-        private int authorizedTeacher;
+        private int _authorizedTeacher;
 
         private TeacherModelManager _teacherModelManager = new TeacherModelManager();
         private TestModelManager _testModelManager = new TestModelManager();
@@ -50,7 +50,7 @@ namespace TelegramTestBot.UI
 
                         if (enteredLogin == aprovedTeacher.Login && enteredPassword == aprovedTeacher.Password)
                         {
-                            authorizedTeacher = aprovedTeacher.Id;
+                            _authorizedTeacher = aprovedTeacher.Id;
                             MessageBox.Show("Авторизация пройдена");                            
                         }
                         else MessageBox.Show("Неверный логин или пароль");
@@ -145,19 +145,24 @@ namespace TelegramTestBot.UI
             if (TB_NewTestorEditName.Text.Length > 0)
             {
                 TBox_CreateEdittTest.Text = nameOfNewTest;
-                //TestModel test = new TestModel()
-                //{
-                //Name = TB_NewTestorEditName.Text,
-                //TeacherId = authorizedTeacher
-                //};
-                //_testModelManager.AddTest(test);
-                //MessageBox.Show("");
-                //LB_CreatedTest.Items.Refresh();
+                TestModel test = new TestModel()
+                {
+                Name = TB_NewTestorEditName.Text,
+                TeacherId = _authorizedTeacher
+                };
+                _testModelManager.AddTest(test);
+                MessageBox.Show("");
+                LB_CreatedTest.Items.Refresh();
                 TB_NewTestorEditName.Clear();
             }
             else MessageBox.Show("Введите название теста");
         }
 
+        private void LB_CreatedTest_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<TestModel> test = _testModelManager.GetAllTests();
+            LB_CreatedTest.ItemsSource = test;
+        }
     }
     }
 
