@@ -110,7 +110,7 @@
                     <TabControl Grid.Column="1">
                         <TabItem x:Name="TabItem_CreatedTest">
                             <Grid x:Name="GridTest" Height="372" Margin="0,0,9,0">
-                                <Label x:Name="Label_NameQuest" Grid.Column="-" Content="Введите вопрос" HorizontalAlignment="Left" Margin="50,56,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold"/>
+                                <Label x:Name="Label_NameQuest" Content="Введите вопрос" HorizontalAlignment="Left" Margin="50,56,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold"/>
                                 <TextBox  x:Name="Tb_ContentQuestuon" HorizontalAlignment="Left" Margin="36,78,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="139" Height="19"/>
                                 <Label x:Name="Label_TypeOfQuest" Content="Вид вопроса:" HorizontalAlignment="Left" Margin="340,58,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold"/>
                                 <ComboBox x:Name="CB_TypeOfQuestion" HorizontalAlignment="Left" Margin="342,78,0,0" VerticalAlignment="Top" Width="120"/>
