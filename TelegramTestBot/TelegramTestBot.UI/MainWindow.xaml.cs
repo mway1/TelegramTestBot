@@ -26,6 +26,8 @@ namespace TelegramTestBot.UI
         {
             InitializeComponent();
 
+            TabItem_CreatedTest.Visibility = Visibility.Hidden;
+            GridTest.Visibility = Visibility.Hidden;
         }
 
         private int _authorizedTeacher;
