@@ -141,6 +141,11 @@ namespace TelegramTestBot.UI
             }
             else MessageBox.Show("Укажите Фамилию");
            }
+        private void LB_CreatedTest_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<TestModel> test = _testModelManager.GetTestByTeacherId(_authorizedTeacher);
+            LB_CreatedTest.ItemsSource = test;
+        }
 
         private void Button_SaveNameOfTest_Click(object sender, RoutedEventArgs e)
         {
@@ -151,33 +156,30 @@ namespace TelegramTestBot.UI
                 TestModel test = new TestModel()
                 {
                 Name = TB_NewTestorEditName.Text,
-                TeacherId = _authorizedTeacher
+                TeacherId = _authorizedTeacher 
                 };
                 _testModelManager.AddTest(test);
-                MessageBox.Show("");
-                LB_CreatedTest.Items.Refresh();
                 TB_NewTestorEditName.Clear();
+                LB_CreatedTest.Items.Refresh();
+                List<TestModel> Updatetest = _testModelManager.GetTestByTeacherId(_authorizedTeacher);
+                LB_CreatedTest.ItemsSource = Updatetest;
+                GridTest.Visibility = Visibility.Visible;
             }
             else MessageBox.Show("Введите название теста");
         }
 
-        private void LB_CreatedTest_Loaded(object sender, RoutedEventArgs e)
-        {
-            List<TestModel> test = _testModelManager.GetAllTests();
-            LB_CreatedTest.ItemsSource = test;
-        }
 
         private void LB_CreatedTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            TestModel selectedTest = (TestModel)LB_CreatedTest.SelectedItem;
+            //TestModel selectedTest = (TestModel)LB_CreatedTest.SelectedItem;
             
-            TBox_CreateEdittTest.Text = selectedTest.Name;
+            //TBox_CreateEdittTest.Text = selectedTest.Name;
 
-            if (Tb_ContentQuestuon.Text.Length > 0)
-            {
+            //if (Tb_ContentQuestuon.Text.Length > 0)
+            //{
 
-            }
-            else MessageBox.Show("");
+            //}
+            //else MessageBox.Show("");
             
         }
     }
