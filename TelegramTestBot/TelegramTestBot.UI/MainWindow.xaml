@@ -32,11 +32,11 @@
             <TabItem x:Name="Reg" Header="Регистрация">
                 <Grid>
                     <Label Grid.Column="1" Content="Форма регистрации" HorizontalAlignment="Center" Margin="0,12,0,0" VerticalAlignment="Top" Width="188" FontSize="16" FontWeight="Bold"/>
-                    <TextBox Grid.Column="1" x:Name="TB_LastName_Teacher" HorizontalAlignment="Left" Margin="31,69,0,0" TextWrapping="Wrap" Text="" Foreground="#FFAFAFAF" VerticalAlignment="Top" Width="259" Height="25" AcceptsReturn="True"/>
-                    <TextBox Grid.Column="1" x:Name="TB_FirstName_Teacher" HorizontalAlignment="Left" Margin="31,110,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
-                    <TextBox Grid.Column="1" x:Name="TB_SurName_Teacher" HorizontalAlignment="Left" Margin="31,149,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
-                    <TextBox Grid.Column="1" x:Name="TB_Email_Teacher" HorizontalAlignment="Left" Margin="31,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Foreground="#FFAFAFAF" Width="259" Height="25"/>
-                    <TextBox Grid.Column="1" x:Name="TB_Login_Teacher" HorizontalAlignment="Left" Margin="31,231,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
+                    <TextBox Grid.Column="1" x:Name="TB_LastName_Teacher" HorizontalAlignment="Left" Margin="31,69,0,0" TextWrapping="Wrap" Text=""  VerticalAlignment="Top" Width="259" Height="25" AcceptsReturn="True"/>
+                    <TextBox Grid.Column="1" x:Name="TB_FirstName_Teacher" HorizontalAlignment="Left" Margin="31,110,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"  Width="259" Height="25"/>
+                    <TextBox Grid.Column="1" x:Name="TB_SurName_Teacher" HorizontalAlignment="Left" Margin="31,149,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="259" Height="25"/>
+                    <TextBox Grid.Column="1" x:Name="TB_Email_Teacher" HorizontalAlignment="Left" Margin="31,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center"  Width="259" Height="25"/>
+                    <TextBox Grid.Column="1" x:Name="TB_Login_Teacher" HorizontalAlignment="Left" Margin="31,231,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"  Width="259" Height="25"/>
                     <Button Grid.Column="1" x:Name="Button_Reg" Content="Зарегистрироваться" HorizontalAlignment="Left" Margin="31,332,0,0" VerticalAlignment="Top" Height="26" Width="147" Click="Button_Reg_Click"/>
                     <Button Grid.Column="1" x:Name="Button_SignIn" Content="Вход" HorizontalAlignment="Left" Margin="192,332,0,0" VerticalAlignment="Top" Height="26" Width="98"/>
                     <PasswordBox x:Name="PasswordForRegister"  Grid.Column="1" HorizontalAlignment="Left" Margin="31,269,0,0" VerticalAlignment="Top" Width="259" Height="25"/>

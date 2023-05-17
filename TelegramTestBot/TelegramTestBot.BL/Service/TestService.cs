@@ -29,13 +29,14 @@ public class TestService
 
         foreach(var question in questions)
         {
-   
             question.TestId = test.Id;
             _questionModelManager.AddQuestion(question);
         }
         return test;
 
     }
+    
+    
 
     public QuestionModel CreaateQuestion(string text, List<AnswerModel> answers,bool isCorrectAnswer)
     {
@@ -44,6 +45,7 @@ public class TestService
 
         foreach (var answer in answers)
         {
+            answer.Content = text;
             answer.QuestionId = question.Id;
             answer.IsCorrect=isCorrectAnswer;
             _answerModelManager.AddAnswer(answer);
