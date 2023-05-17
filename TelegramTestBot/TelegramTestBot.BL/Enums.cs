@@ -9,7 +9,8 @@
     {
         start,
         reg,
+        teachers,
+        test,
         next,
-        teachers
     }
 }

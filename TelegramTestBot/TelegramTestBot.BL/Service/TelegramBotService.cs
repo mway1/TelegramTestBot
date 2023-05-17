@@ -34,12 +34,7 @@ namespace TelegramTestBot.BL.Service
             _botClient.StartReceiving(HandleUpdateAsync, HandleErrorAsync);
         }
 
-        private async void SendExceptionForNull(long id)
-        {
-            await _botClient.SendTextMessageAsync(new ChatId(id), "Пусто :(");
-        }
-
-        private async void ActionWithBot(long id, ActionType type, string username = "User", string msg = " ")
+        private async void MakeActionWithBot(long id, ActionType type, string username = "User", string msg = " ")
         {
             switch (type)
             {
@@ -99,6 +94,10 @@ namespace TelegramTestBot.BL.Service
                                 username + ", чтобы использовать данную команду, зарегистрируйтесь! \nГлавное меню - /menu");
                         break;
                     }
+                case ActionType.test:
+                    {
+                        break;
+                    }
             }
         }
 
@@ -134,23 +133,29 @@ namespace TelegramTestBot.BL.Service
             var inlineKeyboard = new InlineKeyboardMarkup(new[]
             {
                 InlineKeyboardButton.WithCallbackData("Зарегистрироваться", "/reg"),
-                InlineKeyboardButton.WithCallbackData("Список преподавателей", "/teachers")
+                InlineKeyboardButton.WithCallbackData("Список преподавателей", "/teachers"),
+                InlineKeyboardButton.WithCallbackData("Тестирование", "/test")
             });
 
             await _botClient.SendTextMessageAsync(new ChatId(chatId), "Выберите действие:", replyMarkup: inlineKeyboard);
+        }
+
+        private async void SendExceptionForNull(long id)
+        {
+            await _botClient.SendTextMessageAsync(new ChatId(id), "Пусто :(");
         }
 
         private async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
             if(update.Message != null && update.Message.Text == "/start" || update.Message?.Text == "/menu")
             {
-                ActionWithBot(update.Message!.Chat.Id, ActionType.start, update.Message.Chat.Username);
+                MakeActionWithBot(update.Message!.Chat.Id, ActionType.start, update.Message.Chat.Username);
             }
             else if (update.CallbackQuery != null)
             {
                 if (update.CallbackQuery.Data == "/reg")
                 {
-                    ActionWithBot(update.CallbackQuery.Message!.Chat.Id, ActionType.reg, update.CallbackQuery.Message.Chat.Username);
+                    MakeActionWithBot(update.CallbackQuery.Message!.Chat.Id, ActionType.reg, update.CallbackQuery.Message.Chat.Username);
 
                     await _botClient.EditMessageTextAsync(
                       update.CallbackQuery.Message!.Chat.Id,
@@ -160,7 +165,7 @@ namespace TelegramTestBot.BL.Service
                 }
                 else if (update.CallbackQuery.Data == "/teachers")
                 {
-                    ActionWithBot(update.CallbackQuery.Message!.Chat.Id, ActionType.teachers, update.CallbackQuery.Message.Chat.Username);
+                    MakeActionWithBot(update.CallbackQuery.Message!.Chat.Id, ActionType.teachers, update.CallbackQuery.Message.Chat.Username);
 
                     await _botClient.EditMessageTextAsync(
                       update.CallbackQuery.Message!.Chat.Id,
@@ -171,7 +176,7 @@ namespace TelegramTestBot.BL.Service
             }
             else if (update.Message?.Text != null && UserAnswers.ContainsKey(update.Message.Chat.Id))
             {
-                ActionWithBot(update.Message!.Chat.Id, ActionType.reg, update.Message.Chat.Username, update.Message.Text);
+                MakeActionWithBot(update.Message!.Chat.Id, ActionType.reg, update.Message.Chat.Username, update.Message.Text);
             }
             else if (update.Message != null && update.Message.Text != null)
             {
