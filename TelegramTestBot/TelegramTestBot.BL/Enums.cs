@@ -4,4 +4,11 @@
     {
 
     }
+
+    public enum ActionType
+    {
+        start,
+        reg,
+        next,
+    }
 }

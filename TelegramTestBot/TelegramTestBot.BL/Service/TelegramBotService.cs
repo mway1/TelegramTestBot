@@ -17,7 +17,6 @@ namespace TelegramTestBot.BL.Service
     {
         public static Dictionary<long, List<string>> UserAnswers { get; set; } = new Dictionary<long, List<string>>();
         protected Action<string> _onMessage;
-        protected bool isReg = false;
         private DataService _dateService = new DataService();
         private StudentModelManager _studentModelManager = new StudentModelManager();
         private readonly TelegramBotClient _botClient;
@@ -39,10 +38,56 @@ namespace TelegramTestBot.BL.Service
             await _botClient.SendTextMessageAsync(new ChatId(id), "Пожалуйста, заполните поле");
         }
 
+        private async void ActionWithBot(long id, string? username, ActionType type, string msg = " ")
+        {
+            switch (type)
+            {
+                case ActionType.start:
+                    {
+                        if(_dateService.CheckStudentChatIdForUnique(id) == true)
+                        {
+                            await _botClient.SendTextMessageAsync(new ChatId(id), "Hello, " + username);
+                            RegisterOfStudent(id);                         
+                        }
+                        else
+                            await _botClient.SendTextMessageAsync(new ChatId(id), username + ", ожидайте заданий от преподавателя");
+
+                        break;
+                    }
+                case ActionType.reg:
+                    {
+                        if (_dateService.CheckStudentChatIdForUnique(id) == true)
+                        {
+                            if (!UserAnswers.ContainsKey(id))
+                            {
+                                UserAnswers.Add(id, new List<string>());
+                                SendRegForm(id, username);
+                            }
+                            else
+                            {
+                                UserAnswers[id].Add(msg);
+                                int num = UserAnswers[id].Count;
+
+                                SendRegForm(id, username, num);
+                            }
+                        }
+                        else
+                            await _botClient.SendTextMessageAsync(new ChatId(id), username + ", вы уже зарегистрированы");
+
+                        break;
+                    }
+                case ActionType.next:
+                    {                       
+
+                        break;
+                    }
+            }
+        }
+
         private async void SendRegForm(long id, string? username, int numOfForm = 0)
         {
             List<string> questions = new List<string>() { "Ваше Имя:", "Ваша Фамилия:", "Ваше Отчество:" };
-            StudentModel regStudent = new StudentModel();
+            //StudentModel regStudent = new StudentModel();
 
             if (numOfForm <= questions.Count - 1)
             {
@@ -52,7 +97,7 @@ namespace TelegramTestBot.BL.Service
             }
             else
             {
-                regStudent = new StudentModel() { UserChatId = id, 
+                StudentModel regStudent = new StudentModel() { UserChatId = id, 
                     Firstname = UserAnswers[id][0], 
                     Surname = UserAnswers[id][1],
                     Lastname = UserAnswers[id][2], 
@@ -60,36 +105,31 @@ namespace TelegramTestBot.BL.Service
                 };
 
                 _studentModelManager.AddStudent(regStudent);
-                isReg = false;
+                UserAnswers.Remove(id);
 
                 await _botClient.SendTextMessageAsync(new ChatId(id), "Поздравляем, вы зарегистрированы, ожидайте заданий от преподавателя");
             }
         }
 
-        private async void RegisterOfStudent(long chatId, Update update)
+        private async void RegisterOfStudent(long chatId)
         {
             var inlineKeyboard = new InlineKeyboardMarkup(new[]
             {
-                InlineKeyboardButton.WithCallbackData("Зарегистрироваться", "RegButton"),
+                InlineKeyboardButton.WithCallbackData("Зарегистрироваться", "/reg"),
             });
-
-            isReg = true;
 
             await _botClient.SendTextMessageAsync(new ChatId(chatId), "Выберите действие:", replyMarkup: inlineKeyboard);
         }
 
         private async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
-            if (update.Message != null && update.Message!.Text == "/start" && _dateService.CheckStudentChatIdForUnique(update.Message.Chat.Id) == true)
+            if(update.Message != null && update.Message.Text == "/start")
             {
-                await botClient.SendTextMessageAsync(update.Message!.Chat.Id, "Hello, " + update.Message.Chat.Username);
-                RegisterOfStudent(update.Message.Chat.Id, update);
+                ActionWithBot(update.Message!.Chat.Id, update.Message.Chat.Username, ActionType.start);
             }
-            else if (update.CallbackQuery != null && update.CallbackQuery.Data == "RegButton")
+            else if (update.CallbackQuery != null && update.CallbackQuery.Data == "/reg")
             {
-                SendRegForm(update.CallbackQuery.Message!.Chat.Id, update.CallbackQuery.Message.Chat.Username);
-
-                UserAnswers.Add(update.CallbackQuery.Message.Chat.Id, new List<string>());
+                ActionWithBot(update.CallbackQuery.Message!.Chat.Id, update.CallbackQuery.Message.Chat.Username, ActionType.reg);
 
                 await _botClient.EditMessageTextAsync(
                       update.CallbackQuery.Message!.Chat.Id,
@@ -97,13 +137,28 @@ namespace TelegramTestBot.BL.Service
                       update.CallbackQuery.Message.Text!,
                       replyMarkup: null);
             }
-            else if (update.Message?.Text != null && isReg == true)
+            else if (update.Message?.Text != null && UserAnswers.ContainsKey(update.Message.Chat.Id))
             {
-                UserAnswers[update.Message.Chat.Id].Add(update.Message.Text);
-                int num = UserAnswers[update.Message.Chat.Id].Count;
-
-                SendRegForm(update.Message.Chat.Id, update.Message.Chat.Username, num);
+                ActionWithBot(update.Message!.Chat.Id, update.Message.Chat.Username, ActionType.reg, update.Message.Text);
             }
+
+            //if (update.Message != null && update.Message!.Text == "/start" && _dateService.CheckStudentChatIdForUnique(update.Message.Chat.Id) == true)
+            //{
+            //    await botClient.SendTextMessageAsync(update.Message!.Chat.Id, "Hello, " + update.Message.Chat.Username);
+            //    RegisterOfStudent(update.Message.Chat.Id);
+            //}
+            //else if (update.CallbackQuery != null && update.CallbackQuery.Data == "RegButton")
+            //{
+            //    SendRegForm(update.CallbackQuery.Message!.Chat.Id, update.CallbackQuery.Message.Chat.Username);
+
+            //    UserAnswers.Add(update.CallbackQuery.Message.Chat.Id, new List<string>());
+
+            //    await _botClient.EditMessageTextAsync(
+            //          update.CallbackQuery.Message!.Chat.Id,
+            //          update.CallbackQuery.Message.MessageId,
+            //          update.CallbackQuery.Message.Text!,
+            //          replyMarkup: null);
+            //}
         }
 
         private async Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
