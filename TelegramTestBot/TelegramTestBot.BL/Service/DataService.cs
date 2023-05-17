@@ -12,12 +12,15 @@ namespace TelegramTestBot.BL.Service
         private TelegramBotModelManager _telegramBotModelManager = new TelegramBotModelManager();
         private TeacherModelManager _teacherModelManager = new TeacherModelManager();
         private StudentModelManager _studentModelManager = new StudentModelManager();
+        private TelegramBotService _telegramBotService;
 
 
         public DataService()
         {
             
         }
+
+       
 
         public bool CheckStudentChatIdForUnique(long studentChatId)
         {
@@ -51,25 +54,6 @@ namespace TelegramTestBot.BL.Service
             }
 
             return IsUnique;
-        }
-
-        public void AddHashedToken(string token)
-        {
-            string hashToken = HashedValue(token);
-
-            TelegramBotModel telegramBot = new TelegramBotModel()
-            {
-                HashToken = hashToken
-            };
-
-            _telegramBotModelManager.AddTelegramBot(telegramBot);
-        }
-
-        public string GetHashedToken(int id)
-        {
-            string hashedToken = _telegramBotModelManager.GetTelegramBotById(id).HashToken;
-
-            return hashedToken;
         }
 
         public string HashedValue(string value)

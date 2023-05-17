@@ -87,7 +87,6 @@ namespace TelegramTestBot.BL.Service
         private async void SendRegForm(long id, string? username, int numOfForm = 0)
         {
             List<string> questions = new List<string>() { "Ваше Имя:", "Ваша Фамилия:", "Ваше Отчество:" };
-            //StudentModel regStudent = new StudentModel();
 
             if (numOfForm <= questions.Count - 1)
             {
@@ -141,50 +140,11 @@ namespace TelegramTestBot.BL.Service
             {
                 ActionWithBot(update.Message!.Chat.Id, update.Message.Chat.Username, ActionType.reg, update.Message.Text);
             }
-
-            //if (update.Message != null && update.Message!.Text == "/start" && _dateService.CheckStudentChatIdForUnique(update.Message.Chat.Id) == true)
-            //{
-            //    await botClient.SendTextMessageAsync(update.Message!.Chat.Id, "Hello, " + update.Message.Chat.Username);
-            //    RegisterOfStudent(update.Message.Chat.Id);
-            //}
-            //else if (update.CallbackQuery != null && update.CallbackQuery.Data == "RegButton")
-            //{
-            //    SendRegForm(update.CallbackQuery.Message!.Chat.Id, update.CallbackQuery.Message.Chat.Username);
-
-            //    UserAnswers.Add(update.CallbackQuery.Message.Chat.Id, new List<string>());
-
-            //    await _botClient.EditMessageTextAsync(
-            //          update.CallbackQuery.Message!.Chat.Id,
-            //          update.CallbackQuery.Message.MessageId,
-            //          update.CallbackQuery.Message.Text!,
-            //          replyMarkup: null);
-            //}
         }
 
         private async Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
         {
             await Task.CompletedTask;
         }
-
-        //private async void ReceivedOnMessage(object sender, Update update)
-        //{
-        //    var message = update.Message;
-
-        //    if (message?.Type == MessageType.Text)
-        //    {
-        //        await _botClient.SendTextMessageAsync(message.Chat.Id, message.Text!);
-        //    }
-        //}
-
-        // protected override async void OnMessage(Message message)
-        //{
-        //if (message.Type == MessageType.Text)
-        //{
-        //if (message.Text == "/start")
-        //{
-        //await _botClient.SendTextMessageAsync(message.Chat.Id, "Hello," + message.Chat.Username);
-        //}
-        //}
-        //}
     }
 }
