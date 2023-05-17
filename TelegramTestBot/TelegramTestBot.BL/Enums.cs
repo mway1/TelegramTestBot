@@ -10,5 +10,6 @@
         start,
         reg,
         next,
+        teachers
     }
 }
