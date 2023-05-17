@@ -36,7 +36,7 @@ namespace TelegramTestBot.BL.Service
 
         private async void SendExceptionForNull(long id)
         {
-            await _botClient.SendTextMessageAsync(new ChatId(id), "Пожалуйста, заполните поле");
+            await _botClient.SendTextMessageAsync(new ChatId(id), "Пусто :(");
         }
 
         private async void ActionWithBot(long id, ActionType type, string username = "User", string msg = " ")
@@ -76,18 +76,25 @@ namespace TelegramTestBot.BL.Service
                     {                       
                         if (_dateService.CheckStudentChatIdForUnique(id) == false)
                         {
-                            List<TeacherModel> teachers = _techerModelManager.GetAllTeachers();
-                            List<string> names = new List<string>();
-
-                            foreach (var item in teachers)
+                            try
                             {
-                                names.Add(item.Lastname + " " + item.Firstname + " " + item.Surname + " " + item.Email);
-                            }
+                                List<TeacherModel> teachers = _techerModelManager.GetAllTeachers();
+                                List<string> names = new List<string>();
 
-                            await _botClient.SendTextMessageAsync(new ChatId(id), string.Join('\n', names));
+                                foreach (var item in teachers)
+                                {
+                                    names.Add(item.Lastname + " " + item.Firstname + " " + item.Surname + " " + item.Email);
+                                }
+
+                                await _botClient.SendTextMessageAsync(new ChatId(id), string.Join('\n', names));
+                            }
+                            catch (Exception)
+                            {
+                                SendExceptionForNull(id);
+                            }
                         }
                         else
-                            await _botClient.SendTextMessageAsync(new ChatId(id), username + ", чтобы использовать данную комманду, зарегистрируйтесь!");
+                            await _botClient.SendTextMessageAsync(new ChatId(id), username + ", чтобы использовать данную команду, зарегистрируйтесь!");
                         break;
                     }
             }
