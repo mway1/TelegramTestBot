@@ -116,5 +116,6 @@
     <Build Include="dbo\Stored Procedures\TelegramBot_Add.sql" />
     <Build Include="dbo\Stored Procedures\TelegramBot_DeleteById.sql" />
     <Build Include="dbo\Stored Procedures\TelegramBot_GetById.sql" />
+    <Build Include="dbo\Stored Procedures\Student_GetByChatId.sql" />
   </ItemGroup>
 </Project>

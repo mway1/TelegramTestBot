@@ -9,5 +9,6 @@ namespace TelegramTestBot.DAL.Interfaces
         void UpdateStudentById(StudentDTO newStudent);
         List<StudentDTO> GetAllStudents();
         StudentDTO GetStudentById(int studentId);
+        StudentDTO GetStudentByChatId(long studentChatId);
     }
 }

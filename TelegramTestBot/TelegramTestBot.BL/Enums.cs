@@ -4,4 +4,13 @@
     {
 
     }
+
+    public enum ActionType
+    {
+        start,
+        reg,
+        teachers,
+        test,
+        next,
+    }
 }

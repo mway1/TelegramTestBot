@@ -18,6 +18,7 @@ namespace TelegramTestBot.DAL.Managers
                         StoredProcedures.Student_Add,
                         param: new
                         {
+                            UserChatId = newStudent.UserChatId,
                             FirstName = newStudent.Firstname,
                             LastName = newStudent.Lastname,
                             SurName = newStudent.Surname,
@@ -55,6 +56,7 @@ namespace TelegramTestBot.DAL.Managers
                         param: new
                         {
                             newStudent.Id,
+                            newStudent.UserChatId,
                             newStudent.Firstname,
                             newStudent.Lastname,
                             newStudent.Surname,
@@ -89,6 +91,21 @@ namespace TelegramTestBot.DAL.Managers
                     (
                         StoredProcedures.Student_GetById,
                         param: new { id = studentId },
+                        commandType: System.Data.CommandType.StoredProcedure
+                    );
+            }
+        }
+
+        public StudentDTO GetStudentByChatId(long studentChatId)
+        {
+            using (var connection = new SqlConnection(ServerSettings._connectionString))
+            {
+                connection.Open();
+
+                return connection.QuerySingle<StudentDTO>
+                    (
+                        StoredProcedures.Student_GetByChatId,
+                        param: new { UserChatId = studentChatId },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
             }

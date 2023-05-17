@@ -1,10 +1,10 @@
-﻿CREATE PROCEDURE [dbo].[Student_GetAll]
-	
+﻿CREATE PROCEDURE [dbo].[Student_GetByChatId]
+	@UserChatId bigint
 AS
 BEGIN
 
 	SELECT Id, UserChatId, Firstname, Lastname, Surname, Username
 	FROM dbo.[Student]
-	WHERE (IsDeleted = 0)
+	WHERE UserChatId=@UserChatId
 
 END

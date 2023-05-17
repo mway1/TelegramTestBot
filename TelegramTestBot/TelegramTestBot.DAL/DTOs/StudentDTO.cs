@@ -3,6 +3,7 @@
     public class StudentDTO
     {
         public int Id { get; set; }
+        public long UserChatId { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string Surname { get; set; }
@@ -25,6 +26,7 @@
             StudentDTO studentDTO = (StudentDTO)obj!;
 
             if (studentDTO.Id != this.Id ||
+                studentDTO.UserChatId != this.UserChatId ||
                 studentDTO.Firstname != this.Firstname ||
                 studentDTO.Lastname != this.Lastname ||
                 studentDTO.Surname != this.Surname ||

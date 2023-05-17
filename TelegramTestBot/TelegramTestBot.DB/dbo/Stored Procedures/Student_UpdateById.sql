@@ -1,5 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[Student_UpdateById]
 	@Id int,
+	@UserChatId bigint,
 	@Firstname nvarchar(30),
 	@Lastname nvarchar(30),
 	@Surname nvarchar(30),
@@ -9,7 +10,8 @@ AS
 BEGIN
 
 UPDATE dbo.[Student]
-SET Firstname = @Firstname,
+SET UserChatId = @UserChatId,
+	Firstname = @Firstname,
     Lastname = @Lastname,
     Surname = @Surname,
     Username = @Username
