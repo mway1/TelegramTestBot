@@ -39,19 +39,14 @@ namespace TelegramTestBot.BL.Service
             await _botClient.SendTextMessageAsync(new ChatId(id), "Пожалуйста, заполните поле");
         }
 
-        private async void ActionWithBot(long id, ActionType type, string username = " ", string msg = " ")
+        private async void ActionWithBot(long id, ActionType type, string username = "User", string msg = " ")
         {
             switch (type)
             {
                 case ActionType.start:
-                    {
-                        if(_dateService.CheckStudentChatIdForUnique(id) == true)
-                        {
-                            await _botClient.SendTextMessageAsync(new ChatId(id), "Hello, " + username);
-                            RegisterOfStudent(id);                         
-                        }
-                        else
-                            await _botClient.SendTextMessageAsync(new ChatId(id), username + ", ожидайте заданий от преподавателя");
+                    {                       
+                        await _botClient.SendTextMessageAsync(new ChatId(id), "Hello, " + username);
+                        SendActionMenu(id);                         
 
                         break;
                     }
@@ -73,7 +68,7 @@ namespace TelegramTestBot.BL.Service
                             }
                         }
                         else
-                            await _botClient.SendTextMessageAsync(new ChatId(id), username + ", вы уже зарегистрированы");
+                            await _botClient.SendTextMessageAsync(new ChatId(id), username + ", вы уже зарегистрированы, ждите заданий от преподавателя!");
 
                         break;
                     }
@@ -124,11 +119,12 @@ namespace TelegramTestBot.BL.Service
             }
         }
 
-        private async void RegisterOfStudent(long chatId)
+        private async void SendActionMenu(long chatId)
         {
             var inlineKeyboard = new InlineKeyboardMarkup(new[]
             {
                 InlineKeyboardButton.WithCallbackData("Зарегистрироваться", "/reg"),
+                InlineKeyboardButton.WithCallbackData("Список преподавателей", "/teachers")
             });
 
             await _botClient.SendTextMessageAsync(new ChatId(chatId), "Выберите действие:", replyMarkup: inlineKeyboard);
@@ -136,27 +132,36 @@ namespace TelegramTestBot.BL.Service
 
         private async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
-            if(update.Message != null && update.Message.Text == "/start")
+            if(update.Message != null && update.Message.Text == "/start" || update.Message?.Text == "/menu")
             {
                 ActionWithBot(update.Message!.Chat.Id, ActionType.start, update.Message.Chat.Username);
             }
-            else if (update.CallbackQuery != null && update.CallbackQuery.Data == "/reg")
+            else if (update.CallbackQuery != null)
             {
-                ActionWithBot(update.CallbackQuery.Message!.Chat.Id, ActionType.reg, update.CallbackQuery.Message.Chat.Username);
+                if (update.CallbackQuery.Data == "/reg")
+                {
+                    ActionWithBot(update.CallbackQuery.Message!.Chat.Id, ActionType.reg, update.CallbackQuery.Message.Chat.Username);
 
-                await _botClient.EditMessageTextAsync(
+                    await _botClient.EditMessageTextAsync(
                       update.CallbackQuery.Message!.Chat.Id,
                       update.CallbackQuery.Message.MessageId,
-                      update.CallbackQuery.Message.Text!,
+                      "Ответьте на все вопросы ниже:",
                       replyMarkup: null);
+                }
+                else if (update.CallbackQuery.Data == "/teachers")
+                {
+                    ActionWithBot(update.CallbackQuery.Message!.Chat.Id, ActionType.teachers, update.CallbackQuery.Message.Chat.Username);
+
+                    await _botClient.EditMessageTextAsync(
+                      update.CallbackQuery.Message!.Chat.Id,
+                      update.CallbackQuery.Message.MessageId,
+                      "Cписок преподавателей:",
+                      replyMarkup: null);
+                }
             }
             else if (update.Message?.Text != null && UserAnswers.ContainsKey(update.Message.Chat.Id))
             {
                 ActionWithBot(update.Message!.Chat.Id, ActionType.reg, update.Message.Chat.Username, update.Message.Text);
-            }
-            else if (update.Message != null && update.Message.Text == "/teachers")
-            {
-                ActionWithBot(update.Message.Chat.Id, ActionType.teachers, update.Message.Chat.Username);
             }
         }
 
