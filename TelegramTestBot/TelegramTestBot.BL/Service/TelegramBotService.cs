@@ -68,7 +68,8 @@ namespace TelegramTestBot.BL.Service
                             }
                         }
                         else
-                            await _botClient.SendTextMessageAsync(new ChatId(id), username + ", вы уже зарегистрированы, ждите заданий от преподавателя!");
+                            await _botClient.SendTextMessageAsync(new ChatId(id), 
+                                username + ", вы уже зарегистрированы, ждите заданий от преподавателя! \nГлавное меню - /menu");
 
                         break;
                     }
@@ -94,7 +95,8 @@ namespace TelegramTestBot.BL.Service
                             }
                         }
                         else
-                            await _botClient.SendTextMessageAsync(new ChatId(id), username + ", чтобы использовать данную команду, зарегистрируйтесь!");
+                            await _botClient.SendTextMessageAsync(new ChatId(id), 
+                                username + ", чтобы использовать данную команду, зарегистрируйтесь! \nГлавное меню - /menu");
                         break;
                     }
             }
@@ -122,7 +124,8 @@ namespace TelegramTestBot.BL.Service
                 _studentModelManager.AddStudent(regStudent);
                 UserAnswers.Remove(id);
 
-                await _botClient.SendTextMessageAsync(new ChatId(id), "Поздравляем, вы зарегистрированы, ожидайте заданий от преподавателя");
+                await _botClient.SendTextMessageAsync(new ChatId(id), 
+                    "Поздравляем, вы зарегистрированы, ожидайте заданий от преподавателя \nГлавное меню - /menu");
             }
         }
 
@@ -169,6 +172,10 @@ namespace TelegramTestBot.BL.Service
             else if (update.Message?.Text != null && UserAnswers.ContainsKey(update.Message.Chat.Id))
             {
                 ActionWithBot(update.Message!.Chat.Id, ActionType.reg, update.Message.Chat.Username, update.Message.Text);
+            }
+            else if (update.Message != null && update.Message.Text != null)
+            {
+                await _botClient.SendTextMessageAsync(update.Message.Chat.Id, "Введите /menu для выбора действий");
             }
         }
 
