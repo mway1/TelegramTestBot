@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using TelegramTestBot.BL.Models;
 using TelegramTestBot.BL.Managers;
 using TelegramTestBot.BL.Service;
+using TelegramTestBot.BL.Interfaces;
 
 namespace TelegramTestBot.UI
 {
@@ -35,8 +36,28 @@ namespace TelegramTestBot.UI
         private TeacherModelManager _teacherModelManager = new TeacherModelManager();
         private TestModelManager _testModelManager = new TestModelManager();
         private QuestionModelManager _questionModelManager = new QuestionModelManager();
+        private List<string> _allQuest = new List<string>();
+        private TestService testService = new TestService();
 
         private Data _data = new Data();
+
+        private List<QuestionModel> GetQuestionsFromUI()
+        {
+                List<QuestionModel> questions = new List<QuestionModel>();
+                foreach (var questionItem in LB_CreatedQuestion.Items)
+                {
+                string questionText = questionItem.ToString();
+
+               QuestionModel question = new QuestionModel
+               {
+                   Content = questionText
+               };
+
+                questions.Add(question);
+                }
+                return questions;
+        }
+
 
         private void B_signin_Click(object sender, RoutedEventArgs e)
         {
@@ -149,27 +170,27 @@ namespace TelegramTestBot.UI
 
         private void Button_SaveNameOfTest_Click(object sender, RoutedEventArgs e)
         {
-            var nameOfNewTest = TB_NewTestorEditName.Text;
-            if (TB_NewTestorEditName.Text.Length > 0)
-            {
-                TBox_CreateEdittTest.Text = nameOfNewTest;
-                TestModel test = new TestModel()
-                {
-                Name = TB_NewTestorEditName.Text,
-                TeacherId = _authorizedTeacher 
-                };
-                _testModelManager.AddTest(test);
-                TB_NewTestorEditName.Clear();
-                LB_CreatedTest.Items.Refresh();
-                List<TestModel> Updatetest = _testModelManager.GetTestByTeacherId(_authorizedTeacher);
-                LB_CreatedTest.ItemsSource = Updatetest;
-                GridTest.Visibility = Visibility.Visible;
+            //    var nameOfNewTest = TB_NewTestorEditName.Text;
+            //    if (TB_NewTestorEditName.Text.Length > 0)
+            //    {
+            //        TBox_CreateEdittTest.Text = nameOfNewTest;
+            //        TestModel test = new TestModel()
+            //        {
+            //        Name = TB_NewTestorEditName.Text,
+            //        TeacherId = _authorizedTeacher 
+            //        };
+            //        _testModelManager.AddTest(test);
+            //        TB_NewTestorEditName.Clear();
+            //        LB_CreatedTest.Items.Refresh();
+            //        List<TestModel> Updatetest = _testModelManager.GetTestByTeacherId(_authorizedTeacher);
+            //        LB_CreatedTest.ItemsSource = Updatetest;
+            //        GridTest.Visibility = Visibility.Visible;
+            //    }
+            //    else MessageBox.Show("Введите название теста");
             }
-            else MessageBox.Show("Введите название теста");
-        }
 
 
-        private void LB_CreatedTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
+            private void LB_CreatedTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //TestModel selectedTest = (TestModel)LB_CreatedTest.SelectedItem;
             
@@ -182,6 +203,50 @@ namespace TelegramTestBot.UI
             //else MessageBox.Show("");
             
         }
+
+        private void TB_NewTestorEditName_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                if (TB_NewTestorEditName.Text.Length > 0)
+                {
+                    TBox_CreateEdittTest.Text = TB_NewTestorEditName.Text;
+                    GridTest.Visibility = Visibility.Visible;
+                    TB_NewTestorEditName.Clear();
+                }
+                else MessageBox.Show("Введите вопрос!");
+            }
+        }
+
+        private void Button_SaveEditQuestion_Click(object sender, RoutedEventArgs e)
+        {
+            //_allQuest.Add(Tb_ContentQuestuon.Text);
+            LB_CreatedQuestion.Items.Add(Tb_ContentQuestuon.Text);
+        }
+
+
+
+        private void But_EndTest_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string testName = TBox_CreateEdittTest.Text;
+                int teacherId = _authorizedTeacher; 
+                List<QuestionModel> questions = GetQuestionsFromUI();
+
+                testService.CreateTest(testName, teacherId, questions);
+
+
+                foreach (var question in questions)
+                {
+                    testService.CreateQuestion(question.Content);
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+        }
     }
-    }
+}
 

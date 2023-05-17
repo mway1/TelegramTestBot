@@ -102,7 +102,7 @@
                     <Label Content="Создать новый тест:" Grid.Column="0" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold" Margin="10,170,0,0"/>
                     <Label Content="Созданные тесты:" HorizontalAlignment="Left" Margin="16,3,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold"/>
                     <ListBox x:Name="LB_CreatedTest"  Grid.Column="0" DisplayMemberPath="Name"  Margin="0,28,10,261" Loaded="LB_CreatedTest_Loaded" SelectionChanged="LB_CreatedTest_SelectionChanged" />
-                    <TextBox x:Name="TB_NewTestorEditName" Grid.Column="0"  HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="203" Height="23" Margin="0,195,0,0" />
+                    <TextBox x:Name="TB_NewTestorEditName" Grid.Column="0"  HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="203" Height="23" Margin="0,195,0,0" KeyUp="TB_NewTestorEditName_KeyUp" />
                     <Button x:Name="Button_EditNameOfTest"  Grid.Column="0" Content="Изменить название" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="116" Margin="0,150,0,0"/>
                     <Button x:Name="Button_EditTest"  Grid.Column="0" Content="Редактировать" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="87" Margin="116,150,0,0"/>
                     <Button x:Name="Button_SaveNameOfTest"  Grid.Column="0" Content="Создать тест" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="203" Height="21" Margin="0,218,0,0" Click="Button_SaveNameOfTest_Click"/>
@@ -114,7 +114,7 @@
                                 <TextBox  x:Name="Tb_ContentQuestuon" HorizontalAlignment="Left" Margin="36,78,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="139" Height="19"/>
                                 <Label x:Name="Label_TypeOfQuest" Content="Вид вопроса:" HorizontalAlignment="Left" Margin="340,58,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold"/>
                                 <ComboBox x:Name="CB_TypeOfQuestion" HorizontalAlignment="Left" Margin="342,78,0,0" VerticalAlignment="Top" Width="120"/>
-                                <Button x:Name="Button_SaveEditQuestion" Content="Сохранить/изменить" HorizontalAlignment="Left" Margin="36,97,0,0" VerticalAlignment="Top" Width="139"/>
+                                <Button x:Name="Button_SaveEditQuestion" Content="Сохранить/изменить" HorizontalAlignment="Left" Margin="36,97,0,0" VerticalAlignment="Top" Width="139" Click="Button_SaveEditQuestion_Click"/>
                                 <Label x:Name="Label_CreatedQuest" Content="Созданные вопросы:" HorizontalAlignment="Left" Margin="50,142,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold"/>
                                 <ListBox x:Name="LB_CreatedQuestion"  d:ItemsSource="{d:SampleData ItemCount=5}" Margin="26,173,348,94"/>
                                 <TextBox x:Name="TB_FirstAnswer" HorizontalAlignment="Left" Margin="342,133,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
@@ -134,6 +134,7 @@
                                 <Button x:Name="Button_EditRightAnswer"  Content="Изменить ответ" HorizontalAlignment="Left" Margin="342,295,0,0" VerticalAlignment="Top" Width="120"/>
                                 <Label x:Name="Label_NameOfTest" Content="Создание/редактирование теста:" HorizontalAlignment="Left" Margin="8,17,0,0" VerticalAlignment="Top" Height="31" Width="244" FontSize="14" FontWeight="Bold" Grid.Column="1"/>
                                 <TextBlock x:Name="TBox_CreateEdittTest" HorizontalAlignment="Left" Margin="247,22,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="31"  FontSize="14" Width="183"/>
+                                <Button  x:Name="But_EndTest" Content="Создать тест" HorizontalAlignment="Left" Margin="77,323,0,0" VerticalAlignment="Top" Height="28" Width="346" Click="But_EndTest_Click"/>
                             </Grid>
                         </TabItem>
                     </TabControl>

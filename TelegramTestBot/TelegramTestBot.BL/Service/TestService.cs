@@ -11,46 +11,55 @@ namespace TelegramTestBot.BL.Service;
 
 public class TestService
 {
-    private readonly ITestModelManager _testmodelManager;
-    private readonly IQuestionModelManager _questionModelManager;
-    private readonly IAnswerModelManager _answerModelManager;
+    private TestModelManager _testmodelManager = new TestModelManager();
+    private QuestionModelManager _questionModelManager = new QuestionModelManager();
+    private AnswerModelManager _answerModelManager = new AnswerModelManager();
 
-    public TestService(ITestModelManager testmodelManager, IQuestionModelManager questionModelManager, IAnswerModelManager answerModelManager)
+    public TestService()
     {
-        _testmodelManager = testmodelManager;
-        _questionModelManager = questionModelManager;
-        _answerModelManager = answerModelManager;
+
     }
 
     public TestModel CreateTest(string name,int teacherId,List<QuestionModel> questions)
     {
-        var test = new TestModel { Name = name, TeacherId = teacherId };
+        TestModel test = new TestModel() { Name = name, TeacherId = teacherId };
         _testmodelManager.AddTest(test);
-
-        foreach(var question in questions)
+        int testId = _testmodelManager.GetLastTestAdded(teacherId);
+       
+        foreach (var question in questions)
         {
-            question.TestId = test.Id;
+            question.TestId = testId;
             _questionModelManager.AddQuestion(question);
         }
-        return test;
+
+    return test;
 
     }
     
-    
-
-    public QuestionModel CreaateQuestion(string text, List<AnswerModel> answers,bool isCorrectAnswer)
+    public QuestionModel CreateQuestion(string text)
     {
         var question=new QuestionModel { Content = text };
         _questionModelManager.AddQuestion(question);
 
+        //foreach (var answer in answers)
+        //{
+        //    answer.QuestionId = question.Id;
+        //    answer.IsCorrect=isCorrectAnswer;
+        //    _answerModelManager.AddAnswer(answer);
+        //}
+        return question;
+    }
+
+    public void CreateAnswer(string text,bool isCorrectAnswer ,List<AnswerModel> answers)
+    {
         foreach (var answer in answers)
         {
             answer.Content = text;
-            answer.QuestionId = question.Id;
-            answer.IsCorrect=isCorrectAnswer;
+            answer.IsCorrect = isCorrectAnswer;
             _answerModelManager.AddAnswer(answer);
         }
-        return question;
     }
+
+
 
 }

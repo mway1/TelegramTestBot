@@ -7,7 +7,6 @@ namespace TelegramTestBot.BL.Models
         public int Id { get; set; }
         public string Content { get; set; }
         public int TestId { get; set; }
-        public TestModel Test { get; set; }
 
         public QuestionModel()
         {
@@ -28,7 +27,7 @@ namespace TelegramTestBot.BL.Models
 
                 if (questionDTO.Id != this.Id ||
                     questionDTO.Content != this.Content ||
-                    questionDTO.Test!.Id != this.Test!.Id)
+                    questionDTO.TestId != this.TestId)
                 {
                     flag = false;
                 }
