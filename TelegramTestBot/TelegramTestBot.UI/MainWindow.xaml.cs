@@ -36,7 +36,7 @@ namespace TelegramTestBot.UI
         private TeacherModelManager _teacherModelManager = new TeacherModelManager();
         private TestModelManager _testModelManager = new TestModelManager();
         private QuestionModelManager _questionModelManager = new QuestionModelManager();
-        private List<string> _allQuest = new List<string>();
+        private List<QuestionModel> _allQuest = new List<QuestionModel>();
         private TestService testService = new TestService();
 
         private Data _data = new Data();
@@ -221,7 +221,13 @@ namespace TelegramTestBot.UI
         private void Button_SaveEditQuestion_Click(object sender, RoutedEventArgs e)
         {
             //_allQuest.Add(Tb_ContentQuestuon.Text);
-            LB_CreatedQuestion.Items.Add(Tb_ContentQuestuon.Text);
+            string contentQuestion = Tb_ContentQuestuon.Text;
+            QuestionModel question = new QuestionModel
+            {
+                Content = contentQuestion
+            };
+
+            _allQuest.Add(question);
         }
 
 
@@ -232,7 +238,7 @@ namespace TelegramTestBot.UI
             {
                 string testName = TBox_CreateEdittTest.Text;
                 int teacherId = _authorizedTeacher; 
-                List<QuestionModel> questions = GetQuestionsFromUI();
+                List<QuestionModel> questions = _allQuest;
 
                 testService.CreateTest(testName, teacherId, questions);
 
