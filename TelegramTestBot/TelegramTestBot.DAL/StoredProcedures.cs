@@ -18,6 +18,7 @@
         public const string Question_DeleteById = "Question_DeleteById";
         public const string Question_GetAll = "Question_GetAll";
         public const string Question_GetById = "Question_GetById";
+        public const string Question_GetLastAdded = "Question_GetLastAdded";
         public const string Question_UpdateById = "Question_UpdateById";
 
         public const string Student_Add = "Student_Add";

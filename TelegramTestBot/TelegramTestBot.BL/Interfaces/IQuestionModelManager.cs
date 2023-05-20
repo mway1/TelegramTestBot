@@ -9,5 +9,6 @@ namespace TelegramTestBot.BL.Interfaces
         void UpdateQuestionById(QuestionModel newQuestion);
         List<QuestionModel> GetAllQuestions();
         QuestionModel GetQuestionById(int questionId);
+        int GetLastQuestionAdded(int testId);
     }
 }

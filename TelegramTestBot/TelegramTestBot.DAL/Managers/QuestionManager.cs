@@ -89,5 +89,20 @@ namespace TelegramTestBot.DAL.Managers
                     );
             }
         }
+
+        public int GetLastQuestionAdded(int testId)
+        {
+            using (var connection = new SqlConnection(ServerSettings._connectionString))
+            {
+                connection.Open();
+
+                return connection.ExecuteScalar<int>
+                    (
+                        StoredProcedures.Question_GetLastAdded,
+                        param: new { TestId = testId },
+                        commandType: System.Data.CommandType.StoredProcedure
+                    );
+            }
+        }
     }
 }

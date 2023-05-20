@@ -37,6 +37,7 @@ namespace TelegramTestBot.UI
         private TestModelManager _testModelManager = new TestModelManager();
         private QuestionModelManager _questionModelManager = new QuestionModelManager();
         private List<QuestionModel> _allQuest = new List<QuestionModel>();
+        private List<AnswerModel> _allAnswer = new List<AnswerModel>();
         private TestService testService = new TestService();
 
         private Data _data = new Data();
@@ -222,11 +223,20 @@ namespace TelegramTestBot.UI
         {
             //_allQuest.Add(Tb_ContentQuestuon.Text);
             string contentQuestion = Tb_ContentQuestuon.Text;
+            string content1Answer = TB_FirstAnswer.Text;
+            string content2Answer = TB_SecondAnswer.Text;
+            string content3Answer = TB_ThirdAnswer.Text;
+            string content4Answer = TB_FourthAnswer.Text;
+            AnswerModel answer1 = new AnswerModel { Content = content1Answer };
+            AnswerModel answer2 = new AnswerModel { Content = TB_SecondAnswer.Text };
+            AnswerModel answer3 = new AnswerModel { Content = TB_ThirdAnswer.Text };
+            AnswerModel answer4 = new AnswerModel { Content = TB_FourthAnswer.Text };
+
             QuestionModel question = new QuestionModel
             {
                 Content = contentQuestion
             };
-
+            _allAnswer.Add(answer1);
             _allQuest.Add(question);
         }
 
@@ -239,13 +249,19 @@ namespace TelegramTestBot.UI
                 string testName = TBox_CreateEdittTest.Text;
                 int teacherId = _authorizedTeacher; 
                 List<QuestionModel> questions = _allQuest;
+                List<AnswerModel> answers = _allAnswer;
 
                 testService.CreateTest(testName, teacherId, questions);
 
 
                 foreach (var question in questions)
                 {
-                    testService.CreateQuestion(question.Content);
+                    testService.CreateQuestion(question.Content,question.TestId,answers);
+                    foreach (var answer in answers)
+                    {
+                        testService.CreateAnswer(answer.Content,false);
+                    }
+
                 }
             }
             catch (Exception)

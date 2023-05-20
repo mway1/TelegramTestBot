@@ -48,5 +48,10 @@ namespace TelegramTestBot.BL.Managers
             QuestionDTO question = _questionManager.GetQuestionById(questionId);
             return MapperConfigStorage.GetInstance().Map<QuestionModel>(question);
         }
+        public int GetLastQuestionAdded(int testId)
+        {
+            int question = _questionManager.GetLastQuestionAdded(testId);
+            return MapperConfigStorage.GetInstance().Map<int>(question);
+        }
     }
 }

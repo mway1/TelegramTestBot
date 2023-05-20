@@ -20,7 +20,7 @@ namespace TelegramTestBot.DAL.Managers
                         {
                             Content = newAnswer.Content,
                             IsCorrect = newAnswer.IsCorrect,
-                            QuestionId = newAnswer.Question!.Id
+                            QuestionId = newAnswer.QuestionId
                         },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
@@ -56,7 +56,7 @@ namespace TelegramTestBot.DAL.Managers
                             newAnswer.Id,
                             newAnswer.Content,
                             newAnswer.IsCorrect,
-                            QuestionId = newAnswer.Question!.Id
+                            QuestionId = newAnswer.QuestionId
                         },
                         commandType: System.Data.CommandType.StoredProcedure
                     );

@@ -36,28 +36,26 @@ public class TestService
 
     }
     
-    public QuestionModel CreateQuestion(string text)
+    public QuestionModel CreateQuestion(string text,int testId,List<AnswerModel> answers)
     {
         var question=new QuestionModel { Content = text };
         _questionModelManager.AddQuestion(question);
+        int questionId = _questionModelManager.GetLastQuestionAdded(testId);
 
-        //foreach (var answer in answers)
-        //{
-        //    answer.QuestionId = question.Id;
-        //    answer.IsCorrect=isCorrectAnswer;
-        //    _answerModelManager.AddAnswer(answer);
-        //}
+        foreach (var answer in answers)
+        {
+            answer.QuestionId = questionId;
+            _answerModelManager.AddAnswer(answer);
+        }
         return question;
     }
 
-    public void CreateAnswer(string text,bool isCorrectAnswer ,List<AnswerModel> answers)
+    public AnswerModel CreateAnswer(string text,bool isCorrect)
     {
-        foreach (var answer in answers)
-        {
-            answer.Content = text;
-            answer.IsCorrect = isCorrectAnswer;
-            _answerModelManager.AddAnswer(answer);
-        }
+        var answer = new AnswerModel { Content = text,IsCorrect=isCorrect};
+        _answerModelManager.AddAnswer(answer);
+        return answer;
+
     }
 
 
