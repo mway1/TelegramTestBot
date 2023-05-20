@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using TelegramTestBot.BL.Models;
 using TelegramTestBot.BL.Managers;
 using TelegramTestBot.BL.Service;
+using TelegramTestBot.BL.Interfaces;
 
 namespace TelegramTestBot.UI
 {
@@ -33,12 +34,26 @@ namespace TelegramTestBot.UI
             _telegramBotService = new TelegramBotService(OnMessage);
             _telegramBotService.StartBot("12345");
             InitializeComponent();
+
+            TabItem_CreatedTest.Visibility = Visibility.Hidden;
+            GridTest.Visibility = Visibility.Hidden;
         }
 
         public void OnMessage(string s)
         {
             _labels.Add(s);
         }
+
+        private int _authorizedTeacher;
+        private int _createdTestId;
+
+        private TeacherModelManager _teacherModelManager = new TeacherModelManager();
+        private TestModelManager _testModelManager = new TestModelManager();
+        private QuestionModelManager _questionModelManager = new QuestionModelManager();
+        private List<QuestionModel> _allQuest = new List<QuestionModel>();
+        private List<AnswerModel> _allAnswer = new List<AnswerModel>();
+        private TestService testService = new TestService();
+        private Data _data = new Data();
 
         private void B_signin_Click(object sender, RoutedEventArgs e)
         {
@@ -54,9 +69,8 @@ namespace TelegramTestBot.UI
                         TeacherModel aprovedTeacher = _teacherModelManager.GetTeacherByLogin(enteredLogin);
 
                         if (enteredLogin == aprovedTeacher.Login && enteredPassword == aprovedTeacher.Password)
-                        {                            
-                            int authorizedTeacher = aprovedTeacher.Id;
-
+                        {
+                            _authorizedTeacher = aprovedTeacher.Id;
                             MessageBox.Show("Авторизация пройдена");                            
                         }
                         else MessageBox.Show("Неверный логин или пароль");
@@ -147,7 +161,135 @@ namespace TelegramTestBot.UI
                 else MessageBox.Show("Укажите Имя");
             }
             else MessageBox.Show("Укажите Фамилию");
-           }     
+           }
+        private void LB_CreatedTest_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<TestModel> test = _testModelManager.GetTestByTeacherId(_authorizedTeacher);
+            LB_CreatedTest.ItemsSource = test;
+        }
+
+        private void Button_SaveNameOfTest_Click(object sender, RoutedEventArgs e)
+        {
+            if (TB_NewTestorEditName.Text.Length > 0)
+            {
+                TestModel newTest = new TestModel { Name = TB_NewTestorEditName.Text, TeacherId = _authorizedTeacher };
+                _testModelManager.AddTest(newTest);
+                TBox_CreateEdittTest.Text = newTest.Name;
+                _createdTestId = _testModelManager.GetLastTestAdded(_authorizedTeacher);
+                GridTest.Visibility = Visibility.Visible;
+                TB_NewTestorEditName.Clear();
+            }
+            else MessageBox.Show("Введите название теста!");
+        }
+
+
+            private void LB_CreatedTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //TestModel selectedTest = (TestModel)LB_CreatedTest.SelectedItem;
+            
+            //TBox_CreateEdittTest.Text = selectedTest.Name;
+            
+        }
+
+        private void TB_NewTestorEditName_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                if (TB_NewTestorEditName.Text.Length > 0)
+                {
+                    TestModel newTest = new TestModel { Name = TB_NewTestorEditName.Text, TeacherId = _authorizedTeacher };
+                    _testModelManager.AddTest(newTest);
+                    TBox_CreateEdittTest.Text = newTest.Name;
+                    _createdTestId = _testModelManager.GetLastTestAdded(_authorizedTeacher);
+                    GridTest.Visibility = Visibility.Visible;
+                    TB_NewTestorEditName.Clear();
+                }
+                else MessageBox.Show("Введите название теста!");
+            }
+        }
+        private void But_EndTest_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string contentQuestion = Tb_ContentQuestuon.Text;
+                string content1Answer = TB_FirstAnswer.Text;
+                string content2Answer = TB_SecondAnswer.Text;
+                string content3Answer = TB_ThirdAnswer.Text;
+                string content4Answer = TB_FourthAnswer.Text;
+                _allQuest.Add(new QuestionModel { Content = contentQuestion });
+                if (RB_RightAnswer1.IsChecked == true)
+                {
+                    TB_RightAnswerForQuest.Text = content1Answer;
+                    _allAnswer.Add(new AnswerModel { Content = content1Answer, IsCorrect = true });
+                    _allAnswer.Add(new AnswerModel { Content = content2Answer });
+                    _allAnswer.Add(new AnswerModel { Content = content3Answer });
+                    _allAnswer.Add(new AnswerModel { Content = content4Answer });
+                }
+                else if (RB_RightAnswer2.IsChecked == true)
+                {
+                    TB_RightAnswerForQuest.Text = content2Answer;
+                    _allAnswer.Add(new AnswerModel { Content = content1Answer});
+                    _allAnswer.Add(new AnswerModel { Content = content2Answer,IsCorrect = true });
+                    _allAnswer.Add(new AnswerModel { Content = content3Answer });
+                    _allAnswer.Add(new AnswerModel { Content = content4Answer });
+                }
+                else if (RB_RightAnswer3.IsChecked == true)
+                {
+                    TB_RightAnswerForQuest.Text = content3Answer;
+                    _allAnswer.Add(new AnswerModel { Content = content1Answer});
+                    _allAnswer.Add(new AnswerModel { Content = content2Answer });
+                    _allAnswer.Add(new AnswerModel { Content = content3Answer,IsCorrect = true });
+                    _allAnswer.Add(new AnswerModel { Content = content4Answer });
+                }
+                else if (RB_RightAnswer4.IsChecked == true)
+                {
+                    TB_RightAnswerForQuest.Text = content4Answer;
+                    _allAnswer.Add(new AnswerModel { Content = content1Answer });
+                    _allAnswer.Add(new AnswerModel { Content = content2Answer });
+                    _allAnswer.Add(new AnswerModel { Content = content3Answer });
+                    _allAnswer.Add(new AnswerModel { Content = content4Answer, IsCorrect = true });
+                }
+                else MessageBox.Show("Выберите правильный вариант ответа");
+
+                int testId = _createdTestId;
+                List<QuestionModel> questions = _allQuest;
+                List<AnswerModel> answers = _allAnswer;
+
+                testService.CreateQuestion(testId,questions);
+
+                    foreach (var question in questions)
+                    {
+                        testService.CreateAnswer(question.Content, question.TestId, answers);
+                    }
+
+                List<QuestionModel> creatingQuest = _questionModelManager.GetQuestionByTestId(testId);
+                LB_CreatedQuestion.ItemsSource = creatingQuest;
+                _allQuest.Clear();
+                _allAnswer.Clear();
+                Tb_ContentQuestuon.Clear();
+                TB_FirstAnswer.Clear();
+                TB_SecondAnswer.Clear();
+                TB_ThirdAnswer.Clear();
+                TB_FourthAnswer.Clear();
+        
+            }
+            catch (Exception)
+            {
+
+            }
+  
+        }
+
+        private void LB_CreatedQuestion_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void But_EndCreatingTest_Click(object sender, RoutedEventArgs e)
+        {
+            GridTest.Visibility = Visibility.Hidden;
+            _createdTestId = 0;
         }
     }
+}
 

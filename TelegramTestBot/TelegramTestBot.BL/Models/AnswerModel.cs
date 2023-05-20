@@ -6,15 +6,10 @@
         public string Content { get; set; }
         public bool IsCorrect { get; set; }
         public int QuestionId { get; set; }
-        public QuestionModel Question { get; set; }
 
-        public AnswerModel(int id, string content, bool isCorrect, int questionId, QuestionModel question)
+        public AnswerModel()
         {
-            Id = id;
-            Content = content;
-            IsCorrect = isCorrect;
-            QuestionId = questionId;
-            Question = question;
+            
         }
 
         public override bool Equals(object? obj)
@@ -32,7 +27,7 @@
                 if (answerDTO.Id != this.Id ||
                     answerDTO.Content != this.Content ||
                     answerDTO.IsCorrect != this.IsCorrect ||
-                    answerDTO.Question!.Id != this.Question!.Id)
+                    answerDTO.QuestionId != this.QuestionId)
                 {
                     flag = false;
                 }

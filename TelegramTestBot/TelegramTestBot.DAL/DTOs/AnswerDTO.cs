@@ -6,7 +6,6 @@
         public string Content { get; set; }
         public int QuestionId { get; set; }
         public bool IsCorrect { get; set; }
-        public QuestionDTO Question { get; set; }
 
         public AnswerDTO()
         {
@@ -26,7 +25,7 @@
 
             if (answerVariantDTO.Id != this.Id ||
                 answerVariantDTO.Content != this.Content ||
-                answerVariantDTO.Question!.Id != this.Question!.Id ||
+                answerVariantDTO.QuestionId != this.QuestionId ||
                 answerVariantDTO.IsCorrect != this.IsCorrect)
             {
                 flag = false;

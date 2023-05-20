@@ -5,7 +5,6 @@
         public int Id { get; set; }
         public string Name { get; set; }
         public int TeacherId { get; set; }
-        public TeacherModel Teacher { get; set; }
 
         public TestModel()
         {
@@ -26,7 +25,7 @@
 
                 if (testDTO.Id != this.Id ||
                     testDTO.Name != this.Name ||
-                    testDTO.Teacher!.Id != this.Teacher!.Id)
+                    testDTO.TeacherId != this.TeacherId)
                 {
                     flag = false;
                 }

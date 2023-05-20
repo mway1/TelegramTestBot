@@ -12,14 +12,13 @@ namespace TelegramTestBot.DAL.Managers
             using (var connection = new SqlConnection(ServerSettings._connectionString))
             {
                 connection.Open();
-
                 connection.QuerySingle<TestDTO>
                     (
                         StoredProcedures.Test_Add,
                         param: new
                         {
                             Name = newTest.Name,
-                            TeacherId = newTest.Teacher!.Id
+                            TeacherId = newTest.TeacherId
                         },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
@@ -54,7 +53,7 @@ namespace TelegramTestBot.DAL.Managers
                         {
                             newTest.Id,
                             newTest.Name,
-                            TeacherId = newTest.Teacher!.Id
+                            TeacherId = newTest.TeacherId
                         },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
@@ -87,6 +86,34 @@ namespace TelegramTestBot.DAL.Managers
                         param: new { id = testId },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
+            }
+        }
+        public int GetLastTestAdded(int teacherId)
+        {
+            using (var connection = new SqlConnection(ServerSettings._connectionString))
+            {
+                connection.Open();
+
+                return connection.ExecuteScalar<int>
+                    (
+                        StoredProcedures.Test_GetLastAdded,
+                        param: new { TeacherId = teacherId },
+                        commandType: System.Data.CommandType.StoredProcedure
+                    );
+            }
+        }
+        public List<TestDTO> GetTestByTeacherId(int teacherId)
+        {
+            using (var connection = new SqlConnection(ServerSettings._connectionString))
+            {
+                connection.Open();
+
+                return connection.Query<TestDTO>
+                    (
+                        StoredProcedures.Test_GetByTeacherId,
+                        param: new { TeacherId = teacherId },
+                        commandType: System.Data.CommandType.StoredProcedure
+                    ).ToList();
             }
         }
     }

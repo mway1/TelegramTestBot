@@ -19,7 +19,7 @@ namespace TelegramTestBot.DAL.Managers
                         param: new
                         {
                             Content = newQuestion.Content,
-                            TestId = newQuestion.Test!.Id,
+                            TestId = newQuestion.TestId,
                         },
                         commandType: System.Data.CommandType.StoredProcedure
                     ); ;
@@ -54,7 +54,7 @@ namespace TelegramTestBot.DAL.Managers
                         {
                             newQuestion.Id,
                             newQuestion.Content,
-                            TestId = newQuestion.Test!.Id,
+                            newQuestion.TestId,
                         },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
@@ -85,6 +85,35 @@ namespace TelegramTestBot.DAL.Managers
                     (
                         StoredProcedures.Question_GetById,
                         param: new { id = questionId },
+                        commandType: System.Data.CommandType.StoredProcedure
+                    );
+            }
+        }
+        public List<QuestionDTO> GetQuestionByTestId(int testId)
+        {
+            using (var connection = new SqlConnection(ServerSettings._connectionString))
+            {
+                connection.Open();
+
+                return connection.Query<QuestionDTO>
+                    (
+                        StoredProcedures.Question_GetByTestId,
+                        param: new { TestId = testId },
+                        commandType: System.Data.CommandType.StoredProcedure
+                    ).ToList();
+            }
+        }
+
+        public int GetLastQuestionAdded(int testId)
+        {
+            using (var connection = new SqlConnection(ServerSettings._connectionString))
+            {
+                connection.Open();
+
+                return connection.ExecuteScalar<int>
+                    (
+                        StoredProcedures.Question_GetLastAdded,
+                        param: new { TestId = testId },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
             }

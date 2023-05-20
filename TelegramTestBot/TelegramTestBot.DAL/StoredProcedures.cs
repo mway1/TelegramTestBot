@@ -18,6 +18,8 @@
         public const string Question_DeleteById = "Question_DeleteById";
         public const string Question_GetAll = "Question_GetAll";
         public const string Question_GetById = "Question_GetById";
+        public const string Question_GetByTestId = "Question_GetByTestId";
+        public const string Question_GetLastAdded = "Question_GetLastAdded";
         public const string Question_UpdateById = "Question_UpdateById";
 
         public const string Student_Add = "Student_Add";
@@ -38,6 +40,8 @@
         public const string Test_DeleteById = "Test_DeleteById";
         public const string Test_GetAll = "Test_GetAll";
         public const string Test_GetById = "Test_GetById";
+        public const string Test_GetLastAdded = "Test_GetLastAdded";
+        public const string Test_GetByTeacherId = "Test_GetByTeacherId";
         public const string Test_UpdateById = "Test_UpdateById";
 
         public const string Testing_Add = "Testing_Add";
