@@ -128,7 +128,7 @@
                                 <TextBlock x:Name="TBox_CreateEdittTest" HorizontalAlignment="Left" Margin="247,22,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="31"  FontSize="14" Width="183"/>
                                 <Button  x:Name="But_EndTest" Content="Добавить/изменить вопрос" HorizontalAlignment="Left" Margin="75,301,0,0" VerticalAlignment="Top" Height="28" Width="346" Click="But_EndTest_Click"/>
                                 <Label x:Name="Label_CorrectAnswer_Copy" Content="Ответы к вопросу:" HorizontalAlignment="Left" Margin="342,87,0,0" VerticalAlignment="Top" Height="30" Width="166" FontSize="12" FontWeight="Bold"/>
-                                <Button  x:Name="But_EndCreatingTest" Content="Сохранить вопрос" HorizontalAlignment="Left" Margin="75,334,0,0" VerticalAlignment="Top" Height="28" Width="346" Click="But_EndTest_Click"/>
+                                <Button  x:Name="But_EndCreatingTest" Content="Сохранить тест" HorizontalAlignment="Left" Margin="75,334,0,0" VerticalAlignment="Top" Height="28" Width="346" Click="But_EndCreatingTest_Click"/>
                             </Grid>
                         </TabItem>
                     </TabControl>

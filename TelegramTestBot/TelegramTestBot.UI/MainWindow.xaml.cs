@@ -267,6 +267,12 @@ namespace TelegramTestBot.UI
         {
 
         }
+
+        private void But_EndCreatingTest_Click(object sender, RoutedEventArgs e)
+        {
+            GridTest.Visibility = Visibility.Hidden;
+            _createdTestId = 0;
+        }
     }
 }
 
