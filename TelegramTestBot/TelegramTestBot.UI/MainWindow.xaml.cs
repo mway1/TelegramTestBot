@@ -23,6 +23,9 @@ namespace TelegramTestBot.UI
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        private int _authorizedTeacher;
+        private int _createdTestId;
         private List<string> _labels;
         private TeacherModelManager _teacherModelManager = new TeacherModelManager();
         private TestModelManager _testModelManager = new TestModelManager();
@@ -42,15 +45,19 @@ namespace TelegramTestBot.UI
 
             TabItem_CreatedTest.Visibility = Visibility.Hidden;
             GridTest.Visibility = Visibility.Hidden;
+            //TabControl_Main.SelectedItem = Auth;
+            TabItem_CreatedTest.Visibility = Visibility.Hidden;
+            TabItem_StartPage.Visibility = Visibility.Hidden;
+            TabItem_Test.Visibility = Visibility.Hidden;
+            Auth.Visibility = Visibility.Hidden;
+            Reg.Visibility = Visibility.Hidden;
+            Groups.Visibility = Visibility.Hidden;
         }
 
         public void OnMessage(string s)
         {
             _labels.Add(s);
         }
-
-        private int _authorizedTeacher;
-        private int _createdTestId;
 
 
         private void B_signin_Click(object sender, RoutedEventArgs e)
@@ -69,7 +76,8 @@ namespace TelegramTestBot.UI
                         if (enteredLogin == aprovedTeacher.Login && enteredPassword == aprovedTeacher.Password)
                         {
                             _authorizedTeacher = aprovedTeacher.Id;
-                            MessageBox.Show("Авторизация пройдена");                            
+                            MessageBox.Show("Авторизация пройдена");
+                            TabControl_Main.SelectedItem = TabItem_StartPage;
                         }
                         else MessageBox.Show("Неверный логин или пароль");
                     }
@@ -287,6 +295,31 @@ namespace TelegramTestBot.UI
         {
             GridTest.Visibility = Visibility.Hidden;
             _createdTestId = 0;
+        }
+
+        private void Button_GoToTest_Click(object sender, RoutedEventArgs e)
+        {
+            TabControl_Main.SelectedItem = TabItem_Test;
+        }
+
+        private void Button_GoToGroups_Click(object sender, RoutedEventArgs e)
+        {
+            TabControl_Main.SelectedItem = Groups;
+        }
+
+        private void But_GoStartGroups_Click(object sender, RoutedEventArgs e)
+        {
+            TabControl_Main.SelectedItem = TabItem_StartPage;
+        }
+
+        private void But_GoStartTest_Click(object sender, RoutedEventArgs e)
+        {
+            TabControl_Main.SelectedItem = TabItem_StartPage;
+        }
+
+        private void Button_SignIn_Click(object sender, RoutedEventArgs e)
+        {
+            TabControl_Main.SelectedItem = Auth;
         }
     }
 }

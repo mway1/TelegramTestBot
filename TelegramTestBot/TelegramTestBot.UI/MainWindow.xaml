@@ -8,14 +8,6 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <TabControl x:Name="TabControl_Main" >
-            <TabItem x:Name="TabItem_StartPage" Header="Главная страница">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                </Grid>
-            </TabItem>
             <TabItem x:Name="Auth" Header="Авторизация">
                 <Grid >
                     <TextBox x:Name="TB_login" HorizontalAlignment="Left" Margin="35,38,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="170" Height="26" Grid.Column="1" Grid.Row="1"/>
@@ -37,6 +29,25 @@
                 </Grid>
 
             </TabItem>
+            <TabItem x:Name="TabItem_StartPage" Header="Главная страница">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="227*"/>
+                        <ColumnDefinition Width="170*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="1" x:Name="Button_Exit" Content="Выйти из аккаунта" HorizontalAlignment="Left" Margin="228,9,0,0" VerticalAlignment="Top" Height="26" Width="106"/>
+                    <Button Grid.Column="1" x:Name="Button_GoToTest" Content="Работа с тестами" HorizontalAlignment="Left" Margin="10,337,0,0" VerticalAlignment="Top" Height="32" Width="142" Click="Button_GoToTest_Click"/>
+                    <Button Grid.Column="1" x:Name="Button_GoToGroups" Content="Работа с группами" HorizontalAlignment="Left" Margin="188,337,0,0" VerticalAlignment="Top" Height="32" Width="142" Click="Button_GoToGroups_Click"/>
+                    <Label Grid.Column="1" Content="Создание группы:" HorizontalAlignment="Left" Margin="43,57,0,0" VerticalAlignment="Top" Width="127" FontWeight="Bold" />
+                    <TextBox Grid.Column="1" x:Name="TB_newGroup" HorizontalAlignment="Left" Margin="32,88,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="165" Height="26"/>
+                    <Button Grid.Column="1" x:Name="Button_AddGroup" Content="+" FontSize="15" HorizontalAlignment="Left" Margin="197,88,0,0" VerticalAlignment="Top" Height="26" Width="28" FontWeight="Bold" FontStretch="Normal"/>
+                    <Label Grid.Column="1" Content="Созданные группы:" HorizontalAlignment="Left" Margin="43,131,0,0" VerticalAlignment="Top" Width="127" FontWeight="Bold" />
+                    <ListBox x:Name="LB_AllGroups" Grid.Column="1"  Margin="32,162,115,122"/>
+                    <Button Grid.Column="1" x:Name="Button_EditGroup" Content="Изменить" HorizontalAlignment="Left" Margin="32,282,0,0" VerticalAlignment="Top" Width="96"/>
+                    <Button Grid.Column="1" x:Name="Button_DeleteGroup" Content="Удалить" HorizontalAlignment="Left" Margin="129,282,0,0" VerticalAlignment="Top" Width="96"/>
+
+                </Grid>
+            </TabItem>
             <TabItem x:Name="Reg" Header="Регистрация">
                 <Grid>
                     <Label Grid.Column="1" Content="Форма регистрации" HorizontalAlignment="Center" Margin="0,12,0,0" VerticalAlignment="Top" Width="188" FontSize="16" FontWeight="Bold"/>
@@ -46,7 +57,7 @@
                     <TextBox Grid.Column="1" x:Name="TB_Email_Teacher" HorizontalAlignment="Left" Margin="31,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center"  Width="259" Height="25"/>
                     <TextBox Grid.Column="1" x:Name="TB_Login_Teacher" HorizontalAlignment="Left" Margin="31,231,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"  Width="259" Height="25"/>
                     <Button Grid.Column="1" x:Name="Button_Reg" Content="Зарегистрироваться" HorizontalAlignment="Left" Margin="31,332,0,0" VerticalAlignment="Top" Height="26" Width="147" Click="Button_Reg_Click"/>
-                    <Button Grid.Column="1" x:Name="Button_SignIn" Content="Вход" HorizontalAlignment="Left" Margin="192,332,0,0" VerticalAlignment="Top" Height="26" Width="98"/>
+                    <Button Grid.Column="1" x:Name="Button_SignIn" Content="Вход" HorizontalAlignment="Left" Margin="192,332,0,0" VerticalAlignment="Top" Height="26" Width="98" Click="Button_SignIn_Click"/>
                     <PasswordBox x:Name="PasswordForRegister"  Grid.Column="1" HorizontalAlignment="Left" Margin="31,269,0,0" VerticalAlignment="Top" Width="259" Height="25"/>
                     <PasswordBox x:Name="PasswordForRegister_Copy"  Grid.Column="1" HorizontalAlignment="Left" Margin="31,306,0,0" VerticalAlignment="Top" Width="259" Height="25"/>
                     <Label Grid.Column="1" Content="Введите фамилию:" HorizontalAlignment="Left" Margin="27,50,0,0" VerticalAlignment="Top"/>
@@ -97,6 +108,7 @@
                     <Label Content="Студенты:" HorizontalAlignment="Center" Margin="0,43,0,0" VerticalAlignment="Top" Width="200"/>
                     <Label Content="Подключенные пользователи:" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Margin="0,225,0,0"/>
                     <Label Content="Группы:" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Margin="0,-3,0,0"/>
+                    <Button x:Name="But_GoStartGroups" Content="На главную" HorizontalAlignment="Left" Margin="10,371,0,0" VerticalAlignment="Top" Height="23" Width="162" Click="But_GoStartGroups_Click"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="TabItem_Test" Header="Создание Теста" Height="22" Margin="-2,0,-2,0" VerticalAlignment="Bottom">
@@ -140,6 +152,7 @@
                             </Grid>
                         </TabItem>
                     </TabControl>
+                    <Button x:Name="But_GoStartTest" Content="На главную" HorizontalAlignment="Left" Margin="22,297,0,0" VerticalAlignment="Top" Height="23" Width="162" Click="But_GoStartTest_Click"/>
 
                 </Grid>
 
