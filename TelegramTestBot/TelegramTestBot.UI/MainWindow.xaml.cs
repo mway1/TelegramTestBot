@@ -227,16 +227,19 @@ namespace TelegramTestBot.UI
             string content2Answer = TB_SecondAnswer.Text;
             string content3Answer = TB_ThirdAnswer.Text;
             string content4Answer = TB_FourthAnswer.Text;
-            AnswerModel answer1 = new AnswerModel { Content = content1Answer };
-            AnswerModel answer2 = new AnswerModel { Content = TB_SecondAnswer.Text };
-            AnswerModel answer3 = new AnswerModel { Content = TB_ThirdAnswer.Text };
-            AnswerModel answer4 = new AnswerModel { Content = TB_FourthAnswer.Text };
+            AnswerModel answer1 = new AnswerModel { Content = content1Answer};
+            AnswerModel answer2 = new AnswerModel { Content = content2Answer };
+            AnswerModel answer3 = new AnswerModel { Content = content3Answer };
+            AnswerModel answer4 = new AnswerModel { Content = content4Answer };
 
             QuestionModel question = new QuestionModel
             {
                 Content = contentQuestion
             };
-            _allAnswer.Add(answer1);
+            _allAnswer.Add(new AnswerModel { Content = content1Answer });
+            _allAnswer.Add(new AnswerModel { Content = content2Answer });
+            _allAnswer.Add(new AnswerModel { Content = content3Answer });
+            _allAnswer.Add(new AnswerModel { Content = content4Answer });
             _allQuest.Add(question);
         }
 
@@ -250,25 +253,20 @@ namespace TelegramTestBot.UI
                 int teacherId = _authorizedTeacher; 
                 List<QuestionModel> questions = _allQuest;
                 List<AnswerModel> answers = _allAnswer;
+                bool isCorr = false;
 
                 testService.CreateTest(testName, teacherId, questions);
 
-
-                foreach (var question in questions)
-                {
-                    testService.CreateQuestion(question.Content,question.TestId,answers);
-                    foreach (var answer in answers)
+                    foreach (var question in questions)
                     {
-                        testService.CreateAnswer(answer.Content,false);
+                        testService.CreateAnswer(question.Content, question.TestId, answers);
                     }
-
-                }
-            }
+        }
             catch (Exception)
             {
 
             }
-        }
+}
     }
 }
 

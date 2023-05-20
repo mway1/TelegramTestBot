@@ -20,7 +20,7 @@ public class TestService
 
     }
 
-    public TestModel CreateTest(string name,int teacherId,List<QuestionModel> questions)
+    public void CreateTest(string name,int teacherId,List<QuestionModel> questions)
     {
         TestModel test = new TestModel() { Name = name, TeacherId = teacherId };
         _testmodelManager.AddTest(test);
@@ -32,14 +32,11 @@ public class TestService
             _questionModelManager.AddQuestion(question);
         }
 
-    return test;
 
     }
     
-    public QuestionModel CreateQuestion(string text,int testId,List<AnswerModel> answers)
+    public void CreateAnswer(string text,int testId,List<AnswerModel> answers)
     {
-        var question=new QuestionModel { Content = text };
-        _questionModelManager.AddQuestion(question);
         int questionId = _questionModelManager.GetLastQuestionAdded(testId);
 
         foreach (var answer in answers)
@@ -47,15 +44,6 @@ public class TestService
             answer.QuestionId = questionId;
             _answerModelManager.AddAnswer(answer);
         }
-        return question;
-    }
-
-    public AnswerModel CreateAnswer(string text,bool isCorrect)
-    {
-        var answer = new AnswerModel { Content = text,IsCorrect=isCorrect};
-        _answerModelManager.AddAnswer(answer);
-        return answer;
-
     }
 
 
