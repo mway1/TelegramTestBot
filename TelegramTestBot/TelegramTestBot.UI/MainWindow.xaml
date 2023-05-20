@@ -113,7 +113,7 @@
                                 <Label x:Name="Label_NameQuest" Content="Введите вопрос" HorizontalAlignment="Left" Margin="50,76,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold"/>
                                 <TextBox  x:Name="Tb_ContentQuestuon" HorizontalAlignment="Left" Margin="26,97,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="190" Height="20"/>
                                 <Label x:Name="Label_CreatedQuest" Content="Созданные вопросы:" HorizontalAlignment="Left" Margin="50,142,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold"/>
-                                <ListBox x:Name="LB_CreatedQuestion"  d:ItemsSource="{d:SampleData ItemCount=5}" Margin="26,173,348,94" Loaded="LB_CreatedQuestion_Loaded"/>
+                                <ListBox x:Name="LB_CreatedQuestion"  DisplayMemberPath="Content" Margin="26,173,348,94" Loaded="LB_CreatedQuestion_Loaded"/>
                                 <TextBox x:Name="TB_FirstAnswer" HorizontalAlignment="Left" Margin="344,123,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="133" Height="20"/>
                                 <TextBox x:Name="TB_SecondAnswer" HorizontalAlignment="Left" Margin="344,151,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="133" Height="19"/>
                                 <TextBox x:Name="TB_FourthAnswer" HorizontalAlignment="Left" Margin="344,203,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="133" Height="18"/>

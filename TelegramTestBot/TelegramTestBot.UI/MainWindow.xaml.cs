@@ -32,6 +32,7 @@ namespace TelegramTestBot.UI
         }
 
         private int _authorizedTeacher;
+        private int _createdTestId;
 
         private TeacherModelManager _teacherModelManager = new TeacherModelManager();
         private TestModelManager _testModelManager = new TestModelManager();
@@ -39,27 +40,7 @@ namespace TelegramTestBot.UI
         private List<QuestionModel> _allQuest = new List<QuestionModel>();
         private List<AnswerModel> _allAnswer = new List<AnswerModel>();
         private TestService testService = new TestService();
-        private int _createdTestId;
-
         private Data _data = new Data();
-
-        private List<QuestionModel> GetQuestionsFromUI()
-        {
-                List<QuestionModel> questions = new List<QuestionModel>();
-                foreach (var questionItem in LB_CreatedQuestion.Items)
-                {
-                string questionText = questionItem.ToString();
-
-               QuestionModel question = new QuestionModel
-               {
-                   Content = questionText
-               };
-
-                questions.Add(question);
-                }
-                return questions;
-        }
-
 
         private void B_signin_Click(object sender, RoutedEventArgs e)
         {
@@ -190,12 +171,6 @@ namespace TelegramTestBot.UI
             //TestModel selectedTest = (TestModel)LB_CreatedTest.SelectedItem;
             
             //TBox_CreateEdittTest.Text = selectedTest.Name;
-
-            //if (Tb_ContentQuestuon.Text.Length > 0)
-            //{
-
-            //}
-            //else MessageBox.Show("");
             
         }
 
@@ -270,6 +245,8 @@ namespace TelegramTestBot.UI
                         testService.CreateAnswer(question.Content, question.TestId, answers);
                     }
 
+                List<QuestionModel> creatingQuest = _questionModelManager.GetQuestionByTestId(testId);
+                LB_CreatedQuestion.ItemsSource = creatingQuest;
                 _allQuest.Clear();
                 _allAnswer.Clear();
                 Tb_ContentQuestuon.Clear();

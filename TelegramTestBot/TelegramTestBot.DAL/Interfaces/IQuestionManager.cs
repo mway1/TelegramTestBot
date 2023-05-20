@@ -9,6 +9,7 @@ namespace TelegramTestBot.DAL.Interfaces
         void UpdateQuestionById(QuestionDTO newQuestion);
         List<QuestionDTO> GetAllQuestions();
         QuestionDTO GetQuestionById(int questionId);
+        List<QuestionDTO> GetQuestionByTestId(int testId);
         int GetLastQuestionAdded(int testId);
     }
 }
