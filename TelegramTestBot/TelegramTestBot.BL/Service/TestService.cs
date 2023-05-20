@@ -20,19 +20,13 @@ public class TestService
 
     }
 
-    public void CreateTest(string name,int teacherId,List<QuestionModel> questions)
+    public void CreateQuestion(int testId,List<QuestionModel> questions)
     {
-        TestModel test = new TestModel() { Name = name, TeacherId = teacherId };
-        _testmodelManager.AddTest(test);
-        int testId = _testmodelManager.GetLastTestAdded(teacherId);
-       
         foreach (var question in questions)
         {
             question.TestId = testId;
             _questionModelManager.AddQuestion(question);
         }
-
-
     }
     
     public void CreateAnswer(string text,int testId,List<AnswerModel> answers)
