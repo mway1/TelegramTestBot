@@ -172,24 +172,17 @@ namespace TelegramTestBot.UI
 
         private void Button_SaveNameOfTest_Click(object sender, RoutedEventArgs e)
         {
-            //    var nameOfNewTest = TB_NewTestorEditName.Text;
-            //    if (TB_NewTestorEditName.Text.Length > 0)
-            //    {
-            //        TBox_CreateEdittTest.Text = nameOfNewTest;
-            //        TestModel test = new TestModel()
-            //        {
-            //        Name = TB_NewTestorEditName.Text,
-            //        TeacherId = _authorizedTeacher 
-            //        };
-            //        _testModelManager.AddTest(test);
-            //        TB_NewTestorEditName.Clear();
-            //        LB_CreatedTest.Items.Refresh();
-            //        List<TestModel> Updatetest = _testModelManager.GetTestByTeacherId(_authorizedTeacher);
-            //        LB_CreatedTest.ItemsSource = Updatetest;
-            //        GridTest.Visibility = Visibility.Visible;
-            //    }
-            //    else MessageBox.Show("Введите название теста");
+            if (TB_NewTestorEditName.Text.Length > 0)
+            {
+                TestModel newTest = new TestModel { Name = TB_NewTestorEditName.Text, TeacherId = _authorizedTeacher };
+                _testModelManager.AddTest(newTest);
+                TBox_CreateEdittTest.Text = newTest.Name;
+                _createdTestId = _testModelManager.GetLastTestAdded(_authorizedTeacher);
+                GridTest.Visibility = Visibility.Visible;
+                TB_NewTestorEditName.Clear();
             }
+            else MessageBox.Show("Введите название теста!");
+        }
 
 
             private void LB_CreatedTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -219,7 +212,7 @@ namespace TelegramTestBot.UI
                     GridTest.Visibility = Visibility.Visible;
                     TB_NewTestorEditName.Clear();
                 }
-                else MessageBox.Show("Введите вопрос!");
+                else MessageBox.Show("Введите название теста!");
             }
         }
         private void But_EndTest_Click(object sender, RoutedEventArgs e)
@@ -276,6 +269,7 @@ namespace TelegramTestBot.UI
                     {
                         testService.CreateAnswer(question.Content, question.TestId, answers);
                     }
+
                 _allQuest.Clear();
                 _allAnswer.Clear();
                 Tb_ContentQuestuon.Clear();
@@ -290,6 +284,11 @@ namespace TelegramTestBot.UI
 
             }
   
+        }
+
+        private void LB_CreatedQuestion_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
