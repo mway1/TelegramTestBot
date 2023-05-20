@@ -1,13 +1,11 @@
 ﻿CREATE PROCEDURE [dbo].[Group_Add]
-	@Name nvarchar(10),
-	@StudentId int
+	@Name nvarchar(10)
+
 AS
 BEGIN
 INSERT INTO dbo.[Group](
-	[Name],
-	StudentId)
+	[Name])
 VALUES(
-	@Name,
-	@StudentId)
+	@Name)
 SELECT @@IDENTITY
 END

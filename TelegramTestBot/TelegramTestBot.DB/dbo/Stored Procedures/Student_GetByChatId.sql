@@ -3,7 +3,7 @@
 AS
 BEGIN
 
-	SELECT Id, UserChatId, Firstname, Lastname, Surname, Username
+	SELECT Id, UserChatId, Firstname, Lastname, Surname, Username, GroupId
 	FROM dbo.[Student]
 	WHERE UserChatId=@UserChatId
 

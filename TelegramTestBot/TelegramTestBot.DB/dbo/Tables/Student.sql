@@ -5,7 +5,9 @@
     [Lastname]   VARCHAR (30) NULL,
     [Surname]    VARCHAR (30) NOT NULL,
     [Username]   VARCHAR (30) NULL,
+    [GroupId] INT NULL,
     [IsDeleted] BIT NOT NULL DEFAULT(0),
-    PRIMARY KEY CLUSTERED ([Id] ASC)
+    PRIMARY KEY CLUSTERED ([Id] ASC),
+    FOREIGN KEY ([GroupId]) REFERENCES [dbo].[Group] ([Id])
 );
 

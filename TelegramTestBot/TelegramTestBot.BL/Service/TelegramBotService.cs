@@ -20,6 +20,7 @@ namespace TelegramTestBot.BL.Service
         private DataService _dateService = new DataService();
         private StudentModelManager _studentModelManager = new StudentModelManager();
         private TeacherModelManager _techerModelManager = new TeacherModelManager();
+        private GroupModelManager _groupModelManager = new GroupModelManager();
         private readonly TelegramBotClient _botClient;
 
         public TelegramBotService(Action<string> onMessage)
@@ -121,6 +122,8 @@ namespace TelegramTestBot.BL.Service
                 };
 
                 _studentModelManager.AddStudent(regStudent);
+
+                
                 UserAnswers.Remove(id);
 
                 await _botClient.SendTextMessageAsync(new ChatId(id), 

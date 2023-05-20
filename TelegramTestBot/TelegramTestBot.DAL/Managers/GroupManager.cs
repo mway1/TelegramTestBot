@@ -18,8 +18,7 @@ namespace TelegramTestBot.DAL.Managers
                         StoredProcedures.Group_Add,
                         param: new
                         {
-                            Name = newGroup.Name,
-                            StudentId = newGroup.Student!.Id
+                            Name = newGroup.Name
                         },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
@@ -53,8 +52,7 @@ namespace TelegramTestBot.DAL.Managers
                         param: new
                         {
                             newGroup.Id,
-                            newGroup.Name,
-                            StudentId = newGroup.Student!.Id
+                            newGroup.Name
                         },
                         commandType: System.Data.CommandType.StoredProcedure
                     );

@@ -23,6 +23,7 @@ namespace TelegramTestBot.DAL.Managers
                             LastName = newStudent.Lastname,
                             SurName = newStudent.Surname,
                             Username = newStudent.Username,
+                            GroupId = newStudent.GroupId
                         },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
@@ -61,6 +62,7 @@ namespace TelegramTestBot.DAL.Managers
                             newStudent.Lastname,
                             newStudent.Surname,
                             newStudent.Username,
+                            newStudent.GroupId
                         },
                         commandType: System.Data.CommandType.StoredProcedure
                     );

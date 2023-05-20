@@ -4,8 +4,6 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int StudentId { get; set; }
-        public StudentModel Student { get; set; }
 
         public GroupModel()
         {
@@ -25,8 +23,7 @@
                 GroupModel groupDTO = (GroupModel)obj!;
 
                 if (groupDTO.Id != this.Id ||
-                    groupDTO.Name != this.Name ||
-                    groupDTO.Student!.Id != this.Student!.Id)
+                    groupDTO.Name != this.Name)
                 {
                     flag = false;
                 }

@@ -4,7 +4,8 @@
 	@Firstname nvarchar(30),
 	@Lastname nvarchar(30),
 	@Surname nvarchar(30),
-	@Username nvarchar(30)
+	@Username nvarchar(30),
+	@GroupId int
 
 AS
 BEGIN
@@ -14,7 +15,8 @@ SET UserChatId = @UserChatId,
 	Firstname = @Firstname,
     Lastname = @Lastname,
     Surname = @Surname,
-    Username = @Username
+    Username = @Username,
+	GroupId = @GroupId
 
 WHERE Id = @Id
 

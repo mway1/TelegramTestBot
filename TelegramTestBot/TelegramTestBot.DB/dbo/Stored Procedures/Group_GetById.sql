@@ -3,7 +3,7 @@
 AS
 BEGIN
 
-	SELECT Id, [Name], StudentId
+	SELECT Id, [Name]
 	FROM dbo.[Group]
 	WHERE Id=@Id
 

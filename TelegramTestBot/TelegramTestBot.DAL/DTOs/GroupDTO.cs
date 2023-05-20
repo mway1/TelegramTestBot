@@ -4,8 +4,6 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int StudentId { get; set; }
-        public StudentDTO Student { get; set; }
 
         public GroupDTO()
         {
@@ -25,7 +23,6 @@
 
             if (groupDTO.Id != this.Id ||
                 groupDTO.Name != this.Name ||
-                groupDTO.Student!.Id != this.Student!.Id)
             {
                 flag = false;
             }
