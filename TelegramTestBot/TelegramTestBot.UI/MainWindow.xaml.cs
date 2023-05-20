@@ -25,7 +25,12 @@ namespace TelegramTestBot.UI
     {
         private List<string> _labels;
         private TeacherModelManager _teacherModelManager = new TeacherModelManager();
+        private TestModelManager _testModelManager = new TestModelManager();
+        private QuestionModelManager _questionModelManager = new QuestionModelManager();
+        private List<QuestionModel> _allQuest = new List<QuestionModel>();
+        private List<AnswerModel> _allAnswer = new List<AnswerModel>();
         private TelegramBotService _telegramBotService;
+        private TestService testService = new TestService();
         private DataService _dataService = new DataService();
 
         public MainWindow()
@@ -47,13 +52,6 @@ namespace TelegramTestBot.UI
         private int _authorizedTeacher;
         private int _createdTestId;
 
-        private TeacherModelManager _teacherModelManager = new TeacherModelManager();
-        private TestModelManager _testModelManager = new TestModelManager();
-        private QuestionModelManager _questionModelManager = new QuestionModelManager();
-        private List<QuestionModel> _allQuest = new List<QuestionModel>();
-        private List<AnswerModel> _allAnswer = new List<AnswerModel>();
-        private TestService testService = new TestService();
-        private Data _data = new Data();
 
         private void B_signin_Click(object sender, RoutedEventArgs e)
         {

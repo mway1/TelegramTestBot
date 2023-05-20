@@ -22,7 +22,7 @@
             GroupDTO groupDTO = (GroupDTO)obj!;
 
             if (groupDTO.Id != this.Id ||
-                groupDTO.Name != this.Name ||
+                groupDTO.Name != this.Name)
             {
                 flag = false;
             }
