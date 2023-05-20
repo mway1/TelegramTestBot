@@ -8,6 +8,14 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <TabControl x:Name="TabControl_Main" >
+            <TabItem x:Name="TabItem_StartPage" Header="Главная страница">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </TabItem>
             <TabItem x:Name="Auth" Header="Авторизация">
                 <Grid >
                     <TextBox x:Name="TB_login" HorizontalAlignment="Left" Margin="35,38,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="170" Height="26" Grid.Column="1" Grid.Row="1"/>
