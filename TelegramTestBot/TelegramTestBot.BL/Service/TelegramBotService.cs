@@ -104,7 +104,7 @@ namespace TelegramTestBot.BL.Service
 
         private async void SendRegForm(long id, string? username, int numOfForm = 0)
         {
-            List<string> questions = new List<string>() { "Ваше Имя:", "Ваша Фамилия:", "Ваше Отчество:" };
+            List<string> questions = new List<string>() { "Ваше Имя:", "Ваша Фамилия:", "Ваше Отчество:", "Ваша группа:" };
 
             if (numOfForm <= questions.Count - 1)
             {
@@ -119,6 +119,7 @@ namespace TelegramTestBot.BL.Service
                     Surname = UserAnswers[id][1],
                     Lastname = UserAnswers[id][2], 
                     Username = username,
+                    GroupId = 1
                 };
 
                 _studentModelManager.AddStudent(regStudent);
