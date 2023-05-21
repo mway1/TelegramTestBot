@@ -114,36 +114,28 @@ namespace TelegramTestBot.BL.Service
                     {                            
                         if (!_dateService.CheckStudentChatIdForUnique(id))
                         {
-                            StudentModel student = _studentModelManager.GetStudentByChatId(id);
-
                             if (!UserAnswersForGroup.ContainsKey(id))
                             {
                                 UserAnswersForGroup.Add(id, new List<string>());
                             }
-                            else if (student.GroupId == 1)
+                            else if (!_dateService.CheckNameOfGroupForUnique(msg))
                             {
-                                if (!_dateService.CheckNameOfGroupForUnique(msg))
-                                {
-                                    int num;
-                                    List<GroupModel> groups = _groupModelManager.GetGroupByEnteredText(msg);
-                                    UserAnswersForGroup.Remove(id);
+                                int num;
+                                List<GroupModel> groups = _groupModelManager.GetGroupByEnteredText(msg);
+                                UserAnswersForGroup.Remove(id);
 
-                                    if (groups.Count <= 2)
-                                        num = 0;
-                                    else
-                                        num = 3;
+                                if (groups.Count <= 2)
+                                    num = 0;
+                                else
+                                    num = 3;
                                 
-                                    var inlineKeyboard = new InlineKeyboardMarkup(InlineKeyboardMarkupMaker(groups, num));
+                                var inlineKeyboard = new InlineKeyboardMarkup(InlineKeyboardMarkupMaker(groups, num));
 
-                                    await _botClient.SendTextMessageAsync(new ChatId(id), 
-                                        "Выберите вашу группу:\n" + "\n\nГлавное меню - /menu", replyMarkup: inlineKeyboard);
-                                }
-                                else                                
-                                    SendMessagesForUser(id, username, ", такой группы не существует! \nГлавное меню - /menu");                               
+                                await _botClient.SendTextMessageAsync(new ChatId(id), 
+                                    "Выберите вашу группу:\n" + "\n\nГлавное меню - /menu", replyMarkup: inlineKeyboard);
                             }
-                            else                            
-                                SendMessagesForUser(id, username, ", вы уже записаны в выбранную вами группу! " +
-                                    "В случае ошибочного выбора - обратитесь к преподавателю! \nГлавное меню - /menu");                            
+                            else                                
+                                SendMessagesForUser(id, username, ", такой группы не существует! \nГлавное меню - /menu");                                                                                     
                         }
                         else
                             SendMessagesForUser(id, username, ", чтобы использовать данную команду, зарегистрируйтесь! \nГлавное меню - /menu");
@@ -240,24 +232,30 @@ namespace TelegramTestBot.BL.Service
                 else
                 {
                     StudentModel editStudent = _studentModelManager.GetStudentByChatId(update.CallbackQuery.Message!.Chat.Id);
-                    bool checkForSuccess = int.TryParse(update.CallbackQuery.Data, out int groupId);
-                    
-                    if (checkForSuccess)
-                    {
-                        editStudent.GroupId = groupId;
 
-                        EditMessagesWithKeyboard(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId,
-                            "Поздравляем, вы добавлены в группу! \nГлавное меню - /menu");
+                    if (editStudent.GroupId == 1)
+                    {
+                        bool checkForSuccess = int.TryParse(update.CallbackQuery.Data, out int groupId);
+                    
+                        if (checkForSuccess)
+                        {
+                            editStudent.GroupId = groupId;
+
+                            _studentModelManager.UpdateStudentById(editStudent);
+
+                            EditMessagesWithKeyboard(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId,
+                                "Поздравляем, вы добавлены в группу! \nГлавное меню - /menu");
+                        }
+                        else
+                        {
+                            EditMessagesWithKeyboard(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId,
+                                "Не получилось добавить Вас в новую группу, попробуйте еще раз. \nГлавное меню - /menu");
+                        }
                     }
                     else
-                    {
-                        editStudent.GroupId = 1;
-
-                        EditMessagesWithKeyboard(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId,
-                            "Не получилось добавить Вас в новую группу, попробуйте еще раз. \nГлавное меню - /menu");
-                    }
-
-                    _studentModelManager.UpdateStudentById(editStudent);
+                        EditMessagesWithKeyboard(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId, 
+                            "Вы уже состоите в группе!" +
+                            "\nВ случае ошибочного выбора - обратитесь к преподавателю! \nГлавное меню - /menu");
                 }
             }
             else if (update.Message?.Text != null && UserAnswers.ContainsKey(update.Message.Chat.Id))
