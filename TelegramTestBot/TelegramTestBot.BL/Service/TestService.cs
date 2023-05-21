@@ -29,7 +29,7 @@ public class TestService
         }
     }
     
-    public void CreateAnswer(string text,int testId,List<AnswerModel> answers)
+    public void CreateAnswer(int testId,List<AnswerModel> answers)
     {
         int questionId = _questionModelManager.GetLastQuestionAdded(testId);
 
@@ -40,6 +40,25 @@ public class TestService
         }
     }
 
+    public void EditQuestion(int questionId,int testId, List<QuestionModel> questions)
+    {
+        foreach (var question in questions)
+        {
+            question.Id = questionId;
+            question.TestId = testId;
+            _questionModelManager.UpdateQuestionById(question);
+        }
+    }
+    public void EditAnswer(int questionId,List<AnswerModel> answers)
+    {
+        //int questionId = _questionModelManager.GetLastQuestionAdded(testId);
+
+        foreach (var answer in answers)
+        {
+            answer.QuestionId = questionId;
+            _answerModelManager.UpdateAnswerById(answer);
+        }
+    }
 
 
 }

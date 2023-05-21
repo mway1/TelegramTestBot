@@ -26,10 +26,12 @@ namespace TelegramTestBot.UI
 
         private int _authorizedTeacher;
         private int _createdTestId;
+        private int _updatedQuestId;
         private List<string> _labels;
         private TeacherModelManager _teacherModelManager = new TeacherModelManager();
         private TestModelManager _testModelManager = new TestModelManager();
         private QuestionModelManager _questionModelManager = new QuestionModelManager();
+        private AnswerModelManager _answerModelManager = new AnswerModelManager();
         private List<QuestionModel> _allQuest = new List<QuestionModel>();
         private List<AnswerModel> _allAnswer = new List<AnswerModel>();
         private TelegramBotService _telegramBotService;
@@ -267,7 +269,7 @@ namespace TelegramTestBot.UI
 
                     foreach (var question in questions)
                     {
-                        testService.CreateAnswer(question.Content, question.TestId, answers);
+                        testService.CreateAnswer(question.TestId, answers);
                     }
 
                 List<QuestionModel> creatingQuest = _questionModelManager.GetQuestionByTestId(testId);
@@ -290,7 +292,8 @@ namespace TelegramTestBot.UI
 
         private void LB_CreatedQuestion_Loaded(object sender, RoutedEventArgs e)
         {
-
+            List<QuestionModel> creatingQuest = _questionModelManager.GetQuestionByTestId(_createdTestId);
+            LB_CreatedQuestion.ItemsSource = creatingQuest;
         }
 
         private void But_EndCreatingTest_Click(object sender, RoutedEventArgs e)
@@ -330,6 +333,98 @@ namespace TelegramTestBot.UI
         {
             _authorizedTeacher = 0;
             TabControl_Main.SelectedItem = Auth;
+        }
+
+        private void Button_EditTest_Click(object sender, RoutedEventArgs e)
+        {
+            TestModel selectedTest = (TestModel)LB_CreatedTest.SelectedItem;
+            TBox_CreateEdittTest.Text = selectedTest.Name;
+            _createdTestId = selectedTest.Id;
+            GridTest.Visibility = Visibility.Visible;
+            List<QuestionModel> creatingQuest = _questionModelManager.GetQuestionByTestId(_createdTestId);
+            LB_CreatedQuestion.ItemsSource = creatingQuest;
+        }
+
+        private void LB_CreatedQuestion_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            QuestionModel selectedQuestion = (QuestionModel)LB_CreatedQuestion.SelectedItem;
+            Tb_ContentQuestuon.Text = selectedQuestion.Content;
+            _updatedQuestId=selectedQuestion.Id;
+            List<AnswerModel> answersForQuest = _answerModelManager.GetAnswerByQuestionId(selectedQuestion.Id);
+            TB_FirstAnswer.Text = answersForQuest[0].Content;
+            TB_SecondAnswer.Text = answersForQuest[1].Content;
+            TB_ThirdAnswer.Text = answersForQuest[2].Content;
+            TB_FourthAnswer.Text = answersForQuest[3].Content;
+        }
+
+        private void But_EditQuestion_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string contentQuestion = Tb_ContentQuestuon.Text;
+                string content1Answer = TB_FirstAnswer.Text;
+                string content2Answer = TB_SecondAnswer.Text;
+                string content3Answer = TB_ThirdAnswer.Text;
+                string content4Answer = TB_FourthAnswer.Text;
+                _allQuest.Add(new QuestionModel { Content = contentQuestion });
+                if (RB_RightAnswer1.IsChecked == true)
+                {
+                    TB_RightAnswerForQuest.Text = content1Answer;
+                    _allAnswer.Add(new AnswerModel { Content = content1Answer, IsCorrect = true });
+                    _allAnswer.Add(new AnswerModel { Content = content2Answer });
+                    _allAnswer.Add(new AnswerModel { Content = content3Answer });
+                    _allAnswer.Add(new AnswerModel { Content = content4Answer });
+                }
+                else if (RB_RightAnswer2.IsChecked == true)
+                {
+                    TB_RightAnswerForQuest.Text = content2Answer;
+                    _allAnswer.Add(new AnswerModel { Content = content1Answer });
+                    _allAnswer.Add(new AnswerModel { Content = content2Answer, IsCorrect = true });
+                    _allAnswer.Add(new AnswerModel { Content = content3Answer });
+                    _allAnswer.Add(new AnswerModel { Content = content4Answer });
+                }
+                else if (RB_RightAnswer3.IsChecked == true)
+                {
+                    TB_RightAnswerForQuest.Text = content3Answer;
+                    _allAnswer.Add(new AnswerModel { Content = content1Answer });
+                    _allAnswer.Add(new AnswerModel { Content = content2Answer });
+                    _allAnswer.Add(new AnswerModel { Content = content3Answer, IsCorrect = true });
+                    _allAnswer.Add(new AnswerModel { Content = content4Answer });
+                }
+                else if (RB_RightAnswer4.IsChecked == true)
+                {
+                    TB_RightAnswerForQuest.Text = content4Answer;
+                    _allAnswer.Add(new AnswerModel { Content = content1Answer });
+                    _allAnswer.Add(new AnswerModel { Content = content2Answer });
+                    _allAnswer.Add(new AnswerModel { Content = content3Answer });
+                    _allAnswer.Add(new AnswerModel { Content = content4Answer, IsCorrect = true });
+                }
+
+                int testId = _createdTestId;
+                List<QuestionModel> questions = _allQuest;
+                List<AnswerModel> answers = _allAnswer;
+
+                testService.EditQuestion(_updatedQuestId,testId, questions);
+                //foreach (var question in questions)
+                //{
+                        testService.EditAnswer(_updatedQuestId, answers);
+                //}
+
+                List<QuestionModel> creatingQuest = _questionModelManager.GetQuestionByTestId(testId);
+                LB_CreatedQuestion.ItemsSource = creatingQuest;
+                _allQuest.Clear();
+                _allAnswer.Clear();
+                Tb_ContentQuestuon.Clear();
+                TB_FirstAnswer.Clear();
+                TB_SecondAnswer.Clear();
+                TB_ThirdAnswer.Clear();
+                TB_FourthAnswer.Clear();
+
+            }
+            catch (Exception)
+            {
+
+            }
         }
     }
 }
