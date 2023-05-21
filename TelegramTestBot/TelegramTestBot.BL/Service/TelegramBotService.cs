@@ -232,6 +232,36 @@ namespace TelegramTestBot.BL.Service
                       "Введите Вашу группу полностью (Пр: 1234) или часть (Пр: 12):",
                       replyMarkup: null);
                 }
+                else
+                {
+                    StudentModel editStudent = _studentModelManager.GetStudentByChatId(update.CallbackQuery.Message!.Chat.Id);
+                    int groupId;
+                    bool checkForSucces = int.TryParse(update.CallbackQuery.Data, out groupId);
+                    
+                    if (checkForSucces)
+                    {
+                        editStudent = new StudentModel() { GroupId = groupId };
+                        
+                        await _botClient.EditMessageTextAsync(
+                          update.CallbackQuery.Message!.Chat.Id,
+                          update.CallbackQuery.Message.MessageId,
+                          "Поздравляем, вы добавлены в группу! \nГлавное меню - /menu",
+                          replyMarkup: null);
+                    }
+                    else
+                    {
+                        editStudent = new StudentModel() { GroupId = 1 };
+
+                        await _botClient.EditMessageTextAsync(
+                          update.CallbackQuery.Message!.Chat.Id,
+                          update.CallbackQuery.Message.MessageId,
+                          "Не получилось добавить Вас в новую группу. \nГлавное меню - /menu",
+                          replyMarkup: null);
+                    }
+
+                    _studentModelManager.UpdateStudentById(editStudent);
+
+                }
             }
             else if (update.Message?.Text != null && UserAnswers.ContainsKey(update.Message.Chat.Id))
             {
