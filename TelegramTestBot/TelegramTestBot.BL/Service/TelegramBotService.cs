@@ -33,26 +33,17 @@ namespace TelegramTestBot.BL.Service
         public void StartBot(string pass)
         {
             if (pass == "12345")
-            _botClient.StartReceiving(HandleUpdateAsync, HandleErrorAsync);
+                _botClient.StartReceiving(HandleUpdateAsync, HandleErrorAsync);
         }
 
         private static InlineKeyboardButton[][] InlineKeyboardMarkupMaker(List<GroupModel> groups, int btnsPerRow = 0)
-        { 
+        {
             var buttonsKeyboard = groups.Select(g => InlineKeyboardButton.WithCallbackData(g.Name, $"{g.Id}"));
 
             if (btnsPerRow == 0)
                 return new InlineKeyboardButton[][] { buttonsKeyboard.ToArray() };
             else
                 return buttonsKeyboard.Chunk(btnsPerRow).Select(g => g.ToArray()).ToArray();
-        }
-
-        private async void EditMessagesWithKeyboard(long chatId, int msgId, string text)
-        {
-            await _botClient.EditMessageTextAsync(
-                      chatId,
-                      msgId,
-                      text,
-                      replyMarkup: null);
         }
 
         private async void MakeActionWithBot(long id, ActionType type, string username = "User", string msg = " ")
@@ -68,7 +59,7 @@ namespace TelegramTestBot.BL.Service
                     }
                 case ActionType.reg:
                     {
-                        if (_dateService.CheckStudentChatIdForUnique(id) == true)
+                        if (_dateService.CheckStudentChatIdForUnique(id))
                         {
                             if (!UserAnswers.ContainsKey(id))
                             {
@@ -84,14 +75,13 @@ namespace TelegramTestBot.BL.Service
                             }
                         }
                         else
-                            await _botClient.SendTextMessageAsync(new ChatId(id), 
-                                username + ", вы уже зарегистрированы, ждите заданий от преподавателя! \nГлавное меню - /menu");
+                            SendMessagesForUser(id, username, ", вы уже зарегистрированы, ждите заданий от преподавателя! \nГлавное меню - /menu");
 
                         break;
                     }
                 case ActionType.teachers:
                     {                       
-                        if (_dateService.CheckStudentChatIdForUnique(id) == false)
+                        if (!_dateService.CheckStudentChatIdForUnique(id))
                         {
                             try
                             {
@@ -112,8 +102,8 @@ namespace TelegramTestBot.BL.Service
                             }
                         }
                         else
-                            await _botClient.SendTextMessageAsync(new ChatId(id), 
-                                username + ", чтобы использовать данную команду, зарегистрируйтесь! \nГлавное меню - /menu");
+                            SendMessagesForUser(id, username, ", чтобы использовать данную команду, зарегистрируйтесь! \nГлавное меню - /menu");
+
                         break;
                     }
                 case ActionType.test:
@@ -121,38 +111,60 @@ namespace TelegramTestBot.BL.Service
                         break;
                     }
                 case ActionType.groups:
-                    {                                               
-                        if (!UserAnswersForGroup.ContainsKey(id))
+                    {                            
+                        if (!_dateService.CheckStudentChatIdForUnique(id))
                         {
-                            UserAnswersForGroup.Add(id, new List<string>());
+                            StudentModel student = _studentModelManager.GetStudentByChatId(id);
+
+                            if (!UserAnswersForGroup.ContainsKey(id))
+                            {
+                                UserAnswersForGroup.Add(id, new List<string>());
+                            }
+                            else if (student.GroupId == 1)
+                            {
+                                if (!_dateService.CheckNameOfGroupForUnique(msg))
+                                {
+                                    int num;
+                                    List<GroupModel> groups = _groupModelManager.GetGroupByEnteredText(msg);
+                                    UserAnswersForGroup.Remove(id);
+
+                                    if (groups.Count <= 2)
+                                        num = 0;
+                                    else
+                                        num = 3;
+                                
+                                    var inlineKeyboard = new InlineKeyboardMarkup(InlineKeyboardMarkupMaker(groups, num));
+
+                                    await _botClient.SendTextMessageAsync(new ChatId(id), 
+                                        "Выберите вашу группу:\n" + "\n\nГлавное меню - /menu", replyMarkup: inlineKeyboard);
+                                }
+                                else                                
+                                    SendMessagesForUser(id, username, ", такой группы не существует! \nГлавное меню - /menu");                               
+                            }
+                            else                            
+                                SendMessagesForUser(id, username, ", вы уже записаны в выбранную вами группу! " +
+                                    "В случае ошибочного выбора - обратитесь к преподавателю! \nГлавное меню - /menu");                            
                         }
                         else
-                        {
-                            if (!_dateService.CheckNameOfGroupForUnique(msg))
-                            {
-                                int num;
-                                List<GroupModel> groups = _groupModelManager.GetGroupByEnteredText(msg);
-                                UserAnswersForGroup.Remove(id);
+                            SendMessagesForUser(id, username, ", чтобы использовать данную команду, зарегистрируйтесь! \nГлавное меню - /menu");
 
-                                if (groups.Count <= 2)
-                                    num = 0;
-                                else
-                                    num = 3;
-                                
-                                var inlineKeyboard = new InlineKeyboardMarkup(InlineKeyboardMarkupMaker(groups, num));
-
-                                await _botClient.SendTextMessageAsync(new ChatId(id), 
-                                    "Выберите вашу группу:\n" + "\n\nГлавное меню - /menu", replyMarkup: inlineKeyboard);
-                            }
-                            else
-                            {
-                                await _botClient.SendTextMessageAsync(new ChatId(id),
-                                username + ", такой группы не существует! \nГлавное меню - /menu");
-                            }
-                        }                        
                         break;
                     }
             }
+        }
+
+        private async void EditMessagesWithKeyboard(long chatId, int msgId, string text)
+        {
+            await _botClient.EditMessageTextAsync(
+                      chatId,
+                      msgId,
+                      text,
+                      replyMarkup: null);
+        }
+
+        private async void SendMessagesForUser(long chatId, string username = "User", string text = " ")
+        {
+            await _botClient.SendTextMessageAsync(new ChatId(chatId), username + text);
         }
 
         private async void SendRegForm(long id, string? username, int numOfForm = 0)
@@ -177,9 +189,7 @@ namespace TelegramTestBot.BL.Service
 
                 _studentModelManager.AddStudent(regStudent);            
                 UserAnswers.Remove(id);
-
-                await _botClient.SendTextMessageAsync(new ChatId(id), 
-                    "Поздравляем, вы зарегистрированы, ожидайте заданий от преподавателя \nГлавное меню - /menu");
+                SendMessagesForUser(id, "Поздравляем, вы зарегистрированы, ожидайте заданий от преподавателя \nГлавное меню - /menu");
             }
         }
 
@@ -230,9 +240,9 @@ namespace TelegramTestBot.BL.Service
                 else
                 {
                     StudentModel editStudent = _studentModelManager.GetStudentByChatId(update.CallbackQuery.Message!.Chat.Id);
-                    bool checkForSucces = int.TryParse(update.CallbackQuery.Data, out int groupId);
+                    bool checkForSuccess = int.TryParse(update.CallbackQuery.Data, out int groupId);
                     
-                    if (checkForSucces)
+                    if (checkForSuccess)
                     {
                         editStudent.GroupId = groupId;
 
