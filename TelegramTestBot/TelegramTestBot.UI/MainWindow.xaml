@@ -122,10 +122,10 @@
                     <Label Content="Создать новый тест:" Grid.Column="0" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold" Margin="10,170,0,0"/>
                     <Label Content="Созданные тесты:" HorizontalAlignment="Left" Margin="16,3,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold"/>
                     <ListBox x:Name="LB_CreatedTest"  Grid.Column="0" DisplayMemberPath="Name"  Margin="0,28,10,261" Loaded="LB_CreatedTest_Loaded" SelectionChanged="LB_CreatedTest_SelectionChanged" />
-                    <TextBox x:Name="TB_NewTestorEditName" Grid.Column="0"  HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="203" Height="23" Margin="0,195,0,0" KeyUp="TB_NewTestorEditName_KeyUp" />
-                    <Button x:Name="Button_EditNameOfTest"  Grid.Column="0" Content="Изменить название" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="116" Margin="0,150,0,0"/>
+                    <TextBox x:Name="TB_NewTestorEditName" Grid.Column="0"  HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="210" Height="23" Margin="0,195,0,0" KeyUp="TB_NewTestorEditName_KeyUp" />
+                    <Button x:Name="Button_EditNameOfTest"  Grid.Column="0" Content="Изменить название" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="116" Margin="0,150,0,0" Click="Button_EditNameOfTest_Click"/>
                     <Button x:Name="Button_EditTest"  Grid.Column="0" Content="Редактировать" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="87" Margin="116,150,0,0" Click="Button_EditTest_Click"/>
-                    <Button x:Name="Button_SaveNameOfTest"  Grid.Column="0" Content="Создать тест" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="203" Height="21" Margin="0,218,0,0" Click="Button_SaveNameOfTest_Click"/>
+                    <Button x:Name="Button_SaveNameOfTest"  Grid.Column="0" Content="Создать тест" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="93" Height="21" Margin="0,218,0,0" Click="Button_SaveNameOfTest_Click"/>
                     <Label Content="Созданные тесты:" Grid.Column="0" HorizontalAlignment="Left" Margin="16,3,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold"/>
                     <TabControl Grid.Column="1">
                         <TabItem x:Name="TabItem_CreatedTest">
@@ -154,6 +154,7 @@
                         </TabItem>
                     </TabControl>
                     <Button x:Name="But_GoStartTest" Content="На главную" HorizontalAlignment="Left" Margin="22,297,0,0" VerticalAlignment="Top" Height="23" Width="162" Click="But_GoStartTest_Click"/>
+                    <Button x:Name="Button_EditNameOfTestForNew"  Grid.Column="0" Content="Изменить название" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="115" Height="21" Margin="95,218,0,0" Click="Button_EditNameOfTestForNew_Click"/>
 
                 </Grid>
 

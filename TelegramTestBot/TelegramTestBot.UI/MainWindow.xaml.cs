@@ -27,6 +27,7 @@ namespace TelegramTestBot.UI
         private int _authorizedTeacher;
         private int _createdTestId;
         private int _updatedQuestId;
+        private int _updatedTestId;
         private List<string> _labels;
         private TeacherModelManager _teacherModelManager = new TeacherModelManager();
         private TestModelManager _testModelManager = new TestModelManager();
@@ -350,6 +351,8 @@ namespace TelegramTestBot.UI
         {
             try
             {
+            if(LB_CreatedQuestion.SelectedItem != null)
+            {
             QuestionModel selectedQuestion = (QuestionModel)LB_CreatedQuestion.SelectedItem;
             Tb_ContentQuestuon.Text = selectedQuestion.Content;
             _updatedQuestId=selectedQuestion.Id;
@@ -364,6 +367,7 @@ namespace TelegramTestBot.UI
                 {
                     TB_RightAnswerForQuest.Text=answer.Content;
                 }
+            }
             }
 
             }
@@ -450,6 +454,23 @@ namespace TelegramTestBot.UI
 
             }
 }
+
+
+
+        private void Button_EditNameOfTest_Click(object sender, RoutedEventArgs e)
+        {
+            TestModel selectedTest = (TestModel)LB_CreatedTest.SelectedItem;
+            TB_NewTestorEditName.Text = selectedTest.Name;
+            _updatedTestId = selectedTest.Id;
+        }
+        private void Button_EditNameOfTestForNew_Click(object sender, RoutedEventArgs e)
+        {
+            TestModel updatedtest = new TestModel { Id = _updatedTestId, Name = TB_NewTestorEditName.Text,TeacherId=_authorizedTeacher };
+            _testModelManager.UpdateTestById(updatedtest);
+            TB_NewTestorEditName.Clear();
+            List<TestModel> test = _testModelManager.GetTestByTeacherId(_authorizedTeacher);
+            LB_CreatedTest.ItemsSource = test;
+        }
     }
 }
 
