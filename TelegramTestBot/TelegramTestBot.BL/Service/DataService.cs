@@ -21,8 +21,6 @@ namespace TelegramTestBot.BL.Service
             
         }
 
-       
-
         public bool CheckStudentChatIdForUnique(long studentChatId)
         {
             bool IsUnique;

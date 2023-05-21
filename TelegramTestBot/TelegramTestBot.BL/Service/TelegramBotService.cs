@@ -46,6 +46,15 @@ namespace TelegramTestBot.BL.Service
                 return buttonsKeyboard.Chunk(btnsPerRow).Select(g => g.ToArray()).ToArray();
         }
 
+        private async void EditMessagesWithKeyboard(long chatId, int msgId, string text)
+        {
+            await _botClient.EditMessageTextAsync(
+                      chatId,
+                      msgId,
+                      text,
+                      replyMarkup: null);
+        }
+
         private async void MakeActionWithBot(long id, ActionType type, string username = "User", string msg = " ")
         {
             switch (type)
@@ -148,7 +157,7 @@ namespace TelegramTestBot.BL.Service
 
         private async void SendRegForm(long id, string? username, int numOfForm = 0)
         {
-            List<string> questions = new List<string>() { "Ваше Имя:", "Ваша Фамилия:", "Ваше Отчество:", "Ваша группа:" };
+            List<string> questions = new List<string>() { "Ваше Имя:", "Ваша Фамилия:", "Ваше Отчество:" };
 
             if (numOfForm <= questions.Count - 1)
             {
@@ -166,9 +175,7 @@ namespace TelegramTestBot.BL.Service
                     GroupId = 1
                 };
 
-                _studentModelManager.AddStudent(regStudent);
-
-                
+                _studentModelManager.AddStudent(regStudent);            
                 UserAnswers.Remove(id);
 
                 await _botClient.SendTextMessageAsync(new ChatId(id), 
@@ -205,62 +212,42 @@ namespace TelegramTestBot.BL.Service
                 if (update.CallbackQuery.Data == "/reg")
                 {
                     MakeActionWithBot(update.CallbackQuery.Message!.Chat.Id, ActionType.reg, update.CallbackQuery.Message.Chat.Username);
-
-                    await _botClient.EditMessageTextAsync(
-                      update.CallbackQuery.Message!.Chat.Id,
-                      update.CallbackQuery.Message.MessageId,
-                      "Ответьте на все вопросы ниже:",
-                      replyMarkup: null);
+                    EditMessagesWithKeyboard(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId, 
+                        "Ответьте на все вопросы ниже:");
                 }
                 else if (update.CallbackQuery.Data == "/teachers")
                 {
                     MakeActionWithBot(update.CallbackQuery.Message!.Chat.Id, ActionType.teachers, update.CallbackQuery.Message.Chat.Username);
-
-                    await _botClient.EditMessageTextAsync(
-                      update.CallbackQuery.Message!.Chat.Id,
-                      update.CallbackQuery.Message.MessageId,
-                      "Cписок преподавателей:",
-                      replyMarkup: null);
+                    EditMessagesWithKeyboard(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId, 
+                        "Список преподавателей:");
                 }
                 else if (update.CallbackQuery.Data == "/groups")
                 {
                     MakeActionWithBot(update.CallbackQuery.Message!.Chat.Id, ActionType.groups, update.CallbackQuery.Message.Chat.Username);
-
-                    await _botClient.EditMessageTextAsync(
-                      update.CallbackQuery.Message!.Chat.Id,
-                      update.CallbackQuery.Message.MessageId,
-                      "Введите Вашу группу полностью (Пр: 1234) или часть (Пр: 12):",
-                      replyMarkup: null);
+                    EditMessagesWithKeyboard(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId, 
+                        "Введите Вашу группу полностью (Пр: 1234) или часть (Пр: 12):");
                 }
                 else
                 {
                     StudentModel editStudent = _studentModelManager.GetStudentByChatId(update.CallbackQuery.Message!.Chat.Id);
-                    int groupId;
-                    bool checkForSucces = int.TryParse(update.CallbackQuery.Data, out groupId);
+                    bool checkForSucces = int.TryParse(update.CallbackQuery.Data, out int groupId);
                     
                     if (checkForSucces)
                     {
-                        editStudent = new StudentModel() { GroupId = groupId };
-                        
-                        await _botClient.EditMessageTextAsync(
-                          update.CallbackQuery.Message!.Chat.Id,
-                          update.CallbackQuery.Message.MessageId,
-                          "Поздравляем, вы добавлены в группу! \nГлавное меню - /menu",
-                          replyMarkup: null);
+                        editStudent.GroupId = groupId;
+
+                        EditMessagesWithKeyboard(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId,
+                            "Поздравляем, вы добавлены в группу! \nГлавное меню - /menu");
                     }
                     else
                     {
-                        editStudent = new StudentModel() { GroupId = 1 };
+                        editStudent.GroupId = 1;
 
-                        await _botClient.EditMessageTextAsync(
-                          update.CallbackQuery.Message!.Chat.Id,
-                          update.CallbackQuery.Message.MessageId,
-                          "Не получилось добавить Вас в новую группу. \nГлавное меню - /menu",
-                          replyMarkup: null);
+                        EditMessagesWithKeyboard(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId,
+                            "Не получилось добавить Вас в новую группу, попробуйте еще раз. \nГлавное меню - /menu");
                     }
 
                     _studentModelManager.UpdateStudentById(editStudent);
-
                 }
             }
             else if (update.Message?.Text != null && UserAnswers.ContainsKey(update.Message.Chat.Id))
