@@ -12,6 +12,7 @@
         public const string Group_DeleteById = "Group_DeleteById";
         public const string Group_GetAll = "Group_GetAll";
         public const string Group_GetById = "Group_GetById";
+        public const string Group_GetByEnteredText = "Group_GetByEnteredText";
         public const string Group_UpdateById = "Group_UpdateById";
 
         public const string Question_Add = "Question_Add";

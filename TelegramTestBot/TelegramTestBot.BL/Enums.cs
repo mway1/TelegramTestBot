@@ -12,5 +12,6 @@
         teachers,
         test,
         next,
+        groups,
     }
 }

@@ -7,5 +7,6 @@ namespace TelegramTestBot.BL.Interfaces
         string HashedValue(string value);
         bool CheckStudentChatIdForUnique(long id);
         bool CheckTeacherLoginForUnique(string enterredLogin);
+        bool CheckNameOfGroupForUnique(string name);
     }
 }

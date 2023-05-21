@@ -12,6 +12,7 @@ namespace TelegramTestBot.BL.Service
         private TelegramBotModelManager _telegramBotModelManager = new TelegramBotModelManager();
         private TeacherModelManager _teacherModelManager = new TeacherModelManager();
         private StudentModelManager _studentModelManager = new StudentModelManager();
+        private GroupModelManager _groupModelManager = new GroupModelManager();
         private TelegramBotService _telegramBotService;
 
 
@@ -52,6 +53,20 @@ namespace TelegramTestBot.BL.Service
             {
                 IsUnique = true;
             }
+
+            return IsUnique;
+        }
+
+        public bool CheckNameOfGroupForUnique(string name)
+        {
+            bool IsUnique;
+
+            List<GroupModel> checkedGroup = _groupModelManager.GetGroupByEnteredText(name);
+            if (checkedGroup.Count > 0)
+                IsUnique = false;
+            
+            else
+                IsUnique = true;                      
 
             return IsUnique;
         }

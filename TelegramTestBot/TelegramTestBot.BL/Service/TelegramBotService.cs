@@ -16,6 +16,7 @@ namespace TelegramTestBot.BL.Service
     public class TelegramBotService
     {
         public static Dictionary<long, List<string>> UserAnswers { get; set; } = new Dictionary<long, List<string>>();
+        public static Dictionary<long, List<string>> UserAnswersForGroup { get; set; } = new Dictionary<long, List<string>>();
         protected Action<string> _onMessage;
         private DataService _dateService = new DataService();
         private StudentModelManager _studentModelManager = new StudentModelManager();
@@ -34,6 +35,21 @@ namespace TelegramTestBot.BL.Service
             if (pass == "12345")
             _botClient.StartReceiving(HandleUpdateAsync, HandleErrorAsync);
         }
+
+        //private static InlineKeyboardButton[][] InlineKeyboardMarkupMaker(List<string> groups)
+        //{
+        //    var inlineKeyboard = new InlineKeyboardButton[1][];
+        //    var buttonsKeyboard = new InlineKeyboardButton[groups.Count];
+
+        //    for (var i = 0; i < groups.Count; i++)
+        //    {
+        //        buttonsKeyboard[i] = new InlineKeyboardButton(groups[i]);               
+        //    }
+
+        //    inlineKeyboard[0] = buttonsKeyboard;
+
+        //    return inlineKeyboard;
+        //}
 
         private async void MakeActionWithBot(long id, ActionType type, string username = "User", string msg = " ")
         {
@@ -83,7 +99,8 @@ namespace TelegramTestBot.BL.Service
                                     names.Add(item.Lastname + " " + item.Firstname + " " + item.Surname + " " + item.Email);
                                 }
 
-                                await _botClient.SendTextMessageAsync(new ChatId(id), string.Join('\n', names));
+                                await _botClient.SendTextMessageAsync(new ChatId(id), 
+                                    string.Join('\n', names) + "\n\nГлавное меню - /menu");
                             }
                             catch (Exception)
                             {
@@ -97,6 +114,47 @@ namespace TelegramTestBot.BL.Service
                     }
                 case ActionType.test:
                     {
+                        break;
+                    }
+                case ActionType.groups:
+                    {                                               
+                        if (!UserAnswersForGroup.ContainsKey(id))
+                        {
+                            UserAnswersForGroup.Add(id, new List<string>());
+                        }
+                        else
+                        {
+                            if (!_dateService.CheckNameOfGroupForUnique(msg))
+                            {
+
+                                List<GroupModel> groups = _groupModelManager.GetGroupByEnteredText(msg);
+                                var namesGr = new List<string>();
+
+                                foreach (var item in groups)
+                                {
+                                    namesGr.Add(item.Name);
+                                }
+
+                                UserAnswersForGroup.Remove(id);
+                                //var inlineKeyboardMarkup = new InlineKeyboardMarkup(InlineKeyboardMarkupMaker(namesGr));
+                                
+                                await _botClient.SendTextMessageAsync(new ChatId(id), 
+                                    "Выберите вашу группу:\n" + string.Join('\n', namesGr) + "\n\nГлавное меню - /menu");
+                            }
+                            else
+                            {
+                                await _botClient.SendTextMessageAsync(new ChatId(id),
+                                username + ", такой группы не существует! \nГлавное меню - /menu");
+                            }
+                        }
+
+                            //var inlineKeyboard = new InlineKeyboardMarkup(new[]
+                            //    {
+                            //        InlineKeyboardButton.WithCallbackData(namesGr)
+                            //    });
+
+
+                        
                         break;
                     }
             }
@@ -138,7 +196,8 @@ namespace TelegramTestBot.BL.Service
             {
                 InlineKeyboardButton.WithCallbackData("Зарегистрироваться", "/reg"),
                 InlineKeyboardButton.WithCallbackData("Список преподавателей", "/teachers"),
-                InlineKeyboardButton.WithCallbackData("Тестирование", "/test")
+                InlineKeyboardButton.WithCallbackData("Тестирование", "/test"),
+                InlineKeyboardButton.WithCallbackData("Группы", "/groups")
             });
 
             await _botClient.SendTextMessageAsync(new ChatId(chatId), "Выберите действие:", replyMarkup: inlineKeyboard);
@@ -177,10 +236,24 @@ namespace TelegramTestBot.BL.Service
                       "Cписок преподавателей:",
                       replyMarkup: null);
                 }
+                else if (update.CallbackQuery.Data == "/groups")
+                {
+                    MakeActionWithBot(update.CallbackQuery.Message!.Chat.Id, ActionType.groups, update.CallbackQuery.Message.Chat.Username);
+
+                    await _botClient.EditMessageTextAsync(
+                      update.CallbackQuery.Message!.Chat.Id,
+                      update.CallbackQuery.Message.MessageId,
+                      "Введите Вашу группу полностью (Пр: 1234) или часть (Пр: 12):",
+                      replyMarkup: null);
+                }
             }
             else if (update.Message?.Text != null && UserAnswers.ContainsKey(update.Message.Chat.Id))
             {
                 MakeActionWithBot(update.Message!.Chat.Id, ActionType.reg, update.Message.Chat.Username, update.Message.Text);
+            }
+            else if (update.Message?.Text != null && UserAnswersForGroup.ContainsKey(update.Message.Chat.Id))
+            {
+                MakeActionWithBot(update.Message!.Chat.Id, ActionType.groups, update.Message.Chat.Username, update.Message.Text);
             }
             else if (update.Message != null && update.Message.Text != null)
             {
