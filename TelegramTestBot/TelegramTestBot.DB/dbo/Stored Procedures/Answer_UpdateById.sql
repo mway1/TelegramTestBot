@@ -9,8 +9,7 @@ BEGIN
 
 UPDATE dbo.[Answer]
 SET Content = @Content,
-	IsCorrect = @IsCorrect,
-	QuestionId = @QuestionId
+	IsCorrect = @IsCorrect
 WHERE Id = @Id
 
 END

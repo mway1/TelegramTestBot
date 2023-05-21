@@ -49,15 +49,9 @@ public class TestService
             _questionModelManager.UpdateQuestionById(question);
         }
     }
-    public void EditAnswer(int questionId,List<AnswerModel> answers)
+    public void EditAnswer(int answerId,int questionId,string contentAns,bool isCorr )
     {
-        //int questionId = _questionModelManager.GetLastQuestionAdded(testId);
-
-        foreach (var answer in answers)
-        {
-            answer.QuestionId = questionId;
-            _answerModelManager.UpdateAnswerById(answer);
-        }
+        _answerModelManager.UpdateAnswerById(new AnswerModel { Id = answerId, QuestionId = questionId, Content = contentAns,IsCorrect=isCorr });
     }
 
 

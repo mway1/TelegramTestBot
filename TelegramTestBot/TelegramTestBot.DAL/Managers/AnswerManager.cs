@@ -56,7 +56,7 @@ namespace TelegramTestBot.DAL.Managers
                             newAnswer.Id,
                             newAnswer.Content,
                             newAnswer.IsCorrect,
-                            QuestionId = newAnswer.QuestionId
+                            newAnswer.QuestionId
                         },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
