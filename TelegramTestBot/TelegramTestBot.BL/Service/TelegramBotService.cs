@@ -36,20 +36,15 @@ namespace TelegramTestBot.BL.Service
             _botClient.StartReceiving(HandleUpdateAsync, HandleErrorAsync);
         }
 
-        //private static InlineKeyboardButton[][] InlineKeyboardMarkupMaker(List<string> groups)
-        //{
-        //    var inlineKeyboard = new InlineKeyboardButton[1][];
-        //    var buttonsKeyboard = new InlineKeyboardButton[groups.Count];
+        private static InlineKeyboardButton[][] InlineKeyboardMarkupMaker(List<GroupModel> groups, int btnsPerRow = 0)
+        { 
+            var buttonsKeyboard = groups.Select(g => InlineKeyboardButton.WithCallbackData(g.Name, $"{g.Id}"));
 
-        //    for (var i = 0; i < groups.Count; i++)
-        //    {
-        //        buttonsKeyboard[i] = new InlineKeyboardButton(groups[i]);               
-        //    }
-
-        //    inlineKeyboard[0] = buttonsKeyboard;
-
-        //    return inlineKeyboard;
-        //}
+            if (btnsPerRow == 0)
+                return new InlineKeyboardButton[][] { buttonsKeyboard.ToArray() };
+            else
+                return buttonsKeyboard.Chunk(btnsPerRow).Select(g => g.ToArray()).ToArray();
+        }
 
         private async void MakeActionWithBot(long id, ActionType type, string username = "User", string msg = " ")
         {
@@ -126,35 +121,26 @@ namespace TelegramTestBot.BL.Service
                         {
                             if (!_dateService.CheckNameOfGroupForUnique(msg))
                             {
-
+                                int num;
                                 List<GroupModel> groups = _groupModelManager.GetGroupByEnteredText(msg);
-                                var namesGr = new List<string>();
-
-                                foreach (var item in groups)
-                                {
-                                    namesGr.Add(item.Name);
-                                }
-
                                 UserAnswersForGroup.Remove(id);
-                                //var inlineKeyboardMarkup = new InlineKeyboardMarkup(InlineKeyboardMarkupMaker(namesGr));
+
+                                if (groups.Count <= 2)
+                                    num = 0;
+                                else
+                                    num = 3;
                                 
+                                var inlineKeyboard = new InlineKeyboardMarkup(InlineKeyboardMarkupMaker(groups, num));
+
                                 await _botClient.SendTextMessageAsync(new ChatId(id), 
-                                    "Выберите вашу группу:\n" + string.Join('\n', namesGr) + "\n\nГлавное меню - /menu");
+                                    "Выберите вашу группу:\n" + "\n\nГлавное меню - /menu", replyMarkup: inlineKeyboard);
                             }
                             else
                             {
                                 await _botClient.SendTextMessageAsync(new ChatId(id),
                                 username + ", такой группы не существует! \nГлавное меню - /menu");
                             }
-                        }
-
-                            //var inlineKeyboard = new InlineKeyboardMarkup(new[]
-                            //    {
-                            //        InlineKeyboardButton.WithCallbackData(namesGr)
-                            //    });
-
-
-                        
+                        }                        
                         break;
                     }
             }
