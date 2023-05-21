@@ -77,6 +77,8 @@ namespace TelegramTestBot.UI
                         {
                             _authorizedTeacher = aprovedTeacher.Id;
                             MessageBox.Show("Авторизация пройдена");
+                            TB_login.Clear();
+                            Password_login.Clear();
                             TabControl_Main.SelectedItem = TabItem_StartPage;
                         }
                         else MessageBox.Show("Неверный логин или пароль");
@@ -294,6 +296,8 @@ namespace TelegramTestBot.UI
         private void But_EndCreatingTest_Click(object sender, RoutedEventArgs e)
         {
             GridTest.Visibility = Visibility.Hidden;
+            List<TestModel> test = _testModelManager.GetTestByTeacherId(_authorizedTeacher);
+            LB_CreatedTest.ItemsSource = test;
             _createdTestId = 0;
         }
 
@@ -319,6 +323,12 @@ namespace TelegramTestBot.UI
 
         private void Button_SignIn_Click(object sender, RoutedEventArgs e)
         {
+            TabControl_Main.SelectedItem = Auth;
+        }
+
+        private void Button_Exit_Click(object sender, RoutedEventArgs e)
+        {
+            _authorizedTeacher = 0;
             TabControl_Main.SelectedItem = Auth;
         }
     }

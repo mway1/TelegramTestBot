@@ -35,7 +35,7 @@
                         <ColumnDefinition Width="227*"/>
                         <ColumnDefinition Width="170*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="1" x:Name="Button_Exit" Content="Выйти из аккаунта" HorizontalAlignment="Left" Margin="228,9,0,0" VerticalAlignment="Top" Height="26" Width="106"/>
+                    <Button Grid.Column="1" x:Name="Button_Exit" Content="Выйти из аккаунта" HorizontalAlignment="Left" Margin="228,9,0,0" VerticalAlignment="Top" Height="26" Width="106" Click="Button_Exit_Click"/>
                     <Button Grid.Column="1" x:Name="Button_GoToTest" Content="Работа с тестами" HorizontalAlignment="Left" Margin="10,337,0,0" VerticalAlignment="Top" Height="32" Width="142" Click="Button_GoToTest_Click"/>
                     <Button Grid.Column="1" x:Name="Button_GoToGroups" Content="Работа с группами" HorizontalAlignment="Left" Margin="188,337,0,0" VerticalAlignment="Top" Height="32" Width="142" Click="Button_GoToGroups_Click"/>
                     <Label Grid.Column="1" Content="Создание группы:" HorizontalAlignment="Left" Margin="43,57,0,0" VerticalAlignment="Top" Width="127" FontWeight="Bold" />
