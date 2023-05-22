@@ -8,13 +8,13 @@ namespace TelegramTestBot.BL.Service
 {
     public class DataService : IDataService
     {
+        public static Dictionary<long, List<string>> UserAnswersForGroup { get; set; } = new Dictionary<long, List<string>>();
+        public static Dictionary<long, List<string>> UserAnswers { get; set; } = new Dictionary<long, List<string>>();
         public readonly string token = "6237629540:AAErGQgxalLVu5W9RKenTd9UYGpx4tnqVNE";
         private TelegramBotModelManager _telegramBotModelManager = new TelegramBotModelManager();
         private TeacherModelManager _teacherModelManager = new TeacherModelManager();
         private StudentModelManager _studentModelManager = new StudentModelManager();
         private GroupModelManager _groupModelManager = new GroupModelManager();
-        private TelegramBotService _telegramBotService;
-
 
         public DataService()
         {
