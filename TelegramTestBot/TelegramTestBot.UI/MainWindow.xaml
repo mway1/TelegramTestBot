@@ -40,11 +40,12 @@
                     <Button Grid.Column="1" x:Name="Button_GoToGroups" Content="Работа с группами" HorizontalAlignment="Left" Margin="188,337,0,0" VerticalAlignment="Top" Height="32" Width="142" Click="Button_GoToGroups_Click"/>
                     <Label Grid.Column="1" Content="Создание группы:" HorizontalAlignment="Left" Margin="43,57,0,0" VerticalAlignment="Top" Width="127" FontWeight="Bold" />
                     <TextBox Grid.Column="1" x:Name="TB_newGroup" HorizontalAlignment="Left" Margin="32,88,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="165" Height="26"/>
-                    <Button Grid.Column="1" x:Name="Button_AddGroup" Content="+" FontSize="15" HorizontalAlignment="Left" Margin="197,88,0,0" VerticalAlignment="Top" Height="26" Width="28" FontWeight="Bold" FontStretch="Normal"/>
+                    <Button Grid.Column="1" x:Name="Button_AddGroup" Content="+" FontSize="15" HorizontalAlignment="Left" Margin="197,88,0,0" VerticalAlignment="Top" Height="26" Width="28" FontWeight="Bold" FontStretch="Normal" Click="Button_AddGroup_Click"/>
                     <Label Grid.Column="1" Content="Созданные группы:" HorizontalAlignment="Left" Margin="43,131,0,0" VerticalAlignment="Top" Width="127" FontWeight="Bold" />
-                    <ListBox x:Name="LB_AllGroups" Grid.Column="1"  Margin="32,162,115,122"/>
-                    <Button Grid.Column="1" x:Name="Button_EditGroup" Content="Изменить" HorizontalAlignment="Left" Margin="32,282,0,0" VerticalAlignment="Top" Width="96"/>
-                    <Button Grid.Column="1" x:Name="Button_DeleteGroup" Content="Удалить" HorizontalAlignment="Left" Margin="129,282,0,0" VerticalAlignment="Top" Width="96"/>
+                    <ListBox x:Name="LB_AllGroups" DisplayMemberPath="Name" Grid.Column="1"  Margin="32,162,115,122" Loaded="LB_AllGroups_Loaded"/>
+                    <Button Grid.Column="1" x:Name="Button_EditGroup" Content="Изменить" HorizontalAlignment="Left" Margin="32,282,0,0" VerticalAlignment="Top" Width="96" Click="Button_EditGroup_Click"/>
+                    <Button Grid.Column="1" x:Name="Button_DeleteGroup" Content="Удалить" HorizontalAlignment="Left" Margin="129,282,0,0" VerticalAlignment="Top" Width="96" Click="Button_DeleteGroup_Click"/>
+                    <Button Grid.Column="1" x:Name="Button_UpdateGroupName" Content="Изменить" FontSize="10" HorizontalAlignment="Left" Margin="227,88,0,0" VerticalAlignment="Top" Height="26" Width="54" FontWeight="Bold" FontStretch="Normal" Click="Button_UpdateGroupName_Click"/>
 
                 </Grid>
             </TabItem>
