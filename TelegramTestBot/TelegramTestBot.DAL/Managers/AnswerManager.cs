@@ -56,7 +56,7 @@ namespace TelegramTestBot.DAL.Managers
                             newAnswer.Id,
                             newAnswer.Content,
                             newAnswer.IsCorrect,
-                            QuestionId = newAnswer.QuestionId
+                            newAnswer.QuestionId
                         },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
@@ -89,6 +89,20 @@ namespace TelegramTestBot.DAL.Managers
                         param: new { id = answerId },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
+            }
+        }
+        public List<AnswerDTO> GetAnswerByQuestionId(int questionId)
+        {
+            using (var connection = new SqlConnection(ServerSettings._connectionString))
+            {
+                connection.Open();
+
+                return connection.Query<AnswerDTO>
+                    (
+                        StoredProcedures.Answer_GetByQuestionId,
+                        param: new { QuestionId = questionId },
+                        commandType: System.Data.CommandType.StoredProcedure
+                    ).ToList();
             }
         }
     }

@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[Answer_UpdateById]
-	@Id int,
+    @Id int,
 	@Content nvarchar(50),
 	@IsCorrect bit,
 	@QuestionId int
@@ -9,8 +9,7 @@ BEGIN
 
 UPDATE dbo.[Answer]
 SET Content = @Content,
-	IsCorrect = @IsCorrect,
-	QuestionId = @QuestionId
+	IsCorrect = @IsCorrect
 WHERE Id = @Id
 
 END

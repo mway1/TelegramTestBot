@@ -122,5 +122,6 @@
     <Build Include="dbo\Stored Procedures\Question_GetLastAdded.sql" />
     <Build Include="dbo\Stored Procedures\Question_GetByTestId.sql" />
     <Build Include="dbo\Stored Procedures\Group_GetByEnteredText.sql" />
+    <Build Include="dbo\Stored Procedures\Answer_GetByQuestionId.sql" />
   </ItemGroup>
 </Project>

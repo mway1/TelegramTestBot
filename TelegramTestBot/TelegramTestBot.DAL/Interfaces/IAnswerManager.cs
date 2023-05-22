@@ -9,5 +9,6 @@ namespace TelegramTestBot.DAL.Interfaces
         void UpdateAnswerById(AnswerDTO newAnswer);
         List<AnswerDTO> GetAllAnswers();
         AnswerDTO GetAnswerById(int answerId);
+        List<AnswerDTO> GetAnswerByQuestionId(int answerId);
     }
 }

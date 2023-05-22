@@ -6,6 +6,7 @@
         public const string Answer_DeleteById = "Answer_DeleteById";
         public const string Answer_GetAll = "Answer_GetAll";
         public const string Answer_GetById = "Answer_GetById";
+        public const string Answer_GetByQuestionId = "Answer_GetByQuestionId";
         public const string Answer_UpdateById = "Answer_UpdateById";
 
         public const string Group_Add = "Group_Add";

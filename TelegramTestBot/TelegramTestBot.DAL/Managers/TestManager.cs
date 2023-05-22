@@ -53,7 +53,7 @@ namespace TelegramTestBot.DAL.Managers
                         {
                             newTest.Id,
                             newTest.Name,
-                            TeacherId = newTest.TeacherId
+                            newTest.TeacherId
                         },
                         commandType: System.Data.CommandType.StoredProcedure
                     );

@@ -29,6 +29,26 @@
                 </Grid>
 
             </TabItem>
+            <TabItem x:Name="TabItem_StartPage" Header="Главная страница">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="227*"/>
+                        <ColumnDefinition Width="170*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="1" x:Name="Button_Exit" Content="Выйти из аккаунта" HorizontalAlignment="Left" Margin="228,9,0,0" VerticalAlignment="Top" Height="26" Width="106" Click="Button_Exit_Click"/>
+                    <Button Grid.Column="1" x:Name="Button_GoToTest" Content="Работа с тестами" HorizontalAlignment="Left" Margin="10,337,0,0" VerticalAlignment="Top" Height="32" Width="142" Click="Button_GoToTest_Click"/>
+                    <Button Grid.Column="1" x:Name="Button_GoToGroups" Content="Работа с группами" HorizontalAlignment="Left" Margin="188,337,0,0" VerticalAlignment="Top" Height="32" Width="142" Click="Button_GoToGroups_Click"/>
+                    <Label Grid.Column="1" Content="Создание группы:" HorizontalAlignment="Left" Margin="43,57,0,0" VerticalAlignment="Top" Width="127" FontWeight="Bold" />
+                    <TextBox Grid.Column="1" x:Name="TB_newGroup" HorizontalAlignment="Left" Margin="32,88,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="165" Height="26"/>
+                    <Button Grid.Column="1" x:Name="Button_AddGroup" Content="+" FontSize="15" HorizontalAlignment="Left" Margin="197,88,0,0" VerticalAlignment="Top" Height="26" Width="28" FontWeight="Bold" FontStretch="Normal" Click="Button_AddGroup_Click"/>
+                    <Label Grid.Column="1" Content="Созданные группы:" HorizontalAlignment="Left" Margin="43,131,0,0" VerticalAlignment="Top" Width="127" FontWeight="Bold" />
+                    <ListBox x:Name="LB_AllGroups" DisplayMemberPath="Name" Grid.Column="1"  Margin="32,162,115,122" Loaded="LB_AllGroups_Loaded"/>
+                    <Button Grid.Column="1" x:Name="Button_EditGroup" Content="Изменить" HorizontalAlignment="Left" Margin="32,282,0,0" VerticalAlignment="Top" Width="96" Click="Button_EditGroup_Click"/>
+                    <Button Grid.Column="1" x:Name="Button_DeleteGroup" Content="Удалить" HorizontalAlignment="Left" Margin="129,282,0,0" VerticalAlignment="Top" Width="96" Click="Button_DeleteGroup_Click"/>
+                    <Button Grid.Column="1" x:Name="Button_UpdateGroupName" Content="Изменить" FontSize="10" HorizontalAlignment="Left" Margin="227,88,0,0" VerticalAlignment="Top" Height="26" Width="54" FontWeight="Bold" FontStretch="Normal" Click="Button_UpdateGroupName_Click"/>
+
+                </Grid>
+            </TabItem>
             <TabItem x:Name="Reg" Header="Регистрация">
                 <Grid>
                     <Label Grid.Column="1" Content="Форма регистрации" HorizontalAlignment="Center" Margin="0,12,0,0" VerticalAlignment="Top" Width="188" FontSize="16" FontWeight="Bold"/>
@@ -38,7 +58,7 @@
                     <TextBox Grid.Column="1" x:Name="TB_Email_Teacher" HorizontalAlignment="Left" Margin="31,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center"  Width="259" Height="25"/>
                     <TextBox Grid.Column="1" x:Name="TB_Login_Teacher" HorizontalAlignment="Left" Margin="31,231,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"  Width="259" Height="25"/>
                     <Button Grid.Column="1" x:Name="Button_Reg" Content="Зарегистрироваться" HorizontalAlignment="Left" Margin="31,332,0,0" VerticalAlignment="Top" Height="26" Width="147" Click="Button_Reg_Click"/>
-                    <Button Grid.Column="1" x:Name="Button_SignIn" Content="Вход" HorizontalAlignment="Left" Margin="192,332,0,0" VerticalAlignment="Top" Height="26" Width="98"/>
+                    <Button Grid.Column="1" x:Name="Button_SignIn" Content="Вход" HorizontalAlignment="Left" Margin="192,332,0,0" VerticalAlignment="Top" Height="26" Width="98" Click="Button_SignIn_Click"/>
                     <PasswordBox x:Name="PasswordForRegister"  Grid.Column="1" HorizontalAlignment="Left" Margin="31,269,0,0" VerticalAlignment="Top" Width="259" Height="25"/>
                     <PasswordBox x:Name="PasswordForRegister_Copy"  Grid.Column="1" HorizontalAlignment="Left" Margin="31,306,0,0" VerticalAlignment="Top" Width="259" Height="25"/>
                     <Label Grid.Column="1" Content="Введите фамилию:" HorizontalAlignment="Left" Margin="27,50,0,0" VerticalAlignment="Top"/>
@@ -89,6 +109,7 @@
                     <Label Content="Студенты:" HorizontalAlignment="Center" Margin="0,43,0,0" VerticalAlignment="Top" Width="200"/>
                     <Label Content="Подключенные пользователи:" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Margin="0,225,0,0"/>
                     <Label Content="Группы:" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Margin="0,-3,0,0"/>
+                    <Button x:Name="But_GoStartGroups" Content="На главную" HorizontalAlignment="Left" Margin="10,371,0,0" VerticalAlignment="Top" Height="23" Width="162" Click="But_GoStartGroups_Click"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="TabItem_Test" Header="Создание Теста" Height="22" Margin="-2,0,-2,0" VerticalAlignment="Bottom">
@@ -101,11 +122,11 @@
                     </Grid.ColumnDefinitions>
                     <Label Content="Создать новый тест:" Grid.Column="0" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold" Margin="10,170,0,0"/>
                     <Label Content="Созданные тесты:" HorizontalAlignment="Left" Margin="16,3,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold"/>
-                    <ListBox x:Name="LB_CreatedTest"  Grid.Column="0" DisplayMemberPath="Name"  Margin="0,28,10,261" Loaded="LB_CreatedTest_Loaded" SelectionChanged="LB_CreatedTest_SelectionChanged" />
-                    <TextBox x:Name="TB_NewTestorEditName" Grid.Column="0"  HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="203" Height="23" Margin="0,195,0,0" KeyUp="TB_NewTestorEditName_KeyUp" />
-                    <Button x:Name="Button_EditNameOfTest"  Grid.Column="0" Content="Изменить название" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="116" Margin="0,150,0,0"/>
-                    <Button x:Name="Button_EditTest"  Grid.Column="0" Content="Редактировать" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="87" Margin="116,150,0,0"/>
-                    <Button x:Name="Button_SaveNameOfTest"  Grid.Column="0" Content="Создать тест" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="203" Height="21" Margin="0,218,0,0" Click="Button_SaveNameOfTest_Click"/>
+                    <ListBox x:Name="LB_CreatedTest"  Grid.Column="0" DisplayMemberPath="Name"  Margin="0,28,10,261" Loaded="LB_CreatedTest_Loaded" />
+                    <TextBox x:Name="TB_NewTestorEditName" Grid.Column="0"  HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="210" Height="23" Margin="0,195,0,0" KeyUp="TB_NewTestorEditName_KeyUp" />
+                    <Button x:Name="Button_EditNameOfTest"  Grid.Column="0" Content="Изменить название" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="116" Margin="0,150,0,0" Click="Button_EditNameOfTest_Click"/>
+                    <Button x:Name="Button_EditTest"  Grid.Column="0" Content="Редактировать" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="87" Margin="116,150,0,0" Click="Button_EditTest_Click"/>
+                    <Button x:Name="Button_SaveNameOfTest"  Grid.Column="0" Content="Создать тест" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="93" Height="21" Margin="0,218,0,0" Click="Button_SaveNameOfTest_Click"/>
                     <Label Content="Созданные тесты:" Grid.Column="0" HorizontalAlignment="Left" Margin="16,3,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold"/>
                     <TabControl Grid.Column="1">
                         <TabItem x:Name="TabItem_CreatedTest">
@@ -113,7 +134,7 @@
                                 <Label x:Name="Label_NameQuest" Content="Введите вопрос" HorizontalAlignment="Left" Margin="50,76,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold"/>
                                 <TextBox  x:Name="Tb_ContentQuestuon" HorizontalAlignment="Left" Margin="26,97,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="190" Height="20"/>
                                 <Label x:Name="Label_CreatedQuest" Content="Созданные вопросы:" HorizontalAlignment="Left" Margin="50,142,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold"/>
-                                <ListBox x:Name="LB_CreatedQuestion"  DisplayMemberPath="Content" Margin="26,173,348,94" Loaded="LB_CreatedQuestion_Loaded"/>
+                                <ListBox x:Name="LB_CreatedQuestion"  DisplayMemberPath="Content" Margin="26,173,348,94" Loaded="LB_CreatedQuestion_Loaded" SelectionChanged="LB_CreatedQuestion_SelectionChanged"/>
                                 <TextBox x:Name="TB_FirstAnswer" HorizontalAlignment="Left" Margin="344,123,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="133" Height="20"/>
                                 <TextBox x:Name="TB_SecondAnswer" HorizontalAlignment="Left" Margin="344,151,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="133" Height="19"/>
                                 <TextBox x:Name="TB_FourthAnswer" HorizontalAlignment="Left" Margin="344,203,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="133" Height="18"/>
@@ -126,12 +147,15 @@
                                 <TextBox x:Name="TB_RightAnswerForQuest" HorizontalAlignment="Left" Margin="342,268,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
                                 <Label x:Name="Label_NameOfTest" Content="Создание/редактирование теста:" HorizontalAlignment="Left" Margin="8,17,0,0" VerticalAlignment="Top" Height="31" Width="244" FontSize="14" FontWeight="Bold" Grid.Column="1"/>
                                 <TextBlock x:Name="TBox_CreateEdittTest" HorizontalAlignment="Left" Margin="247,22,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="31"  FontSize="14" Width="183"/>
-                                <Button  x:Name="But_EndTest" Content="Добавить/изменить вопрос" HorizontalAlignment="Left" Margin="75,301,0,0" VerticalAlignment="Top" Height="28" Width="346" Click="But_EndTest_Click"/>
+                                <Button  x:Name="But_EndTest" Content="Добавить вопрос" HorizontalAlignment="Left" Margin="75,301,0,0" VerticalAlignment="Top" Height="28" Width="173" Click="But_EndTest_Click"/>
                                 <Label x:Name="Label_CorrectAnswer_Copy" Content="Ответы к вопросу:" HorizontalAlignment="Left" Margin="342,87,0,0" VerticalAlignment="Top" Height="30" Width="166" FontSize="12" FontWeight="Bold"/>
                                 <Button  x:Name="But_EndCreatingTest" Content="Сохранить тест" HorizontalAlignment="Left" Margin="75,334,0,0" VerticalAlignment="Top" Height="28" Width="346" Click="But_EndCreatingTest_Click"/>
+                                <Button  x:Name="But_EditQuestion" Content="Изменить вопрос" HorizontalAlignment="Left" Margin="250,301,0,0" VerticalAlignment="Top" Height="28" Width="172" Click="But_EditQuestion_Click"/>
                             </Grid>
                         </TabItem>
                     </TabControl>
+                    <Button x:Name="But_GoStartTest" Content="На главную" HorizontalAlignment="Left" Margin="22,297,0,0" VerticalAlignment="Top" Height="23" Width="162" Click="But_GoStartTest_Click"/>
+                    <Button x:Name="Button_EditNameOfTestForNew"  Grid.Column="0" Content="Изменить название" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="115" Height="21" Margin="95,218,0,0" Click="Button_EditNameOfTestForNew_Click"/>
 
                 </Grid>
 
