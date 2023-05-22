@@ -87,5 +87,20 @@ namespace TelegramTestBot.DAL.Managers
                     );
             }
         }
+        
+        public List<GroupDTO> GetGroupByEnteredText(string text)
+        {
+            using (var connection = new SqlConnection(ServerSettings._connectionString))
+            {
+                connection.Open();
+
+                return connection.Query<GroupDTO>
+                    (
+                        StoredProcedures.Group_GetByEnteredText,
+                        param: new { text = text },
+                        commandType: System.Data.CommandType.StoredProcedure
+                    ).ToList();
+            }
+        }
     }
 }

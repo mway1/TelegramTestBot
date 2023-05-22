@@ -9,5 +9,6 @@ namespace TelegramTestBot.DAL.Interfaces
         void UpdateGroupById(GroupDTO newGroup);
         List<GroupDTO> GetAllGroups();
         GroupDTO GetGroupById(int groupId);
+        List<GroupDTO> GetGroupByEnteredText(string text);
     }
 }

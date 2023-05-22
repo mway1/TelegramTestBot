@@ -31,9 +31,9 @@ namespace TelegramTestBot.BL.Managers
             _studentManager.DeleteStudentById(studentId);
         }
 
-        public void UpdateStudentById(StudentModel studentModel)
+        public void UpdateStudentById(StudentModel newStudent)
         {
-            StudentDTO student = MapperConfigStorage.GetInstance().Map<StudentDTO>(studentModel);
+            StudentDTO student = MapperConfigStorage.GetInstance().Map<StudentDTO>(newStudent);
             _studentManager.UpdateStudentById(student);
         }
 

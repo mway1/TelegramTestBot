@@ -48,5 +48,11 @@ namespace TelegramTestBot.BL.Managers
             GroupDTO group = _groupManager.GetGroupById(groupId);
             return MapperConfigStorage.GetInstance().Map<GroupModel>(group);
         }
+        
+        public List<GroupModel> GetGroupByEnteredText(string text)
+        {
+            List<GroupDTO> group = _groupManager.GetGroupByEnteredText(text);
+            return MapperConfigStorage.GetInstance().Map<List<GroupModel>>(group);
+        }
     }
 }

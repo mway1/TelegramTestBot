@@ -8,19 +8,18 @@ namespace TelegramTestBot.BL.Service
 {
     public class DataService : IDataService
     {
+        public static Dictionary<long, List<string>> UserAnswersForGroup { get; set; } = new Dictionary<long, List<string>>();
+        public static Dictionary<long, List<string>> UserAnswers { get; set; } = new Dictionary<long, List<string>>();
         public readonly string token = "6237629540:AAErGQgxalLVu5W9RKenTd9UYGpx4tnqVNE";
         private TelegramBotModelManager _telegramBotModelManager = new TelegramBotModelManager();
         private TeacherModelManager _teacherModelManager = new TeacherModelManager();
         private StudentModelManager _studentModelManager = new StudentModelManager();
-        private TelegramBotService _telegramBotService;
-
+        private GroupModelManager _groupModelManager = new GroupModelManager();
 
         public DataService()
         {
             
         }
-
-       
 
         public bool CheckStudentChatIdForUnique(long studentChatId)
         {
@@ -52,6 +51,20 @@ namespace TelegramTestBot.BL.Service
             {
                 IsUnique = true;
             }
+
+            return IsUnique;
+        }
+
+        public bool CheckNameOfGroupForUnique(string name)
+        {
+            bool IsUnique;
+
+            List<GroupModel> checkedGroup = _groupModelManager.GetGroupByEnteredText(name);
+            if (checkedGroup.Count > 0)
+                IsUnique = false;
+            
+            else
+                IsUnique = true;                      
 
             return IsUnique;
         }
