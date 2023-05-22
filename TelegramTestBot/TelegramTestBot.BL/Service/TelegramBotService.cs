@@ -145,8 +145,11 @@ namespace TelegramTestBot.BL.Service
                                 await _botClient.SendTextMessageAsync(new ChatId(id), 
                                     "Выберите вашу группу:\n" + "\n\nГлавное меню - /menu", replyMarkup: inlineKeyboard);
                             }
-                            else                                
+                            else
+                            {
+                                DataService.UserAnswersForGroup.Remove(id);
                                 SendMessagesForUser(id, username, ", такой группы не существует! \nГлавное меню - /menu");                                                                                     
+                            }                               
                         }
                         else
                             SendMessagesForUser(id, username, ", чтобы использовать данную команду, зарегистрируйтесь! \nГлавное меню - /menu");
