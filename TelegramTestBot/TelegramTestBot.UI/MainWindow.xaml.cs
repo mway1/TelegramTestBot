@@ -184,23 +184,13 @@ namespace TelegramTestBot.UI
         {
             if (TB_NewTestorEditName.Text.Length > 0)
             {
-                TestModel newTest = new TestModel { Name = TB_NewTestorEditName.Text, TeacherId = _authorizedTeacher };
-                _testModelManager.AddTest(newTest);
-                TBox_CreateEdittTest.Text = newTest.Name;
+                TestModel test = testService.CreateTest(TB_NewTestorEditName.Text, _authorizedTeacher);
+                TBox_CreateEdittTest.Text = test.Name;
                 _createdTestId = _testModelManager.GetLastTestAdded(_authorizedTeacher);
                 GridTest.Visibility = Visibility.Visible;
                 TB_NewTestorEditName.Clear();
             }
             else MessageBox.Show("Введите название теста!");
-        }
-
-
-            private void LB_CreatedTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //TestModel selectedTest = (TestModel)LB_CreatedTest.SelectedItem;
-            
-            //TBox_CreateEdittTest.Text = selectedTest.Name;
-            
         }
 
         private void TB_NewTestorEditName_KeyUp(object sender, KeyEventArgs e)
@@ -209,9 +199,8 @@ namespace TelegramTestBot.UI
             {
                 if (TB_NewTestorEditName.Text.Length > 0)
                 {
-                    TestModel newTest = new TestModel { Name = TB_NewTestorEditName.Text, TeacherId = _authorizedTeacher };
-                    _testModelManager.AddTest(newTest);
-                    TBox_CreateEdittTest.Text = newTest.Name;
+                    TestModel test = testService.CreateTest(TB_NewTestorEditName.Text, _authorizedTeacher);
+                    TBox_CreateEdittTest.Text = test.Name;
                     _createdTestId = _testModelManager.GetLastTestAdded(_authorizedTeacher);
                     GridTest.Visibility = Visibility.Visible;
                     TB_NewTestorEditName.Clear();
@@ -228,69 +217,61 @@ namespace TelegramTestBot.UI
                 string content2Answer = TB_SecondAnswer.Text;
                 string content3Answer = TB_ThirdAnswer.Text;
                 string content4Answer = TB_FourthAnswer.Text;
-                _allQuest.Add(new QuestionModel { Content = contentQuestion });
+                bool firstRB = false;
+                bool secondRB = false;
+                bool thirdRB = false;
+                bool fourthRB = false;
+
                 if (RB_RightAnswer1.IsChecked == true)
                 {
-                    TB_RightAnswerForQuest.Text = content1Answer;
-                    _allAnswer.Add(new AnswerModel { Content = content1Answer, IsCorrect = true });
-                    _allAnswer.Add(new AnswerModel { Content = content2Answer });
-                    _allAnswer.Add(new AnswerModel { Content = content3Answer });
-                    _allAnswer.Add(new AnswerModel { Content = content4Answer });
+                    firstRB = true;
+                    secondRB = false;
+                    thirdRB = false;
+                    fourthRB = false;
                 }
                 else if (RB_RightAnswer2.IsChecked == true)
                 {
-                    TB_RightAnswerForQuest.Text = content2Answer;
-                    _allAnswer.Add(new AnswerModel { Content = content1Answer});
-                    _allAnswer.Add(new AnswerModel { Content = content2Answer,IsCorrect = true });
-                    _allAnswer.Add(new AnswerModel { Content = content3Answer });
-                    _allAnswer.Add(new AnswerModel { Content = content4Answer });
+                    firstRB = true;
+                    secondRB = true;
+                    thirdRB = false;
+                    fourthRB = false;
                 }
-                else if (RB_RightAnswer3.IsChecked == true)
+                else if(RB_RightAnswer3.IsChecked == true)
                 {
-                    TB_RightAnswerForQuest.Text = content3Answer;
-                    _allAnswer.Add(new AnswerModel { Content = content1Answer});
-                    _allAnswer.Add(new AnswerModel { Content = content2Answer });
-                    _allAnswer.Add(new AnswerModel { Content = content3Answer,IsCorrect = true });
-                    _allAnswer.Add(new AnswerModel { Content = content4Answer });
+                    firstRB = false;
+                    secondRB = false;
+                    thirdRB = true;
+                    fourthRB = false;
                 }
-                else if (RB_RightAnswer4.IsChecked == true)
+                else if(RB_RightAnswer4.IsChecked == true)
                 {
-                    TB_RightAnswerForQuest.Text = content4Answer;
-                    _allAnswer.Add(new AnswerModel { Content = content1Answer });
-                    _allAnswer.Add(new AnswerModel { Content = content2Answer });
-                    _allAnswer.Add(new AnswerModel { Content = content3Answer });
-                    _allAnswer.Add(new AnswerModel { Content = content4Answer, IsCorrect = true });
+                    firstRB = false;
+                    secondRB = false;
+                    thirdRB = false;
+                    fourthRB = true;
                 }
-                else MessageBox.Show("Выберите правильный вариант ответа");
 
                 int testId = _createdTestId;
-                List<QuestionModel> questions = _allQuest;
-                List<AnswerModel> answers = _allAnswer;
 
-                testService.CreateQuestion(testId,questions);
+                testService.CreateQuestion(testId,contentQuestion);
 
-                    foreach (var question in questions)
-                    {
-                        testService.CreateAnswer(question.TestId, answers);
-                    }
+                testService.CreateAnswer(testId, content1Answer, content2Answer, content3Answer, content4Answer,firstRB,secondRB,thirdRB,fourthRB);
 
                 List<QuestionModel> creatingQuest = _questionModelManager.GetQuestionByTestId(testId);
                 LB_CreatedQuestion.ItemsSource = creatingQuest;
-                _allQuest.Clear();
-                _allAnswer.Clear();
                 Tb_ContentQuestuon.Clear();
                 TB_FirstAnswer.Clear();
                 TB_SecondAnswer.Clear();
                 TB_ThirdAnswer.Clear();
                 TB_FourthAnswer.Clear();
-        
-            }
+
+        }
             catch (Exception)
             {
 
             }
-  
-        }
+
+}
 
         private void LB_CreatedQuestion_Loaded(object sender, RoutedEventArgs e)
         {
@@ -304,6 +285,8 @@ namespace TelegramTestBot.UI
             List<TestModel> test = _testModelManager.GetTestByTeacherId(_authorizedTeacher);
             LB_CreatedTest.ItemsSource = test;
             _createdTestId = 0;
+            Tb_ContentQuestuon.Clear();
+            //LB_CreatedQuestion.Items.Clear();
         }
 
         private void Button_GoToTest_Click(object sender, RoutedEventArgs e)
@@ -371,7 +354,7 @@ namespace TelegramTestBot.UI
             }
 
             }
-            catch (NullReferenceException)
+            catch (Exception)
             {
                 
             }
@@ -386,58 +369,47 @@ namespace TelegramTestBot.UI
                 string content2Answer = TB_SecondAnswer.Text;
                 string content3Answer = TB_ThirdAnswer.Text;
                 string content4Answer = TB_FourthAnswer.Text;
-                _allQuest.Add(new QuestionModel { Content = contentQuestion });
-            if (RB_RightAnswer1.IsChecked == true)
-            {
-                TB_RightAnswerForQuest.Text = content1Answer;
-                _answersForEditQuest[0].IsCorrect = true;
-                _answersForEditQuest[0].Content = TB_FirstAnswer.Text;
-                _answersForEditQuest[1].Content = TB_SecondAnswer.Text;
-                _answersForEditQuest[2].Content = TB_ThirdAnswer.Text;
-                _answersForEditQuest[3].Content = TB_FourthAnswer.Text;
-            }
-            else if (RB_RightAnswer2.IsChecked == true)
-            {
-                TB_RightAnswerForQuest.Text = content2Answer;
-                _answersForEditQuest[1].IsCorrect = true;
-                _answersForEditQuest[0].Content = TB_FirstAnswer.Text;
-                _answersForEditQuest[1].Content = TB_SecondAnswer.Text;
-                _answersForEditQuest[2].Content = TB_ThirdAnswer.Text;
-                _answersForEditQuest[3].Content = TB_FourthAnswer.Text;
-            }
-            else if (RB_RightAnswer3.IsChecked == true)
-            {
-                TB_RightAnswerForQuest.Text = content3Answer;
-                _answersForEditQuest[2].IsCorrect = true;
-                _answersForEditQuest[0].Content = TB_FirstAnswer.Text;
-                _answersForEditQuest[1].Content = TB_SecondAnswer.Text;
-                _answersForEditQuest[2].Content = TB_ThirdAnswer.Text;
-                _answersForEditQuest[3].Content = TB_FourthAnswer.Text;
-            }
-            else if (RB_RightAnswer4.IsChecked == true)
-            {
-                TB_RightAnswerForQuest.Text = content4Answer;
-                _answersForEditQuest[3].IsCorrect = true;
-                _answersForEditQuest[0].Content = TB_FirstAnswer.Text;
-                _answersForEditQuest[1].Content = TB_SecondAnswer.Text;
-                _answersForEditQuest[2].Content = TB_ThirdAnswer.Text;
-                _answersForEditQuest[3].Content = TB_FourthAnswer.Text;
-            }
-                int testId = _createdTestId;
-                List<QuestionModel> questions = _allQuest;
-                List<AnswerModel> answers = _answersForEditQuest;
-
-                testService.EditQuestion(_updatedQuestId,testId, questions);
-
-                foreach(var answer in answers)
+                bool firstRB = false;
+                bool secondRB = false;
+                bool thirdRB = false;
+                bool fourthRB = false;
+                if (RB_RightAnswer1.IsChecked == true)
                 {
-                testService.EditAnswer( answer.Id,_updatedQuestId,answer.Content,answer.IsCorrect);
+                    firstRB = true;
+                    secondRB = false;
+                    thirdRB = false;
+                    fourthRB = false;
                 }
+                else if (RB_RightAnswer2.IsChecked == true)
+                {
+                    firstRB = true;
+                    secondRB = true;
+                    thirdRB = false;
+                    fourthRB = false;
+                }
+                else if (RB_RightAnswer3.IsChecked == true)
+                {
+                    firstRB = false;
+                    secondRB = false;
+                    thirdRB = true;
+                    fourthRB = false;
+                }
+                else if (RB_RightAnswer4.IsChecked == true)
+                {
+                    firstRB = false;
+                    secondRB = false;
+                    thirdRB = false;
+                    fourthRB = true;
+                }
+                int testId = _createdTestId;
+
+
+                testService.EditQuestion(_updatedQuestId,testId, contentQuestion);
+
+                testService.EditAnswer(_updatedQuestId, content1Answer, content2Answer, content3Answer, content4Answer, firstRB, secondRB, thirdRB, fourthRB);
 
                 List<QuestionModel> creatingQuest = _questionModelManager.GetQuestionByTestId(testId);
                 LB_CreatedQuestion.ItemsSource = creatingQuest;
-                _allQuest.Clear();
-                _answersForEditQuest.Clear();
                 Tb_ContentQuestuon.Clear();
                 Tb_ContentQuestuon.Clear();
                 TB_FirstAnswer.Clear();
@@ -446,14 +418,12 @@ namespace TelegramTestBot.UI
                 TB_FourthAnswer.Clear();
                 TB_RightAnswerForQuest.Clear();
                 _updatedQuestId = 0;
-
-
-        }
+            }
             catch (Exception)
             {
 
             }
-}
+        }
 
 
 
