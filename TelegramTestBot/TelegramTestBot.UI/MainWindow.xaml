@@ -103,13 +103,13 @@
                             </Grid>
                         </TabItem>
                     </TabControl>
-                    <ComboBox x:Name="CB_Groups" HorizontalAlignment="Center" VerticalAlignment="Top" Width="205" Height="26" Margin="0,22,0,0"/>
+                    <ComboBox x:Name="CB_Groups" HorizontalAlignment="Center" DisplayMemberPath="Name" VerticalAlignment="Top" Width="205" Height="26" Margin="0,22,0,0" Loaded="CB_Groups_Loaded"/>
                     <ListBox x:Name="LB_StudentsInGroup" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="2,71,3,181"/>
-                    <ListBox x:Name="LB_NewUsers" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="2,251,3,38"/>
+                    <ListBox x:Name="LB_NewUsers" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="2,251,5,55"/>
                     <Label Content="Студенты:" HorizontalAlignment="Center" Margin="0,43,0,0" VerticalAlignment="Top" Width="200"/>
                     <Label Content="Подключенные пользователи:" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Margin="0,225,0,0"/>
                     <Label Content="Группы:" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Margin="0,-3,0,0"/>
-                    <Button x:Name="But_GoStartGroups" Content="На главную" HorizontalAlignment="Left" Margin="10,371,0,0" VerticalAlignment="Top" Height="23" Width="162" Click="But_GoStartGroups_Click"/>
+                    <Button x:Name="But_GoStartGroups" Content="На главную" HorizontalAlignment="Left" Margin="10,360,0,0" VerticalAlignment="Top" Height="23" Width="162" Click="But_GoStartGroups_Click"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="TabItem_Test" Header="Создание Теста" Height="22" Margin="-2,0,-2,0" VerticalAlignment="Bottom">

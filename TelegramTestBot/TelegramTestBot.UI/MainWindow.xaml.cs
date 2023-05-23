@@ -452,6 +452,12 @@ namespace TelegramTestBot.UI
             }
 
         }
+
+        private void CB_Groups_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<GroupModel> allGroups = _groupModelManager.GetAllGroups();
+            CB_Groups.ItemsSource = allGroups;
+        }
     }
 }
 
