@@ -95,5 +95,35 @@ namespace TelegramTestBot.BL.Service
 
             return "Регистрация пройдена успешно";
         }
+
+        public string AuthTeacher(string eneterdLogin, string eneterdPass)
+        {
+            string AprovedTeacher;
+            if (eneterdLogin.Length > 0)
+            {
+                if (eneterdPass.Length > 0)
+                {
+                    string enteredPassword = _dataService.HashedValue(eneterdPass);
+
+                    try
+                    {
+                        TeacherModel aprovedTeacher = _teacherModelManager.GetTeacherByLogin(eneterdLogin);
+
+                        if (eneterdLogin == aprovedTeacher.Login && enteredPassword == aprovedTeacher.Password)
+                        {
+                            AprovedTeacher = "Авторизация пройдена";
+                        }
+                        else return "Неверный логин или пароль";
+                    }
+                    catch (Exception)
+                    {
+                        return "Пользователь не найден";
+                    }
+                }
+                else return "Введите пароль";
+            }
+            else return "Введите логин";
+           return AprovedTeacher;
+        }
     }
 }

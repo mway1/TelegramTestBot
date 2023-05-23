@@ -38,7 +38,6 @@ namespace TelegramTestBot.UI
         List<AnswerModel> _answersForEditQuest = new List<AnswerModel>();
         private TelegramBotService _telegramBotService;
         private TestService testService = new TestService();
-        private DataService _dataService = new DataService();
         private RegAuthService regAuthService = new RegAuthService();
 
         public MainWindow()
@@ -50,7 +49,6 @@ namespace TelegramTestBot.UI
 
             TabItem_CreatedTest.Visibility = Visibility.Hidden;
             GridTest.Visibility = Visibility.Hidden;
-            //TabControl_Main.SelectedItem = Auth;
             TabItem_CreatedTest.Visibility = Visibility.Hidden;
             TabItem_StartPage.Visibility = Visibility.Hidden;
             TabItem_Test.Visibility = Visibility.Hidden;
@@ -67,35 +65,23 @@ namespace TelegramTestBot.UI
 
         private void B_signin_Click(object sender, RoutedEventArgs e)
         {
-            if (TB_login.Text.Length > 0)     
+            string enteredLogin = TB_login.Text;
+            string enteredPassword = Password_login.Password;
+
+            string resultOfAuth = regAuthService.AuthTeacher(enteredLogin, enteredPassword);
+
+            if (resultOfAuth == "Авторизация пройдена")
             {
-                if (Password_login.Password.Length > 0)         
-                {
-                    string enteredLogin = TB_login.Text;
-                    string enteredPassword = _dataService.HashedValue(Password_login.Password);
-
-                    try
-                    {
-                        TeacherModel aprovedTeacher = _teacherModelManager.GetTeacherByLogin(enteredLogin);
-
-                        if (enteredLogin == aprovedTeacher.Login && enteredPassword == aprovedTeacher.Password)
-                        {
-                            _authorizedTeacher = aprovedTeacher.Id;
-                            MessageBox.Show("Авторизация пройдена");
-                            TB_login.Clear();
-                            Password_login.Clear();
-                            TabControl_Main.SelectedItem = TabItem_StartPage;
-                        }
-                        else MessageBox.Show("Неверный логин или пароль");
-                    }
-                    catch(Exception)
-                    {                    
-                        MessageBox.Show("Пользователь не найден");
-                    }                                   
-                }
-                else MessageBox.Show("Введите пароль");    
+                TeacherModel aprovedTeacher = _teacherModelManager.GetTeacherByLogin(enteredLogin);
+                _authorizedTeacher = aprovedTeacher.Id;
+                MessageBox.Show("Авторизация пройдена");
+                TB_login.Clear();
+                Password_login.Clear();
+                TabControl_Main.SelectedItem = TabItem_StartPage;
             }
-            else MessageBox.Show("Введите логин"); 
+            else MessageBox.Show(resultOfAuth);
+
+
         }
 
         private void B_reg_Click(object sender, RoutedEventArgs e)
@@ -464,8 +450,6 @@ namespace TelegramTestBot.UI
             {
                 LB_AllGroups.ItemsSource = _groupModelManager.GetAllGroups();
             }
-
-
 
         }
     }
