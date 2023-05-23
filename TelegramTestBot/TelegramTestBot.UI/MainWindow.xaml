@@ -103,8 +103,8 @@
                             </Grid>
                         </TabItem>
                     </TabControl>
-                    <ComboBox x:Name="CB_Groups" HorizontalAlignment="Center" DisplayMemberPath="Name" VerticalAlignment="Top" Width="205" Height="26" Margin="0,22,0,0" Loaded="CB_Groups_Loaded"/>
-                    <ListBox x:Name="LB_StudentsInGroup" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="2,71,3,181"/>
+                    <ComboBox x:Name="CB_Groups" HorizontalAlignment="Center" DisplayMemberPath="Name" VerticalAlignment="Top" Width="205" Height="26" Margin="0,22,0,0" Loaded="CB_Groups_Loaded" SelectionChanged="CB_Groups_SelectionChanged"/>
+                    <ListBox x:Name="LB_StudentsInGroup" DisplayMemberPath="Surname"  Margin="2,71,3,181"/>
                     <ListBox x:Name="LB_NewUsers" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="2,251,5,55"/>
                     <Label Content="Студенты:" HorizontalAlignment="Center" Margin="0,43,0,0" VerticalAlignment="Top" Width="200"/>
                     <Label Content="Подключенные пользователи:" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Margin="0,225,0,0"/>

@@ -97,18 +97,18 @@ namespace TelegramTestBot.DAL.Managers
                     );
             }
         }
-        public StudentDTO GetStudentByGroupId(int groupId)
+        public List<StudentDTO> GetStudentByGroupId(int groupId)
         {
             using (var connection = new SqlConnection(ServerSettings._connectionString))
             {
                 connection.Open();
 
-                return connection.QuerySingle<StudentDTO>
+                return connection.Query<StudentDTO>
                     (
-                        StoredProcedures.Student_GetById,
+                        StoredProcedures.Student_GetByGroupId,
                         param: new { GroupId = groupId },
                         commandType: System.Data.CommandType.StoredProcedure
-                    );
+                    ).ToList();
             }
         }
 

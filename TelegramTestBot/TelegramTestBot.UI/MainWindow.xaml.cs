@@ -35,6 +35,7 @@ namespace TelegramTestBot.UI
         private QuestionModelManager _questionModelManager = new QuestionModelManager();
         private AnswerModelManager _answerModelManager = new AnswerModelManager();
         private GroupModelManager _groupModelManager = new GroupModelManager();
+        private StudentModelManager _studentModelManager = new StudentModelManager();
         List<AnswerModel> _answersForEditQuest = new List<AnswerModel>();
         private TelegramBotService _telegramBotService;
         private TestService testService = new TestService();
@@ -457,6 +458,14 @@ namespace TelegramTestBot.UI
         {
             List<GroupModel> allGroups = _groupModelManager.GetAllGroups();
             CB_Groups.ItemsSource = allGroups;
+        }
+
+        private void CB_Groups_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            GroupModel selectedGroup = (GroupModel)CB_Groups.SelectedItem;
+            int groupId = selectedGroup.Id;
+            List<StudentModel> studentInGroup =  _studentModelManager.GetStudentByGroupId(groupId);
+            LB_StudentsInGroup.ItemsSource = studentInGroup;
         }
     }
 }

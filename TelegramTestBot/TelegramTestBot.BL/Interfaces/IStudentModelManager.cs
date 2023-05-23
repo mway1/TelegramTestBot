@@ -9,7 +9,7 @@ namespace TelegramTestBot.BL.Interfaces
         void UpdateStudentById(StudentModel newStudent);
         List<StudentModel> GetAllStudents();
         StudentModel GetStudentById(int studentId);
-        StudentModel GetStudentByGroupId(int groupId);
+        List<StudentModel> GetStudentByGroupId(int groupId);
         StudentModel GetStudentByChatId(long studentChatId);
     }
 }
