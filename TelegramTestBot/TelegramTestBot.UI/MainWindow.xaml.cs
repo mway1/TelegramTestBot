@@ -39,6 +39,7 @@ namespace TelegramTestBot.UI
         private TelegramBotService _telegramBotService;
         private TestService testService = new TestService();
         private DataService _dataService = new DataService();
+        private RegAuthService regAuthService = new RegAuthService();
 
         public MainWindow()
         {
@@ -102,78 +103,26 @@ namespace TelegramTestBot.UI
             TabControl_Main.SelectedItem = Reg;
         }
 
+
+
         private void Button_Reg_Click(object sender, RoutedEventArgs e)
         {
-            if (TB_LastName_Teacher.Text.Length > 0)
+            string enteredLastName = TB_LastName_Teacher.Text;
+            string enteredFirstName = TB_FirstName_Teacher.Text;
+            string enterdSurName = TB_SurName_Teacher.Text;
+            string eneterdEmail = TB_Email_Teacher.Text;
+            string eneterdLogin = TB_Login_Teacher.Text;
+            string enteredPassword = PasswordForRegister.Password;
+            string enteredCopyPassword = PasswordForRegister_Copy.Password;
+
+            string resultOfReg = regAuthService.RegTeacher(enteredLastName, enteredFirstName, enterdSurName, eneterdEmail, eneterdLogin, enteredPassword, enteredCopyPassword);
+            if (resultOfReg == "Регистрация пройдена успешно")
             {
-                if (TB_FirstName_Teacher.Text.Length > 0)
-                {
-                    if (TB_SurName_Teacher.Text.Length > 0)
-                    {
-                        if(TB_Email_Teacher.Text.Length > 0)
-                        {
-                            if(TB_Login_Teacher.Text.Length > 0)
-                            {
-                                if (_dataService.CheckTeacherLoginForUnique(TB_Login_Teacher.Text) == true)
-                                {
-                                    if (PasswordForRegister.Password.Length > 0)
-                                    {
-                                        if (PasswordForRegister_Copy.Password.Length > 0)
-                                        {
-                                            if (PasswordForRegister.Password.Length >= 6)
-                                            {
-                                                bool en = true;
-                                                bool number = false;
-
-                                                for (int i = 0; i < PasswordForRegister.Password.Length; i++)
-                                                {
-                                                    if (PasswordForRegister.Password[i] >= 'А' && PasswordForRegister.Password[i] <= 'Я') en = false;
-                                                    if (PasswordForRegister.Password[i] >= '0' && PasswordForRegister.Password[i] <= '9') number = true;
-                                                }
-
-                                                if (!en)
-                                                    MessageBox.Show("Доступна только английская раскладка");
-                                                else if (!number)
-                                                    MessageBox.Show("Добавьте хотя бы одну цифру");
-                                                if (en && number)
-                                                {
-                                                    if (PasswordForRegister.Password == PasswordForRegister_Copy.Password)
-                                                    {
-                                                        string hashPassword = _dataService.HashedValue(PasswordForRegister.Password);
-                                                        TeacherModel teacher = new TeacherModel()
-                                                        {
-                                                            Lastname = TB_LastName_Teacher.Text,
-                                                            Firstname = TB_FirstName_Teacher.Text,
-                                                            Surname = TB_SurName_Teacher.Text,
-                                                            Email = TB_Email_Teacher.Text,
-                                                            Login = TB_Login_Teacher.Text,
-                                                            Password = hashPassword
-                                                        };
-                                                        _teacherModelManager.AddTeacher(teacher);
-                                                        MessageBox.Show("Пользователь зарегистрирован");
-                                                        TabControl_Main.SelectedItem = Auth;
-                                                    }
-                                                    else MessageBox.Show("Пароли не совпадают");
-                                                }
-                                            }
-                                            else MessageBox.Show("пароль слишком короткий, минимум 6 символов");
-                                        }
-                                        else MessageBox.Show("Повторите пароль");
-                                    }
-                                    else MessageBox.Show("Укажите пароль");
-                                }
-                                else MessageBox.Show("Логин уже занят, попробуйте другой");
-                            }
-                            else MessageBox.Show("Укажите Login");
-                        }
-                        else MessageBox.Show("Укажите Email");
-                    }
-                    else MessageBox.Show("Укажите Отчество");
-                }
-                else MessageBox.Show("Укажите Имя");
+                MessageBox.Show(resultOfReg);
+                TabControl_Main.SelectedItem = Auth;
             }
-            else MessageBox.Show("Укажите Фамилию");
-           }
+            else MessageBox.Show(resultOfReg);
+    }
         private void LB_CreatedTest_Loaded(object sender, RoutedEventArgs e)
         {
             List<TestModel> test = _testModelManager.GetTestByTeacherId(_authorizedTeacher);
