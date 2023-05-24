@@ -6,6 +6,6 @@ BEGIN
 
 	SELECT Id, [Name]
 	FROM dbo.[Group]
-	WHERE [Name] LIKE @Text + '%'
+	WHERE ([Name] LIKE @Text + '%') AND (IsDeleted = 0)
 
 END
