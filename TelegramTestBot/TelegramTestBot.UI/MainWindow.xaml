@@ -89,7 +89,7 @@
                                 <TextBox x:Name="TB_FirstName_Student" HorizontalAlignment="Left" Margin="172,65,0,0" TextWrapping="Wrap" Text="Введите Имя" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
                                 <TextBox x:Name="TB_SurName_Student" HorizontalAlignment="Left" Margin="172,102,0,0" TextWrapping="Wrap" Text="Введите Отчество" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
                                 <TextBox x:Name="TB_Username_Student" HorizontalAlignment="Left" Margin="172,139,0,0" TextWrapping="Wrap" Text="Введите Username" VerticalAlignment="Top" Foreground="#FFAFAFAF" Width="259" Height="25"/>
-                                <ComboBox x:Name="CB_GroupsForStudent" HorizontalAlignment="Left" VerticalAlignment="Top" Width="258" Height="26" Margin="173,173,0,0" />
+                                <ComboBox x:Name="CB_GroupsForStudent" HorizontalAlignment="Left" VerticalAlignment="Top" Width="258" Height="26" DisplayMemberPath="Name" Margin="173,173,0,0" />
                                 <Button x:Name="Button_EditStudent" Content="Сохранить изменения" HorizontalAlignment="Left" Margin="172,207,0,0" VerticalAlignment="Top" Width="259"/>
                             </Grid>
                         </TabItem>
@@ -104,7 +104,7 @@
                         </TabItem>
                     </TabControl>
                     <ComboBox x:Name="CB_Groups" HorizontalAlignment="Center" DisplayMemberPath="Name" VerticalAlignment="Top" Width="205" Height="26" Margin="0,22,0,0" Loaded="CB_Groups_Loaded" SelectionChanged="CB_Groups_SelectionChanged"/>
-                    <ListBox x:Name="LB_StudentsInGroup" DisplayMemberPath="Surname"  Margin="2,71,3,181"/>
+                    <ListBox x:Name="LB_StudentsInGroup" DisplayMemberPath="Surname"  Margin="2,71,3,181" SelectionChanged="LB_StudentsInGroup_SelectionChanged"/>
                     <ListBox x:Name="LB_NewUsers" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="2,251,5,55"/>
                     <Label Content="Студенты:" HorizontalAlignment="Center" Margin="0,43,0,0" VerticalAlignment="Top" Width="200"/>
                     <Label Content="Подключенные пользователи:" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Margin="0,225,0,0"/>

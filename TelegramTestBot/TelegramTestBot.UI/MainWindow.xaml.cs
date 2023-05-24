@@ -467,6 +467,17 @@ namespace TelegramTestBot.UI
             List<StudentModel> studentInGroup =  _studentModelManager.GetStudentByGroupId(groupId);
             LB_StudentsInGroup.ItemsSource = studentInGroup;
         }
+
+        private void LB_StudentsInGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            StudentModel selectedStudent = (StudentModel)LB_StudentsInGroup.SelectedItem;
+            TB_LastName_Student.Text = selectedStudent.Surname;
+            TB_FirstName_Student.Text = selectedStudent.Firstname;
+            TB_SurName_Student.Text = selectedStudent.Lastname;
+            TB_Username_Student.Text = selectedStudent.Username;
+            CB_GroupsForStudent.ItemsSource = _groupModelManager.GetAllGroups();
+            CB_GroupsForStudent.SelectedItem = _groupModelManager.GetGroupById(selectedStudent.GroupId);
+        }
     }
 }
 
