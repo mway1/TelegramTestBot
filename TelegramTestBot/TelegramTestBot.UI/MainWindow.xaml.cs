@@ -75,6 +75,7 @@ namespace TelegramTestBot.UI
                 TeacherModel aprovedTeacher = _teacherModelManager.GetTeacherByLogin(enteredLogin);
                 _authorizedTeacher = aprovedTeacher.Id;
                 MessageBox.Show("Авторизация пройдена");
+                Label_helloForTeacher.Content +=  " "+ aprovedTeacher.Firstname +" "+ aprovedTeacher.Surname;
                 TB_login.Clear();
                 Password_login.Clear();
                 TabControl_Main.SelectedItem = TabItem_StartPage;
@@ -451,6 +452,31 @@ namespace TelegramTestBot.UI
                 LB_AllGroups.ItemsSource = _groupModelManager.GetAllGroups();
             }
 
+        }
+
+
+        private void CB_groupForTesting_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<GroupModel> allGroupsForTesting = _groupModelManager.GetAllGroups();
+            CB_groupForTesting.ItemsSource = allGroupsForTesting;
+        }
+
+        private void CB_allTeacherTests_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<TestModel> allTeacherTests = _testModelManager.GetTestByTeacherId(_authorizedTeacher);
+            CB_allTeacherTests.ItemsSource = allTeacherTests;
+        }
+
+        private void DP_selectDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBoxItem CBitem = CB_timeSelect.SelectedItem as ComboBoxItem;
+            if(CBitem.Content != null)
+            {
+                string time = CBitem.Content.ToString();
+                string date = DP_selectDate.Text;
+                DateTime datetime = DateTime.Parse(date +" "+ time);
+                TB_dateTimeForTesting.Text = datetime.ToString();
+            }
         }
     }
 }

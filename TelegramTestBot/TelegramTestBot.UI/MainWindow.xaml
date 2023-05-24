@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TelegramTestBot.UI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" ResizeMode="NoResize">
     <Grid>
         <TabControl x:Name="TabControl_Main" >
             <TabItem x:Name="Auth" Header="Авторизация">
@@ -31,21 +31,55 @@
             </TabItem>
             <TabItem x:Name="TabItem_StartPage" Header="Главная страница">
                 <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="127*"/>
+                        <RowDefinition Height="277*"/>
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="227*"/>
                         <ColumnDefinition Width="170*"/>
                     </Grid.ColumnDefinitions>
                     <Button Grid.Column="1" x:Name="Button_Exit" Content="Выйти из аккаунта" HorizontalAlignment="Left" Margin="228,9,0,0" VerticalAlignment="Top" Height="26" Width="106" Click="Button_Exit_Click"/>
-                    <Button Grid.Column="1" x:Name="Button_GoToTest" Content="Работа с тестами" HorizontalAlignment="Left" Margin="10,337,0,0" VerticalAlignment="Top" Height="32" Width="142" Click="Button_GoToTest_Click"/>
-                    <Button Grid.Column="1" x:Name="Button_GoToGroups" Content="Работа с группами" HorizontalAlignment="Left" Margin="188,337,0,0" VerticalAlignment="Top" Height="32" Width="142" Click="Button_GoToGroups_Click"/>
-                    <Label Grid.Column="1" Content="Создание группы:" HorizontalAlignment="Left" Margin="43,57,0,0" VerticalAlignment="Top" Width="127" FontWeight="Bold" />
-                    <TextBox Grid.Column="1" x:Name="TB_newGroup" HorizontalAlignment="Left" Margin="32,88,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="165" Height="26"/>
-                    <Button Grid.Column="1" x:Name="Button_AddGroup" Content="+" FontSize="15" HorizontalAlignment="Left" Margin="197,88,0,0" VerticalAlignment="Top" Height="26" Width="28" FontWeight="Bold" FontStretch="Normal" Click="Button_AddGroup_Click"/>
-                    <Label Grid.Column="1" Content="Созданные группы:" HorizontalAlignment="Left" Margin="43,131,0,0" VerticalAlignment="Top" Width="127" FontWeight="Bold" />
-                    <ListBox x:Name="LB_AllGroups" DisplayMemberPath="Name" Grid.Column="1"  Margin="32,162,115,122" Loaded="LB_AllGroups_Loaded"/>
-                    <Button Grid.Column="1" x:Name="Button_EditGroup" Content="Изменить" HorizontalAlignment="Left" Margin="32,282,0,0" VerticalAlignment="Top" Width="96" Click="Button_EditGroup_Click"/>
-                    <Button Grid.Column="1" x:Name="Button_DeleteGroup" Content="Удалить" HorizontalAlignment="Left" Margin="129,282,0,0" VerticalAlignment="Top" Width="96" Click="Button_DeleteGroup_Click"/>
-                    <Button Grid.Column="1" x:Name="Button_UpdateGroupName" Content="Изменить" FontSize="10" HorizontalAlignment="Left" Margin="227,88,0,0" VerticalAlignment="Top" Height="26" Width="54" FontWeight="Bold" FontStretch="Normal" Click="Button_UpdateGroupName_Click"/>
+                    <Button Grid.Column="1" x:Name="Button_GoToTest" Content="Работа с тестами" HorizontalAlignment="Left" Margin="10,226,0,0" VerticalAlignment="Top" Height="32" Width="142" Click="Button_GoToTest_Click" Grid.Row="1"/>
+                    <Button Grid.Column="1" x:Name="Button_GoToGroups" Content="Работа с группами" HorizontalAlignment="Left" Margin="188,226,0,0" VerticalAlignment="Top" Height="32" Width="142" Click="Button_GoToGroups_Click" Grid.Row="1"/>
+                    <Label Grid.Column="1" Grid.Row="0" Content="Создание группы:" HorizontalAlignment="Left" Margin="43,57,0,0" VerticalAlignment="Top" Width="127" FontWeight="Bold" Height="26" />
+                    <TextBox Grid.Column="1" Grid.Row="0" x:Name="TB_newGroup" HorizontalAlignment="Left" Margin="32,87,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="165" Height="26"/>
+                    <Button Grid.Column="1" Grid.Row="0" x:Name="Button_AddGroup" Content="+" FontSize="15" HorizontalAlignment="Left" Margin="197,87,0,0" VerticalAlignment="Top" Height="26" Width="28" FontWeight="Bold" FontStretch="Normal" Click="Button_AddGroup_Click"/>
+                    <Label Grid.Column="1" Content="Созданные группы:" HorizontalAlignment="Left" Margin="43,20,0,0" VerticalAlignment="Top" Width="127" FontWeight="Bold" Height="26" Grid.Row="1" />
+                    <ListBox x:Name="LB_AllGroups" DisplayMemberPath="Name"  Margin="39,51,81,113" Loaded="LB_AllGroups_Loaded" Grid.Row="1" Grid.Column="1"/>
+                    <Button Grid.Column="1" x:Name="Button_EditGroup" Content="Изменить" HorizontalAlignment="Left" Margin="39,164,0,0" VerticalAlignment="Top" Width="109" Click="Button_EditGroup_Click" Height="23" Grid.Row="1"/>
+                    <Button Grid.Column="1" x:Name="Button_DeleteGroup" Content="Удалить" HorizontalAlignment="Left" Margin="150,164,0,0" VerticalAlignment="Top" Width="109" Click="Button_DeleteGroup_Click" Height="23" Grid.Row="1"/>
+                    <Button Grid.Column="1" Grid.Row="0" x:Name="Button_UpdateGroupName" Content="Изменить" FontSize="10" HorizontalAlignment="Left" Margin="227,87,0,0" VerticalAlignment="Top" Height="26" Width="54" FontWeight="Bold" FontStretch="Normal" Click="Button_UpdateGroupName_Click"/>
+                    <Label x:Name="Label_helloForTeacher" Content="Здравствуйте, " HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="422" FontWeight="Bold" FontSize="15" Height="30" />
+                    <Label Content="Выберите группу:" HorizontalAlignment="Left" Margin="11,65,0,0" VerticalAlignment="Top" Width="142" Height="26"/>
+                    <Label Content="Выберите тест:" HorizontalAlignment="Left" Margin="279,65,0,0" VerticalAlignment="Top" Width="142" Height="26"/>
+                    <ComboBox x:Name="CB_groupForTesting" DisplayMemberPath="Name" Margin="11,91,297,10" Grid.Column="0" Grid.Row="0" Loaded="CB_groupForTesting_Loaded"/>
+                    <ComboBox x:Name="CB_allTeacherTests" DisplayMemberPath="Name" Margin="279,91,29,10" Grid.Column="0" Grid.Row="0" Loaded="CB_allTeacherTests_Loaded"/>
+                    <Label Content="Выберите дату и время:" HorizontalAlignment="Center" Margin="0,12,0,0" VerticalAlignment="Top" Width="142" Height="26" Grid.Row="1"/>
+                    <Button Content="Запустить" HorizontalAlignment="Left" Margin="142,230,0,0" VerticalAlignment="Top" Width="180" Height="23" Grid.Row="1"/>
+                    <Label Content="Запуск теста для студентов" HorizontalAlignment="Left" Margin="132,40,0,0" VerticalAlignment="Top" Width="198" FontSize="14"/>
+
+                    <StackPanel Grid.Row="1" Margin="160,49,144,113">
+                        <DatePicker x:Name="DP_selectDate" Width="140" FirstDayOfWeek="Monday" SelectedDateChanged="DP_selectDate_SelectedDateChanged"/>
+                        <TextBox x:Name="TB_dateTimeForTesting" TextWrapping="Wrap" Text="" Width="140" Margin="0,40,0,0" Height="20"/>
+                        <ComboBox x:Name="CB_timeSelect" Width="140" Height="20" Margin="0,-98,0,0" Opacity="3">
+                            <ComboBoxItem>10:00</ComboBoxItem>
+                            <ComboBoxItem>11:00</ComboBoxItem>
+                            <ComboBoxItem>12:00</ComboBoxItem>
+                            <ComboBoxItem>13:00</ComboBoxItem>
+                            <ComboBoxItem>14:00</ComboBoxItem>
+                            <ComboBoxItem>14:00</ComboBoxItem>
+                            <ComboBoxItem>15:00</ComboBoxItem>
+                            <ComboBoxItem>16:00</ComboBoxItem>
+                            <ComboBoxItem>17:00</ComboBoxItem>
+                            <ComboBoxItem>18:00</ComboBoxItem>
+                            <ComboBoxItem>19:00</ComboBoxItem>
+                            <ComboBoxItem>20:00</ComboBoxItem>
+                            <ComboBoxItem>21:00</ComboBoxItem>
+                            <ComboBoxItem>22:00</ComboBoxItem>
+                        </ComboBox>
+                        <Label Content="Введенная дата и время:" Margin="0,-53,0,0" Height="28" />
+                    </StackPanel>
 
                 </Grid>
             </TabItem>
@@ -104,12 +138,12 @@
                         </TabItem>
                     </TabControl>
                     <ComboBox x:Name="CB_Groups" HorizontalAlignment="Center" VerticalAlignment="Top" Width="205" Height="26" Margin="0,22,0,0"/>
-                    <ListBox x:Name="LB_StudentsInGroup" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="2,71,3,181"/>
-                    <ListBox x:Name="LB_NewUsers" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="2,251,3,38"/>
+                    <ListBox x:Name="LB_StudentsInGroup" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="2,71,3,216"/>
+                    <ListBox x:Name="LB_NewUsers" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="2,219,3,70"/>
                     <Label Content="Студенты:" HorizontalAlignment="Center" Margin="0,43,0,0" VerticalAlignment="Top" Width="200"/>
-                    <Label Content="Подключенные пользователи:" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Margin="0,225,0,0"/>
+                    <Label Content="Подключенные пользователи:" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Margin="0,193,0,0"/>
                     <Label Content="Группы:" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Margin="0,-3,0,0"/>
-                    <Button x:Name="But_GoStartGroups" Content="На главную" HorizontalAlignment="Left" Margin="10,371,0,0" VerticalAlignment="Top" Height="23" Width="162" Click="But_GoStartGroups_Click"/>
+                    <Button x:Name="But_GoStartGroups" Content="На главную" HorizontalAlignment="Center" Margin="0,339,0,0" VerticalAlignment="Top" Height="23" Width="162" Click="But_GoStartGroups_Click"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="TabItem_Test" Header="Создание Теста" Height="22" Margin="-2,0,-2,0" VerticalAlignment="Bottom">
