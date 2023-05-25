@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Timers;
 using TelegramTestBot.BL.Models;
 using TelegramTestBot.BL.Managers;
 using Telegram.Bot;
@@ -15,6 +15,8 @@ namespace TelegramTestBot.BL.Service
 {
     public class TelegramBotService
     {
+        private static Dictionary<long, DateTime> scheduleMsgs = new Dictionary<long, DateTime>();
+        private static Dictionary<long, System.Timers.Timer> timers = new Dictionary<long, System.Timers.Timer>();
         protected Action<string> _onMessage;
         private DataService _dataService = new DataService();
         private StudentModelManager _studentModelManager = new StudentModelManager();
@@ -26,6 +28,12 @@ namespace TelegramTestBot.BL.Service
         {
             _botClient = new TelegramBotClient(_dataService.token);
             _onMessage = onMessage;
+
+            foreach(var timer in timers.Values)
+            {
+                timer.Stop();
+                timer.Dispose();
+            }
         }
 
         public void StartBot(string pass)
@@ -111,12 +119,39 @@ namespace TelegramTestBot.BL.Service
                             }
                         }
                         else
-                            SendMessagesForUser(id, username, ", чтобы использовать данную команду, зарегистрируйтесь! \nГлавное меню - /menu");
+                            EditMessagesWithKeyboard(id, msgId, 
+                                "Чтобы использовать данную команду, зарегистрируйтесь! \nГлавное меню - /menu");
 
                         break;
                     }
                 case ActionType.test:
                     {
+                        if (!_dataService.CheckStudentChatIdForUnique(id))
+                        {
+                            DateTime sendTime = new DateTime(2023, 05, 25, 3, 13, 0);
+                            if (!scheduleMsgs.ContainsKey(id))
+                            {
+                                scheduleMsgs[id] = sendTime;
+
+                                System.Timers.Timer timer = new System.Timers.Timer();
+                                timer.Interval = (sendTime - DateTime.Now).TotalMilliseconds;
+                                timer.AutoReset = false;
+                                timer.Elapsed += (sender, args) => WaitForScheduleTime(id, sendTime);
+                                timer.Start();
+
+                                timers[id] = timer;
+
+                                EditMessagesWithKeyboard(id, msgId,
+                                "Ожидайте теста!");
+                            }
+                            else
+                                EditMessagesWithKeyboard(id, msgId, $"{username}, тест начнется {sendTime.ToShortDateString()} в {sendTime.ToShortTimeString()}");
+
+                        }
+                        else
+                            EditMessagesWithKeyboard(id, msgId, 
+                                "Чтобы использовать данную команду, зарегистрируйтесь! \nГлавное меню - /menu");
+
                         break;
                     }
                 case ActionType.groups:
@@ -152,7 +187,8 @@ namespace TelegramTestBot.BL.Service
                             }                               
                         }
                         else
-                            SendMessagesForUser(id, username, ", чтобы использовать данную команду, зарегистрируйтесь! \nГлавное меню - /menu");
+                            EditMessagesWithKeyboard(id, msgId, 
+                                "Чтобы использовать данную команду, зарегистрируйтесь! \nГлавное меню - /menu");
 
                         break;
                     }
@@ -214,6 +250,7 @@ namespace TelegramTestBot.BL.Service
 
         private async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
+            DateTime date1 = new DateTime(2023, 05, 25, 1, 13, 0);
             if(update.Message != null && update.Message.Text == "/start" || update.Message?.Text == "/menu")
             {
                 MakeActionWithBot(update.Message!.Chat.Id, ActionType.start, update.Message.Chat.Username);
@@ -278,6 +315,19 @@ namespace TelegramTestBot.BL.Service
         private async Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
         {
             await Task.CompletedTask;
+        }
+
+        private async void WaitForScheduleTime(long id, DateTime sendTime)
+        {
+            if (scheduleMsgs.ContainsKey(id) && scheduleMsgs[id] == sendTime)
+            {
+                await _botClient.SendTextMessageAsync(new ChatId(id), "Твоя мама хорошая женщина");
+            }
+
+            scheduleMsgs.Remove(id);
+            timers[id].Stop();
+            timers[id].Dispose();
+            timers.Remove(id);
         }
     }
 }

@@ -251,7 +251,7 @@ namespace TelegramTestBot.UI
 
         private void Button_SignIn_Click(object sender, RoutedEventArgs e)
         {
-            TabControl_Main.SelectedItem = Auth;
+            TabControl_Main.SelectedItem = Auth;            
         }
 
         private void Button_Exit_Click(object sender, RoutedEventArgs e)
