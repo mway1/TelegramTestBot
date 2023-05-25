@@ -85,29 +85,40 @@
             </TabItem>
             <TabItem x:Name="Reg" Header="Регистрация">
                 <Grid>
-                    <Label Grid.Column="1" Content="Форма регистрации" HorizontalAlignment="Center" Margin="0,12,0,0" VerticalAlignment="Top" Width="188" FontSize="16" FontWeight="Bold"/>
-                    <TextBox Grid.Column="1" x:Name="TB_LastName_Teacher" HorizontalAlignment="Left" Margin="31,69,0,0" TextWrapping="Wrap" Text=""  VerticalAlignment="Top" Width="259" Height="25" AcceptsReturn="True"/>
-                    <TextBox Grid.Column="1" x:Name="TB_FirstName_Teacher" HorizontalAlignment="Left" Margin="31,110,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"  Width="259" Height="25"/>
-                    <TextBox Grid.Column="1" x:Name="TB_SurName_Teacher" HorizontalAlignment="Left" Margin="31,149,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="259" Height="25"/>
-                    <TextBox Grid.Column="1" x:Name="TB_Email_Teacher" HorizontalAlignment="Left" Margin="31,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center"  Width="259" Height="25"/>
-                    <TextBox Grid.Column="1" x:Name="TB_Login_Teacher" HorizontalAlignment="Left" Margin="31,231,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"  Width="259" Height="25"/>
-                    <Button Grid.Column="1" x:Name="Button_Reg" Content="Зарегистрироваться" HorizontalAlignment="Left" Margin="31,332,0,0" VerticalAlignment="Top" Height="26" Width="147" Click="Button_Reg_Click"/>
-                    <Button Grid.Column="1" x:Name="Button_SignIn" Content="Вход" HorizontalAlignment="Left" Margin="192,332,0,0" VerticalAlignment="Top" Height="26" Width="98" Click="Button_SignIn_Click"/>
-                    <PasswordBox x:Name="PasswordForRegister"  Grid.Column="1" HorizontalAlignment="Left" Margin="31,269,0,0" VerticalAlignment="Top" Width="259" Height="25"/>
-                    <PasswordBox x:Name="PasswordForRegister_Copy"  Grid.Column="1" HorizontalAlignment="Left" Margin="31,306,0,0" VerticalAlignment="Top" Width="259" Height="25"/>
-                    <Label Grid.Column="1" Content="Введите фамилию:" HorizontalAlignment="Left" Margin="27,50,0,0" VerticalAlignment="Top"/>
-                    <Label Grid.Column="1" Content="Введите Имя:" HorizontalAlignment="Left" Margin="27,90,0,0" VerticalAlignment="Top"/>
-                    <Label Grid.Column="1" Content="Введите Отчество:" HorizontalAlignment="Left" Margin="27,130,0,0" VerticalAlignment="Top"/>
-                    <Label Grid.Column="1" Content="Введите email:" HorizontalAlignment="Left" Margin="27,168,0,0" VerticalAlignment="Top"/>
-                    <Label Grid.Column="1" Content="Введите login:" HorizontalAlignment="Left" Margin="27,212,0,0" VerticalAlignment="Top"/>
-                    <Label Grid.Column="1" Content="Введите пароль:" HorizontalAlignment="Left" Margin="27,250,0,0" VerticalAlignment="Top"/>
-                    <Label Grid.Column="1" Content="Повторите пароль:" HorizontalAlignment="Left" Margin="27,287,0,0" VerticalAlignment="Top"/>
+                    <Label Grid.Column="1" Grid.Row="0" Content="Форма регистрации" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="188" FontSize="16" FontWeight="Bold"/>
+                    <TextBox Grid.Column="1" Grid.Row="1" x:Name="TB_LastName_Teacher" HorizontalAlignment="Left" TextWrapping="Wrap" Text=""  VerticalAlignment="Center" Width="212" Height="25" AcceptsReturn="True" Margin="111,0,0,0"/>
+                    <TextBox Grid.Column="1" Grid.Row="2" x:Name="TB_FirstName_Teacher" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="229" Height="25" AcceptsReturn="True" Margin="94,0,0,0"/>
+                    <TextBox Grid.Column="1" Grid.Row="3" x:Name="TB_SurName_Teacher" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="212" Height="25" AcceptsReturn="True" Margin="111,0,0,0"/>
+                    <TextBox Grid.Column="1" Grid.Row="4" x:Name="TB_Email_Teacher" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="229" Height="25" AcceptsReturn="True" Margin="93,0,0,0"/>
+                    <TextBox Grid.Column="1" Grid.Row="5" x:Name="TB_Login_Teacher" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="" VerticalAlignment="Center"  Width="229" Height="25" AcceptsReturn="True" Margin="94,0,0,0"/>
+                    <Button Grid.Column="1" Grid.Row="7" x:Name="Button_Reg" Content="Зарегистрироваться" HorizontalAlignment="Left" VerticalAlignment="Center" Height="26" Width="147" Click="Button_Reg_Click" Margin="36,45,0,0" Grid.RowSpan="2"/>
+                    <Button Grid.Column="1" Grid.Row="7" x:Name="Button_SignIn" Content="Вход" HorizontalAlignment="Left"  VerticalAlignment="Center" Height="26" Width="98" Click="Button_SignIn_Click" Margin="184,45,0,0" Grid.RowSpan="2"/>
+                    <PasswordBox x:Name="PasswordForRegister"  Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left"  VerticalAlignment="Center" Width="212" Height="25"  Margin="110,0,0,0"/>
+                    <PasswordBox x:Name="PasswordForRegister_Copy"  Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left"  VerticalAlignment="Center" Width="212" Height="25"  Margin="110,0,0,0"/>
+                    <Label Grid.Column="1" Grid.Row="1"  Content="Введите фамилию:" HorizontalAlignment="Left"  VerticalAlignment="Center"/>
+                    <Label Grid.Column="1" Grid.Row="2" Content="Введите Имя:" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    <Label Grid.Column="1" Grid.Row="3" Content="Введите Отчество:" HorizontalAlignment="Left"  VerticalAlignment="Center"/>
+                    <Label Grid.Column="1" Grid.Row="4" Content="Введите email:" HorizontalAlignment="Left"  VerticalAlignment="Center"/>
+                    <Label Grid.Column="1" Grid.Row="5" Content="Введите login:" HorizontalAlignment="Left"  VerticalAlignment="Center"/>
+                    <Label Grid.Column="1" Grid.Row="6" Content="Введите пароль:" HorizontalAlignment="Left"  VerticalAlignment="Center"/>
+                    <Label Grid.Column="1" Grid.Row="7" Content="Повторите пароль:" HorizontalAlignment="Left"  VerticalAlignment="Center"/>
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="219*" />
                         <ColumnDefinition Width="329*" />
                         <ColumnDefinition Width="246*" />
                     </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
                 </Grid>
             </TabItem>
             <TabItem x:Name="Groups" Header="Создание Групп">
