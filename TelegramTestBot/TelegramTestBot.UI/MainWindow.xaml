@@ -91,8 +91,8 @@
                     <TextBox Grid.Column="1" Grid.Row="3" x:Name="TB_SurName_Teacher" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="212" Height="25" AcceptsReturn="True" Margin="111,0,0,0"/>
                     <TextBox Grid.Column="1" Grid.Row="4" x:Name="TB_Email_Teacher" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="229" Height="25" AcceptsReturn="True" Margin="93,0,0,0"/>
                     <TextBox Grid.Column="1" Grid.Row="5" x:Name="TB_Login_Teacher" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="" VerticalAlignment="Center"  Width="229" Height="25" AcceptsReturn="True" Margin="94,0,0,0"/>
-                    <Button Grid.Column="1" Grid.Row="7" x:Name="Button_Reg" Content="Зарегистрироваться" HorizontalAlignment="Left" VerticalAlignment="Center" Height="26" Width="147" Click="Button_Reg_Click" Margin="36,45,0,0" Grid.RowSpan="2"/>
-                    <Button Grid.Column="1" Grid.Row="7" x:Name="Button_SignIn" Content="Вход" HorizontalAlignment="Left"  VerticalAlignment="Center" Height="26" Width="98" Click="Button_SignIn_Click" Margin="184,45,0,0" Grid.RowSpan="2"/>
+                    <Button Grid.Column="1" Grid.Row="8" x:Name="Button_Reg" Content="Зарегистрироваться" HorizontalAlignment="Left" VerticalAlignment="Center" Height="26" Width="147" Click="Button_Reg_Click" Margin="9,0,0,0"/>
+                    <Button Grid.Column="1" Grid.Row="8" x:Name="Button_SignIn" Content="Вход" HorizontalAlignment="Left"  VerticalAlignment="Center" Height="26" Width="98" Click="Button_SignIn_Click" Margin="159,0,0,0"/>
                     <PasswordBox x:Name="PasswordForRegister"  Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left"  VerticalAlignment="Center" Width="212" Height="25"  Margin="110,0,0,0"/>
                     <PasswordBox x:Name="PasswordForRegister_Copy"  Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left"  VerticalAlignment="Center" Width="212" Height="25"  Margin="110,0,0,0"/>
                     <Label Grid.Column="1" Grid.Row="1"  Content="Введите фамилию:" HorizontalAlignment="Left"  VerticalAlignment="Center"/>

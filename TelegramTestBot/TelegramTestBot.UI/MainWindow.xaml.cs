@@ -454,7 +454,6 @@ namespace TelegramTestBot.UI
 
         }
 
-
         private void CB_groupForTesting_Loaded(object sender, RoutedEventArgs e)
         {
             List<GroupModel> allGroupsForTesting = _groupModelManager.GetAllGroups();
