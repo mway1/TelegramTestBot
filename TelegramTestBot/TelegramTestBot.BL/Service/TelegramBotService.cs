@@ -125,10 +125,10 @@ namespace TelegramTestBot.BL.Service
                         break;
                     }
                 case ActionType.test:
-                    {
+                    {                       
                         if (!_dataService.CheckStudentChatIdForUnique(id))
                         {
-                            DateTime sendTime = new DateTime(2023, 05, 26, 21, 35, 0);
+                            DateTime sendTime = new DateTime(2023, 05, 27, 2, 50, 0);
                             int groupId = 5;
                             
                             if (!_testingService.SchedulesGroup.ContainsKey(groupId))
