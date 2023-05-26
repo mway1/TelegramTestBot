@@ -77,6 +77,7 @@ namespace TelegramTestBot.UI
                 TeacherModel aprovedTeacher = _teacherModelManager.GetTeacherByLogin(enteredLogin);
                 _authorizedTeacher = aprovedTeacher.Id;
                 MessageBox.Show("Авторизация пройдена");
+                Label_helloForTeacher.Content +=  " "+ aprovedTeacher.Firstname +" "+ aprovedTeacher.Surname;
                 TB_login.Clear();
                 Password_login.Clear();
                 TabControl_Main.SelectedItem = TabItem_StartPage;
@@ -378,7 +379,7 @@ namespace TelegramTestBot.UI
 
         private void Button_EditNameOfTest_Click(object sender, RoutedEventArgs e)
         {
-            if (TB_NewTestorEditName.Text.Length > 0)
+            if (LB_CreatedTest.SelectedItem!=null)
             {
                 TestModel selectedTest = (TestModel)LB_CreatedTest.SelectedItem;
                 TB_NewTestorEditName.Text = selectedTest.Name;
@@ -498,6 +499,30 @@ namespace TelegramTestBot.UI
             CB_Groups.SelectedItem = _groupModelManager.GetGroupById(newSelectedGroupId);
             List<StudentModel> studentInGroup = _studentModelManager.GetStudentByGroupId(newSelectedGroupId);
             LB_StudentsInGroup.ItemsSource = studentInGroup;
+        }
+
+        private void CB_groupForTesting_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<GroupModel> allGroupsForTesting = _groupModelManager.GetAllGroups();
+            CB_groupForTesting.ItemsSource = allGroupsForTesting;
+        }
+
+        private void CB_allTeacherTests_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<TestModel> allTeacherTests = _testModelManager.GetTestByTeacherId(_authorizedTeacher);
+            CB_allTeacherTests.ItemsSource = allTeacherTests;
+        }
+
+        private void DP_selectDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBoxItem CBitem = CB_timeSelect.SelectedItem as ComboBoxItem;
+            if(CBitem.Content != null)
+            {
+                string time = CBitem.Content.ToString();
+                string date = DP_selectDate.Text;
+                DateTime datetime = DateTime.Parse(date +" "+ time);
+                TB_dateTimeForTesting.Text = datetime.ToString();
+            }
         }
     }
 }
