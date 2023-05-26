@@ -29,6 +29,7 @@ namespace TelegramTestBot.UI
         private int _updatedQuestId;
         private int _updatedTestId;
         private int _updatedGroupId;
+        private int _updatedStudentId;
         private List<string> _labels;
         private TeacherModelManager _teacherModelManager = new TeacherModelManager();
         private TestModelManager _testModelManager = new TestModelManager();
@@ -470,13 +471,33 @@ namespace TelegramTestBot.UI
 
         private void LB_StudentsInGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (LB_StudentsInGroup.SelectedItem != null)
+            {
             StudentModel selectedStudent = (StudentModel)LB_StudentsInGroup.SelectedItem;
             TB_LastName_Student.Text = selectedStudent.Surname;
             TB_FirstName_Student.Text = selectedStudent.Firstname;
             TB_SurName_Student.Text = selectedStudent.Lastname;
             TB_Username_Student.Text = selectedStudent.Username;
+            _updatedStudentId = selectedStudent.Id;
             CB_GroupsForStudent.ItemsSource = _groupModelManager.GetAllGroups();
             CB_GroupsForStudent.SelectedItem = _groupModelManager.GetGroupById(selectedStudent.GroupId);
+            }
+        }
+
+        private void Button_EditStudent_Click(object sender, RoutedEventArgs e)
+        {
+            int newSelectedGroupId = ((GroupModel)CB_GroupsForStudent.SelectedItem).Id;
+            StudentModel updatedStudent = new StudentModel { Id = _updatedStudentId, Firstname = TB_FirstName_Student.Text, Lastname = TB_SurName_Student.Text, Surname = TB_LastName_Student.Text, GroupId = newSelectedGroupId};
+            _studentModelManager.UpdateStudentById(updatedStudent);
+            _updatedStudentId = 0;
+            TB_LastName_Student.Clear();
+            TB_FirstName_Student.Clear();
+            TB_SurName_Student.Clear();
+            TB_Username_Student.Clear();
+            CB_GroupsForStudent.SelectedIndex = -1;
+            CB_Groups.SelectedItem = _groupModelManager.GetGroupById(newSelectedGroupId);
+            List<StudentModel> studentInGroup = _studentModelManager.GetStudentByGroupId(newSelectedGroupId);
+            LB_StudentsInGroup.ItemsSource = studentInGroup;
         }
     }
 }
