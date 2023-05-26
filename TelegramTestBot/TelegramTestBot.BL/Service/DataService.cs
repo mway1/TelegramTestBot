@@ -23,7 +23,6 @@ namespace TelegramTestBot.BL.Service
 
         public bool CheckStudentForPresenceInGroup(long id, int groupId)
         {
-            bool isPresence;
             List<long> userIds = new List<long>();
             List<StudentModel> checkedStudents = _studentModelManager.GetStudentsByGroupId(groupId);
 
@@ -33,11 +32,9 @@ namespace TelegramTestBot.BL.Service
             }
 
             if (userIds.Contains(id))
-                isPresence = true;
-            else
-                isPresence = false;
+                return true;
 
-            return isPresence;
+            return false;
         }
 
         public bool CheckStudentChatIdForUnique(long studentChatId)

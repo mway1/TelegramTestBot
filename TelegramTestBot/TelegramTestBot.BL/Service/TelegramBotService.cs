@@ -18,6 +18,7 @@ namespace TelegramTestBot.BL.Service
         protected Action<string> _onMessage;
         private DataService _dataService = new DataService();
         private TestingService _testingService = new TestingService();
+        private LocationTrackingService _locationTrackingService = new LocationTrackingService();
         private StudentModelManager _studentModelManager = new StudentModelManager();
         private TeacherModelManager _techerModelManager = new TeacherModelManager();
         private GroupModelManager _groupModelManager = new GroupModelManager();
@@ -127,8 +128,8 @@ namespace TelegramTestBot.BL.Service
                     {
                         if (!_dataService.CheckStudentChatIdForUnique(id))
                         {
-                            DateTime sendTime = new DateTime(2023, 05, 26, 20, 29, 0);
-                            int groupId = 3;
+                            DateTime sendTime = new DateTime(2023, 05, 26, 21, 35, 0);
+                            int groupId = 5;
                             
                             if (!_testingService.SchedulesGroup.ContainsKey(groupId))
                             {                              
@@ -257,7 +258,7 @@ namespace TelegramTestBot.BL.Service
             _testingService.TimersForGroup[groupId] = timer;
         }
 
-        private void WaitForScheduleTime(int groupId, DateTime sendTime)
+        private async void WaitForScheduleTime(int groupId, DateTime sendTime)
         {
             List<StudentModel> studentsOfTestGroup = _studentModelManager.GetStudentsByGroupId(groupId);
 
@@ -265,7 +266,15 @@ namespace TelegramTestBot.BL.Service
             {
                 foreach (var students in studentsOfTestGroup)
                 {
-                    SendMessagesForUser(students.UserChatId, text: ", Проверка связи");
+                    var geoButton = new ReplyKeyboardMarkup(new[]
+                    {
+                        KeyboardButton.WithRequestLocation(text : "Поделиться местоположением"),
+                    });
+
+                    geoButton.OneTimeKeyboard = true;
+                    geoButton.ResizeKeyboard = true;
+                    
+                    await _botClient.SendTextMessageAsync(students.UserChatId, "Отправь геопозицию для начала теста", replyMarkup: geoButton);
                 }
             }
 
@@ -331,6 +340,20 @@ namespace TelegramTestBot.BL.Service
             else if (update.Message?.Text != null && DataService.UserAnswersForGroup.ContainsKey(update.Message.Chat.Id))
             {
                 MakeActionWithBot(update.Message!.Chat.Id, ActionType.groups, update.Message.Chat.Username, update.Message.Text);
+            }
+            else if (update.Message != null && update.Message.Type == MessageType.Location)
+            {              
+                Location location = update.Message.Location;
+
+                double latitude = location.Latitude;
+                double longitude = location.Longitude;
+
+                bool isAttendance = _locationTrackingService.CalculateDistance(latitude, longitude);
+                
+                if(isAttendance)
+                    await _botClient.SendTextMessageAsync(update.Message.Chat.Id, "ТЫ ГЕЙ");
+                else
+                    await _botClient.SendTextMessageAsync(update.Message.Chat.Id, "ТЫ смешарик");
             }
             else if (update.Message != null && update.Message.Text != null)
             {
