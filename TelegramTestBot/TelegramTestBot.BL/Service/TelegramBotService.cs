@@ -341,8 +341,9 @@ namespace TelegramTestBot.BL.Service
             {
                 MakeActionWithBot(update.Message!.Chat.Id, ActionType.groups, update.Message.Chat.Username, update.Message.Text);
             }
-            else if (update.Message != null && update.Message.Type == MessageType.Location)
-            {              
+            else if (update.Message != null && update.Message.Type == MessageType.Location && !_dataService.UsersWithGeo.Contains(update.Message.Chat.Id))
+            {
+                _dataService.UsersWithGeo.Add(update.Message.Chat.Id);
                 Location location = update.Message.Location;
 
                 double latitude = location.Latitude;

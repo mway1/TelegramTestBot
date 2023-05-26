@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[Testing_Add]
-	@Date date,
+	@Date datetime,
 	@TestId int
 AS
 BEGIN
