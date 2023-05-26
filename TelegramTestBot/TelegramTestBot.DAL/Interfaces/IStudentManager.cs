@@ -8,6 +8,7 @@ namespace TelegramTestBot.DAL.Interfaces
         void DeleteStudentById(int studentId);
         void UpdateStudentById(StudentDTO newStudent);
         List<StudentDTO> GetAllStudents();
+        List<StudentDTO> GetStudentsByGroupId(int groupId);
         StudentDTO GetStudentById(int studentId);
         StudentDTO GetStudentByChatId(long studentChatId);
     }

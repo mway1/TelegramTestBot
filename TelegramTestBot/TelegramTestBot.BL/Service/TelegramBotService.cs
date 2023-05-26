@@ -15,10 +15,9 @@ namespace TelegramTestBot.BL.Service
 {
     public class TelegramBotService
     {
-        private static Dictionary<long, DateTime> scheduleMsgs = new Dictionary<long, DateTime>();
-        private static Dictionary<long, System.Timers.Timer> timers = new Dictionary<long, System.Timers.Timer>();
         protected Action<string> _onMessage;
         private DataService _dataService = new DataService();
+        private TestingService _testingService = new TestingService();
         private StudentModelManager _studentModelManager = new StudentModelManager();
         private TeacherModelManager _techerModelManager = new TeacherModelManager();
         private GroupModelManager _groupModelManager = new GroupModelManager();
@@ -29,7 +28,7 @@ namespace TelegramTestBot.BL.Service
             _botClient = new TelegramBotClient(_dataService.token);
             _onMessage = onMessage;
 
-            foreach(var timer in timers.Values)
+            foreach (var timer in _testingService.Timers.Values)
             {
                 timer.Stop();
                 timer.Dispose();
@@ -128,25 +127,22 @@ namespace TelegramTestBot.BL.Service
                     {
                         if (!_dataService.CheckStudentChatIdForUnique(id))
                         {
-                            DateTime sendTime = new DateTime(2023, 05, 25, 3, 13, 0);
-                            if (!scheduleMsgs.ContainsKey(id))
-                            {
-                                scheduleMsgs[id] = sendTime;
+                            DateTime sendTime = new DateTime(2023, 05, 26, 20, 29, 0);
+                            int groupId = 3;
+                            
+                            if (!_testingService.SchedulesGroup.ContainsKey(groupId))
+                            {                              
+                                StartTimerForStudent(groupId, sendTime);
 
-                                System.Timers.Timer timer = new System.Timers.Timer();
-                                timer.Interval = (sendTime - DateTime.Now).TotalMilliseconds;
-                                timer.AutoReset = false;
-                                timer.Elapsed += (sender, args) => WaitForScheduleTime(id, sendTime);
-                                timer.Start();
-
-                                timers[id] = timer;
-
-                                EditMessagesWithKeyboard(id, msgId,
-                                "Ожидайте теста!");
+                                    EditMessagesWithKeyboard(id, msgId,
+                                    "Ожидайте теста!");
                             }
+                            else if (_dataService.CheckStudentForPresenceInGroup(id, groupId))
+                                EditMessagesWithKeyboard(id, msgId, 
+                                    $"{username}, тест начнется {sendTime.ToShortDateString()} в {sendTime.ToShortTimeString()}");
                             else
-                                EditMessagesWithKeyboard(id, msgId, $"{username}, тест начнется {sendTime.ToShortDateString()} в {sendTime.ToShortTimeString()}");
-
+                                EditMessagesWithKeyboard(id, msgId,
+                                    $"{username}, для вашей группы тестов еще не назначено! \nГлавное меню - /menu");
                         }
                         else
                             EditMessagesWithKeyboard(id, msgId, 
@@ -204,7 +200,7 @@ namespace TelegramTestBot.BL.Service
                       replyMarkup: null);
         }
 
-        private async void SendMessagesForUser(long chatId, string username = "User", string text = " ")
+        public async void SendMessagesForUser(long chatId, string username = "User", string text = " ")
         {
             await _botClient.SendTextMessageAsync(new ChatId(chatId), username + text);
         }
@@ -248,9 +244,39 @@ namespace TelegramTestBot.BL.Service
             await _botClient.SendTextMessageAsync(new ChatId(chatId), "Выберите действие:", replyMarkup: inlineKeyboard);
         }
 
+        private void StartTimerForStudent(int groupId, DateTime sendTime)
+        {
+            _testingService.SchedulesGroup[groupId] = sendTime;
+
+            System.Timers.Timer timer = new System.Timers.Timer();
+            timer.Interval = (sendTime - DateTime.Now).TotalMilliseconds;
+            timer.AutoReset = false;
+            timer.Elapsed += (sender, args) => WaitForScheduleTime(groupId, sendTime);
+            timer.Start();
+
+            _testingService.TimersForGroup[groupId] = timer;
+        }
+
+        private void WaitForScheduleTime(int groupId, DateTime sendTime)
+        {
+            List<StudentModel> studentsOfTestGroup = _studentModelManager.GetStudentsByGroupId(groupId);
+
+            if (_testingService.SchedulesGroup.ContainsKey(groupId) && _testingService.SchedulesGroup[groupId] == sendTime)
+            {
+                foreach (var students in studentsOfTestGroup)
+                {
+                    SendMessagesForUser(students.UserChatId, text: ", Проверка связи");
+                }
+            }
+
+            _testingService.SchedulesGroup.Remove(groupId);
+            _testingService.TimersForGroup[groupId].Stop();
+            _testingService.TimersForGroup[groupId].Dispose();
+            _testingService.TimersForGroup.Remove(groupId);
+        }
+
         private async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
-            DateTime date1 = new DateTime(2023, 05, 25, 1, 13, 0);
             if(update.Message != null && update.Message.Text == "/start" || update.Message?.Text == "/menu")
             {
                 MakeActionWithBot(update.Message!.Chat.Id, ActionType.start, update.Message.Chat.Username);
@@ -315,19 +341,6 @@ namespace TelegramTestBot.BL.Service
         private async Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
         {
             await Task.CompletedTask;
-        }
-
-        private async void WaitForScheduleTime(long id, DateTime sendTime)
-        {
-            if (scheduleMsgs.ContainsKey(id) && scheduleMsgs[id] == sendTime)
-            {
-                await _botClient.SendTextMessageAsync(new ChatId(id), "Твоя мама хорошая женщина");
-            }
-
-            scheduleMsgs.Remove(id);
-            timers[id].Stop();
-            timers[id].Dispose();
-            timers.Remove(id);
         }
     }
 }
