@@ -377,7 +377,7 @@ namespace TelegramTestBot.UI
 
         private void Button_EditNameOfTest_Click(object sender, RoutedEventArgs e)
         {
-            if (TB_NewTestorEditName.Text.Length > 0)
+            if (LB_CreatedTest.SelectedItem!=null)
             {
                 TestModel selectedTest = (TestModel)LB_CreatedTest.SelectedItem;
                 TB_NewTestorEditName.Text = selectedTest.Name;
