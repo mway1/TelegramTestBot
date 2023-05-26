@@ -56,11 +56,11 @@
                     <ComboBox x:Name="CB_groupForTesting" DisplayMemberPath="Name" Margin="11,91,297,10" Grid.Column="0" Grid.Row="0" Loaded="CB_groupForTesting_Loaded"/>
                     <ComboBox x:Name="CB_allTeacherTests" DisplayMemberPath="Name" Margin="279,91,29,10" Grid.Column="0" Grid.Row="0" Loaded="CB_allTeacherTests_Loaded"/>
                     <Label Content="Выберите дату и время:" HorizontalAlignment="Center" Margin="0,12,0,0" VerticalAlignment="Top" Width="142" Height="26" Grid.Row="1"/>
-                    <Button Content="Запустить" HorizontalAlignment="Left" Margin="142,230,0,0" VerticalAlignment="Top" Width="180" Height="23" Grid.Row="1"/>
+                    <Button x:Name="StartTesting" Content="Запустить" HorizontalAlignment="Left" Margin="142,230,0,0" VerticalAlignment="Top" Width="180" Height="23" Grid.Row="1" Click="StartTesting_Click"/>
                     <Label Content="Запуск теста для студентов" HorizontalAlignment="Left" Margin="132,40,0,0" VerticalAlignment="Top" Width="198" FontSize="14"/>
 
                     <StackPanel Grid.Row="1" Margin="160,49,144,113">
-                        <DatePicker x:Name="DP_selectDate" Width="140" FirstDayOfWeek="Monday" SelectedDateChanged="DP_selectDate_SelectedDateChanged"/>
+                        <DatePicker x:Name="DP_selectDate" Width="140" FirstDayOfWeek="Monday" SelectedDateChanged="DP_selectDate_SelectedDateChanged" SelectedDateFormat="Short"/>
                         <TextBox x:Name="TB_dateTimeForTesting" TextWrapping="Wrap" Text="" Width="140" Margin="0,40,0,0" Height="20"/>
                         <ComboBox x:Name="CB_timeSelect" Width="140" Height="20" Margin="0,-98,0,0" Opacity="3">
                             <ComboBoxItem>10:00</ComboBoxItem>
