@@ -29,12 +29,14 @@ namespace TelegramTestBot.UI
         private int _updatedQuestId;
         private int _updatedTestId;
         private int _updatedGroupId;
+        private int _updatedStudentId;
         private List<string> _labels;
         private TeacherModelManager _teacherModelManager = new TeacherModelManager();
         private TestModelManager _testModelManager = new TestModelManager();
         private QuestionModelManager _questionModelManager = new QuestionModelManager();
         private AnswerModelManager _answerModelManager = new AnswerModelManager();
         private GroupModelManager _groupModelManager = new GroupModelManager();
+        private StudentModelManager _studentModelManager = new StudentModelManager();
         List<AnswerModel> _answersForEditQuest = new List<AnswerModel>();
         private TelegramBotService _telegramBotService;
         private TestService testService = new TestService();
@@ -75,6 +77,7 @@ namespace TelegramTestBot.UI
                 TeacherModel aprovedTeacher = _teacherModelManager.GetTeacherByLogin(enteredLogin);
                 _authorizedTeacher = aprovedTeacher.Id;
                 MessageBox.Show("Авторизация пройдена");
+                Label_helloForTeacher.Content +=  " "+ aprovedTeacher.Firstname +" "+ aprovedTeacher.Surname;
                 TB_login.Clear();
                 Password_login.Clear();
                 TabControl_Main.SelectedItem = TabItem_StartPage;
@@ -376,7 +379,7 @@ namespace TelegramTestBot.UI
 
         private void Button_EditNameOfTest_Click(object sender, RoutedEventArgs e)
         {
-            if (TB_NewTestorEditName.Text.Length > 0)
+            if (LB_CreatedTest.SelectedItem!=null)
             {
                 TestModel selectedTest = (TestModel)LB_CreatedTest.SelectedItem;
                 TB_NewTestorEditName.Text = selectedTest.Name;
@@ -451,6 +454,75 @@ namespace TelegramTestBot.UI
                 LB_AllGroups.ItemsSource = _groupModelManager.GetAllGroups();
             }
 
+        }
+
+        private void CB_Groups_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<GroupModel> allGroups = _groupModelManager.GetAllGroups();
+            CB_Groups.ItemsSource = allGroups;
+        }
+
+        private void CB_Groups_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            GroupModel selectedGroup = (GroupModel)CB_Groups.SelectedItem;
+            int groupId = selectedGroup.Id;
+            List<StudentModel> studentInGroup =  _studentModelManager.GetStudentByGroupId(groupId);
+            LB_StudentsInGroup.ItemsSource = studentInGroup;
+        }
+
+        private void LB_StudentsInGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (LB_StudentsInGroup.SelectedItem != null)
+            {
+            StudentModel selectedStudent = (StudentModel)LB_StudentsInGroup.SelectedItem;
+            TB_LastName_Student.Text = selectedStudent.Surname;
+            TB_FirstName_Student.Text = selectedStudent.Firstname;
+            TB_SurName_Student.Text = selectedStudent.Lastname;
+            TB_Username_Student.Text = selectedStudent.Username;
+            _updatedStudentId = selectedStudent.Id;
+            CB_GroupsForStudent.ItemsSource = _groupModelManager.GetAllGroups();
+            CB_GroupsForStudent.SelectedItem = _groupModelManager.GetGroupById(selectedStudent.GroupId);
+            }
+        }
+
+        private void Button_EditStudent_Click(object sender, RoutedEventArgs e)
+        {
+            int newSelectedGroupId = ((GroupModel)CB_GroupsForStudent.SelectedItem).Id;
+            StudentModel updatedStudent = new StudentModel { Id = _updatedStudentId, Firstname = TB_FirstName_Student.Text, Lastname = TB_SurName_Student.Text, Surname = TB_LastName_Student.Text, GroupId = newSelectedGroupId};
+            _studentModelManager.UpdateStudentById(updatedStudent);
+            _updatedStudentId = 0;
+            TB_LastName_Student.Clear();
+            TB_FirstName_Student.Clear();
+            TB_SurName_Student.Clear();
+            TB_Username_Student.Clear();
+            CB_GroupsForStudent.SelectedIndex = -1;
+            CB_Groups.SelectedItem = _groupModelManager.GetGroupById(newSelectedGroupId);
+            List<StudentModel> studentInGroup = _studentModelManager.GetStudentByGroupId(newSelectedGroupId);
+            LB_StudentsInGroup.ItemsSource = studentInGroup;
+        }
+
+        private void CB_groupForTesting_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<GroupModel> allGroupsForTesting = _groupModelManager.GetAllGroups();
+            CB_groupForTesting.ItemsSource = allGroupsForTesting;
+        }
+
+        private void CB_allTeacherTests_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<TestModel> allTeacherTests = _testModelManager.GetTestByTeacherId(_authorizedTeacher);
+            CB_allTeacherTests.ItemsSource = allTeacherTests;
+        }
+
+        private void DP_selectDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBoxItem CBitem = CB_timeSelect.SelectedItem as ComboBoxItem;
+            if(CBitem.Content != null)
+            {
+                string time = CBitem.Content.ToString();
+                string date = DP_selectDate.Text;
+                DateTime datetime = DateTime.Parse(date +" "+ time);
+                TB_dateTimeForTesting.Text = datetime.ToString();
+            }
         }
     }
 }

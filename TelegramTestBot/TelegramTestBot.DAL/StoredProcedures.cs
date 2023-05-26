@@ -28,6 +28,7 @@
         public const string Student_DeleteById = "Student_DeleteById";
         public const string Student_GetAll = "Student_GetAll";
         public const string Student_GetById = "Student_GetById";
+        public const string Student_GetByGroupId = "Student_GetByGroupId";
         public const string Student_GetByChatId = "Student_GetByChatId";
         public const string Student_GetStudentsByGroupId = "Student_GetStudentsByGroupId";
         public const string Student_UpdateById = "Student_UpdateById";
