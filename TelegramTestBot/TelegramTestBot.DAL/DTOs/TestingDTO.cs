@@ -3,9 +3,8 @@
     public class TestingDTO
     {
         public int Id { get; set; }
-        public DateOnly Date { get; set; }
+        public DateTime Date { get; set; }
         public int TestId { get; set; }
-        public TestDTO Test { get; set; }
 
         public TestingDTO()
         {
@@ -25,7 +24,7 @@
 
             if (testingDTO.Id != this.Id ||
                 testingDTO.Date != this.Date ||
-                testingDTO.Test!.Id != this.Test!.Id)
+                testingDTO.TestId != this.TestId)
             {
                 flag = false;
             }

@@ -37,6 +37,7 @@ namespace TelegramTestBot.UI
         private AnswerModelManager _answerModelManager = new AnswerModelManager();
         private GroupModelManager _groupModelManager = new GroupModelManager();
         private StudentModelManager _studentModelManager = new StudentModelManager();
+        private TestingModelManager _testingModelManager = new TestingModelManager();
         List<AnswerModel> _answersForEditQuest = new List<AnswerModel>();
         private TelegramBotService _telegramBotService;
         private TestService testService = new TestService();
@@ -516,13 +517,23 @@ namespace TelegramTestBot.UI
         private void DP_selectDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBoxItem CBitem = CB_timeSelect.SelectedItem as ComboBoxItem;
-            if(CBitem.Content != null)
+            if (CBitem.Content != null)
             {
+                GroupModel selectedGroupForTesting = (GroupModel)CB_groupForTesting.SelectedItem;
+                TestModel selectedTestForTesting = (TestModel)CB_allTeacherTests.SelectedItem;
                 string time = CBitem.Content.ToString();
                 string date = DP_selectDate.Text;
-                DateTime datetime = DateTime.Parse(date +" "+ time);
+                DateTime datetime = DateTime.Parse(date + " " + time);
                 TB_dateTimeForTesting.Text = datetime.ToString();
             }
+        }
+
+        private void StartTesting_Click(object sender, RoutedEventArgs e)
+        {
+                GroupModel selectedGroupForTesting = (GroupModel)CB_groupForTesting.SelectedItem;
+                TestModel selectedTestForTesting = (TestModel)CB_allTeacherTests.SelectedItem;
+                DateTime datetime = DateTime.Parse(TB_dateTimeForTesting.Text);
+                _testingModelManager.AddTesting(new TestingModel { Date = datetime,TestId= selectedTestForTesting.Id });
         }
     }
 }
