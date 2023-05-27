@@ -23,6 +23,7 @@ namespace TelegramTestBot.BL.Service
         private TeacherModelManager _techerModelManager = new TeacherModelManager();
         private GroupModelManager _groupModelManager = new GroupModelManager();
         private TestingModelManager _testingModelManager = new TestingModelManager();
+        private TestingStudentModelManager _testingStudentModelManager = new TestingStudentModelManager();
         private readonly TelegramBotClient _botClient;
 
         public TelegramBotService(Action<string> onMessage)
@@ -128,6 +129,7 @@ namespace TelegramTestBot.BL.Service
                 case ActionType.test:
                     {
                         List<StudentModel> students = _studentModelManager.GetStudentsByGroupId(groupId);
+                        int testingId = _testingModelManager.GetTestingByGroupId(groupId).Id;
 
                         foreach (var std in students)
                         {
@@ -135,7 +137,10 @@ namespace TelegramTestBot.BL.Service
                             {
                                 if (!_testingService.SchedulesGroup.ContainsKey(groupId))
                                 {
+                                    TestingStudentModel testingStudent = new TestingStudentModel() 
+                                    { StudentId = std.Id, TestingId = testingId };
                                     StartTimerForStudent(groupId, sendTime);
+                                    _testingStudentModelManager.AddTestingStudent(testingStudent);
                                 }
                             }
                         }
@@ -278,7 +283,8 @@ namespace TelegramTestBot.BL.Service
             {
                 foreach (var students in studentsOfTestGroup)
                 {
-                    _dataService.UsersWithGeo.Remove(students.UserChatId);
+                    if (_dataService.UsersWithGeo.Contains(students.UserChatId))
+                        _dataService.UsersWithGeo.Remove(students.UserChatId);
 
                     var geoButton = new ReplyKeyboardMarkup(new[]
                     {
@@ -296,6 +302,7 @@ namespace TelegramTestBot.BL.Service
             _testingService.TimersForGroup[groupId].Stop();
             _testingService.TimersForGroup[groupId].Dispose();
             _testingService.TimersForGroup.Remove(groupId);
+            //_testingModelManager.DeleteTestingById(testingId);
         }
 
         private async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
@@ -364,9 +371,14 @@ namespace TelegramTestBot.BL.Service
                 double longitude = location.Longitude;
 
                 bool isAttendance = _locationTrackingService.CalculateDistance(latitude, longitude);
-                
-                if(isAttendance)
+
+                if (isAttendance)
+                {
+                    int studentId = _studentModelManager.GetStudentByChatId(update.Message.Chat.Id).Id;
+                    _testingStudentModelManager.UpdateTestingStudentById(new TestingStudentModel() { Id = studentId, IsAttendance = true });
+
                     await _botClient.SendTextMessageAsync(update.Message.Chat.Id, "ТЫ ГЕЙ");
+                }
                 else
                     await _botClient.SendTextMessageAsync(update.Message.Chat.Id, "ТЫ смешарик");
             }

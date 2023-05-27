@@ -20,8 +20,8 @@ namespace TelegramTestBot.DAL.Managers
                         {
                             CountAnswers = newTestingStudent.CountAnswers,
                             IsAttendance = newTestingStudent.IsAttendance,
-                            StudentId = newTestingStudent.Student!.Id,
-                            TestingId = newTestingStudent.Testing!.Id
+                            StudentId = newTestingStudent.StudentId,
+                            TestingId = newTestingStudent.TestingId
                         },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
@@ -57,8 +57,8 @@ namespace TelegramTestBot.DAL.Managers
                             newTestingStudent.Id,
                             newTestingStudent.CountAnswers,
                             newTestingStudent.IsAttendance,
-                            StudentId = newTestingStudent.Student!.Id,
-                            TestingId = newTestingStudent.Testing!.Id
+                            newTestingStudent.StudentId,
+                            newTestingStudent.TestingId
                         },
                         commandType: System.Data.CommandType.StoredProcedure
                     );

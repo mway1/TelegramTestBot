@@ -3,7 +3,7 @@
 AS
 BEGIN
 
-	SELECT Id, [Date], TestId, GroupId
+	SELECT MAX(Id), [Date], TestId, GroupId
 	FROM dbo.[Testing]
 	WHERE (GroupId = @GroupId) AND (IsDeleted = 0)
 
