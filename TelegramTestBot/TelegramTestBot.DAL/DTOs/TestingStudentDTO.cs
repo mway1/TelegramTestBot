@@ -7,8 +7,6 @@
         public int TestingId { get; set; }
         public int StudentId { get; set; }
         public bool IsAttendance { get; set; }
-        public StudentDTO Student { get; set; }
-        public TestingDTO Testing { get; set; }
 
         public TestingStudentDTO()
         {
@@ -29,8 +27,8 @@
             if (testing_StudentDTO.Id != this.Id ||
                 testing_StudentDTO.CountAnswers != this.CountAnswers ||
                 testing_StudentDTO.IsAttendance != this.IsAttendance ||
-                testing_StudentDTO.Student!.Id != this.Student!.Id ||
-                testing_StudentDTO.Testing!.Id != this.Testing!.Id)
+                testing_StudentDTO.StudentId != this.StudentId ||
+                testing_StudentDTO.TestingId != this.TestingId)
             {
                 flag = false;
             }

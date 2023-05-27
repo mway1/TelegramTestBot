@@ -7,8 +7,7 @@
         public bool IsAttendance { get; set; }
         public int StudentId { get; set; }
         public int TestingId { get; set; }
-        public StudentModel Student { get; set; }
-        public TestingModel Testing { get; set; }
+
 
         public TestingStudentModel()
         {
@@ -30,8 +29,8 @@
                 if (testingStudentDTO.Id != this.Id ||
                     testingStudentDTO.CountAnswers != this.CountAnswers ||
                     testingStudentDTO.IsAttendance != this.IsAttendance ||
-                    testingStudentDTO.Student!.Id != this.Student!.Id ||
-                    testingStudentDTO.Testing!.Id != this.Testing!.Id)
+                    testingStudentDTO.StudentId != this.StudentId ||
+                    testingStudentDTO.TestingId != this.TestingId)
                 {
                     flag = false;
                 }

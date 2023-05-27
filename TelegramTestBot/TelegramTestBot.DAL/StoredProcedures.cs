@@ -57,6 +57,7 @@
         public const string Testing_Student_DeleteById = "Testing_Student_DeleteById";
         public const string Testing_Student_GetAll = "Testing_Student_GetAll";
         public const string Testing_Student_GetById = "Testing_Student_GetById";
+        public const string Testing_Student_GetByStudentId = "Testing_Student_GetByStudentId";
         public const string Testing_Student_UpdateById = "Testing_Student_UpdateById";
 
         public const string TelegramBot_Add = "TelegramBot_Add";

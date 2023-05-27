@@ -149,7 +149,9 @@
                                     <ColumnDefinition/>
                                     <ColumnDefinition Width="582*"/>
                                 </Grid.ColumnDefinitions>
-                                <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,22,0" Grid.ColumnSpan="2"/>
+                                <DataGrid x:Name="DG_StudentResult" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,22,0" Grid.ColumnSpan="2" AutoGenerateColumns="False" ItemsSource="{Binding}"  >
+                                    
+                                 </DataGrid>
                             </Grid>
                         </TabItem>
                     </TabControl>
