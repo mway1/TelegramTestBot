@@ -22,6 +22,7 @@ namespace TelegramTestBot.BL.Service
         private StudentModelManager _studentModelManager = new StudentModelManager();
         private TeacherModelManager _techerModelManager = new TeacherModelManager();
         private GroupModelManager _groupModelManager = new GroupModelManager();
+        private TestingModelManager _testingModelManager = new TestingModelManager();
         private readonly TelegramBotClient _botClient;
 
         public TelegramBotService(Action<string> onMessage)
@@ -130,7 +131,7 @@ namespace TelegramTestBot.BL.Service
 
                         foreach (var std in students)
                         {
-                            if (!_dataService.CheckStudentChatIdForUnique(std.Id))
+                            if (!_dataService.CheckStudentChatIdForUnique(std.UserChatId))
                             {
                                 if (!_testingService.SchedulesGroup.ContainsKey(groupId))
                                 {
@@ -146,9 +147,13 @@ namespace TelegramTestBot.BL.Service
                         {
                             StudentModel checkedStudent = _studentModelManager.GetStudentByChatId(id);
 
-                            if (_dataService.CheckStudentForPresenceInGroup(id, checkedStudent.GroupId))
+                            if (_testingService.SchedulesGroup.ContainsKey(checkedStudent.GroupId) && !_dataService.CheckTestingGroupIdForUnique(checkedStudent.GroupId))
+                            {
+                                TestingModel checkedTestingGroup = _testingModelManager.GetTestingByGroupId(checkedStudent.GroupId);
+                                
                                 EditMessagesWithKeyboard(id, msgId,
-                                    $"{username}, тест начнется {sendTime.ToShortDateString()} в {sendTime.ToShortTimeString()}");
+                                    $"{username}, тест начнется {checkedTestingGroup.Date.ToShortDateString()} в {checkedTestingGroup.Date.ToShortTimeString()}");
+                            }
                             else
                                 EditMessagesWithKeyboard(id, msgId,
                                     $"{username}, для вашей группы тестов еще не назначено! \nГлавное меню - /menu");
@@ -266,13 +271,15 @@ namespace TelegramTestBot.BL.Service
         }
 
         private async void WaitForScheduleTime(int groupId, DateTime sendTime)
-        {
+        {          
             List<StudentModel> studentsOfTestGroup = _studentModelManager.GetStudentsByGroupId(groupId);
 
             if (_testingService.SchedulesGroup.ContainsKey(groupId) && _testingService.SchedulesGroup[groupId] == sendTime)
             {
                 foreach (var students in studentsOfTestGroup)
                 {
+                    _dataService.UsersWithGeo.Remove(students.UserChatId);
+
                     var geoButton = new ReplyKeyboardMarkup(new[]
                     {
                         KeyboardButton.WithRequestLocation(text : "Поделиться местоположением"),

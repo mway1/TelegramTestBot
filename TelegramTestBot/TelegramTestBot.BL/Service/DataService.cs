@@ -16,6 +16,7 @@ namespace TelegramTestBot.BL.Service
         private TeacherModelManager _teacherModelManager = new TeacherModelManager();
         private StudentModelManager _studentModelManager = new StudentModelManager();
         private GroupModelManager _groupModelManager = new GroupModelManager();
+        private TestingModelManager _testingModelManager = new TestingModelManager();
 
         public DataService()
         {
@@ -38,52 +39,53 @@ namespace TelegramTestBot.BL.Service
             return false;
         }
 
-        public bool CheckStudentChatIdForUnique(long studentChatId)
+        public bool CheckTestingGroupIdForUnique(int groupId)
         {
-            bool IsUnique;
-
             try
             {
-                StudentModel checkedStudent = _studentModelManager.GetStudentByChatId(studentChatId);
-                IsUnique = false;
+                TestingModel checkedTesting = _testingModelManager.GetTestingByGroupId(groupId);
+                return false;
             }
             catch (Exception)
             {
-                IsUnique = true;
+                return true;
             }
+        }
 
-            return IsUnique;
+        public bool CheckStudentChatIdForUnique(long studentChatId)
+        {
+            try
+            {
+                StudentModel checkedStudent = _studentModelManager.GetStudentByChatId(studentChatId);
+                return false;
+            }
+            catch (Exception)
+            {
+                return true;
+            }
         }
 
         public bool CheckTeacherLoginForUnique(string enterredLogin)
         {
-            bool IsUnique;
-
             try
             {
                 TeacherModel approvedTeacher = _teacherModelManager.GetTeacherByLogin(enterredLogin);
-                IsUnique = false;
+                return false;
             }
             catch(Exception)
             {
-                IsUnique = true;
+                return true;
             }
-
-            return IsUnique;
         }
 
         public bool CheckNameOfGroupForUnique(string name)
         {
-            bool IsUnique;
-
             List<GroupModel> checkedGroup = _groupModelManager.GetGroupByEnteredText(name);
             if (checkedGroup.Count > 0)
-                IsUnique = false;
+                return false;
             
             else
-                IsUnique = true;                      
-
-            return IsUnique;
+                return true;                      
         }
 
         public string HashedValue(string value)
