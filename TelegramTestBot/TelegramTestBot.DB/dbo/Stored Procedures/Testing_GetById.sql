@@ -3,7 +3,7 @@
 AS
 BEGIN
 
-	SELECT Id, [Date], TestId
+	SELECT Id, [Date], TestId, GroupId
 	FROM dbo.[Testing]
 	WHERE Id=@Id
 
