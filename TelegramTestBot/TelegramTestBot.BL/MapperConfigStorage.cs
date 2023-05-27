@@ -67,6 +67,7 @@ namespace TelegramTestBot.BL
                 .ForMember("Id", opt => opt.MapFrom(tg => tg.Id))
                 .ForMember("Date", opt => opt.MapFrom(tg => tg.Date))
                 .ForMember("TestId", opt => opt.MapFrom(tg => tg.TestId))
+                .ForMember("GroupId", opt => opt.MapFrom(tg => tg.GroupId))
                 .ReverseMap();
 
                 cfg.CreateMap<TestingStudentDTO, TestingStudentModel>()

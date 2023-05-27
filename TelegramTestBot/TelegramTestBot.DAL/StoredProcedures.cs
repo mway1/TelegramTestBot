@@ -52,6 +52,7 @@
         public const string Testing_DeleteById = "Testing_DeleteById";
         public const string Testing_GetAll = "Testing_GetAll";
         public const string Testing_GetById = "Testing_GetById";
+        public const string Testing_GetByGroupId = "Testing_GetByGroupId";
         public const string Testing_UpdateById = "Testing_UpdateById";
 
         public const string Testing_Student_Add = "Testing_Student_Add";

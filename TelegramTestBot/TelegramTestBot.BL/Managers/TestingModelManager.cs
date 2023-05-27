@@ -48,5 +48,11 @@ namespace TelegramTestBot.BL.Managers
             TestingDTO testing = _testingManager.GetTestingById(testingId);
             return MapperConfigStorage.GetInstance().Map<TestingModel>(testing);
         }
+        
+        public TestingModel GetTestingByGroupId(int groupId)
+        {
+            TestingDTO testing = _testingManager.GetTestingById(groupId);
+            return MapperConfigStorage.GetInstance().Map<TestingModel>(testing);
+        }
     }
 }
