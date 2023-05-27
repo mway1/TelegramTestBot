@@ -57,7 +57,7 @@ namespace TelegramTestBot.BL.Service
                 return buttonsKeyboard.Chunk(btnsPerRow).Select(g => g.ToArray()).ToArray();
         }
 
-        private async void MakeActionWithBot(long id, ActionType type, string username = "User", string msg = " ", int msgId = 0)
+        public async void MakeActionWithBot(ActionType type, long id = 0, string username = "User", string msg = " ", int msgId = 0, int groupId = 0, DateTime sendTime = default)
         {
             switch (type)
             {
@@ -125,30 +125,37 @@ namespace TelegramTestBot.BL.Service
                         break;
                     }
                 case ActionType.test:
-                    {                       
+                    {
+                        List<StudentModel> students = _studentModelManager.GetStudentsByGroupId(groupId);
+
+                        foreach (var std in students)
+                        {
+                            if (!_dataService.CheckStudentChatIdForUnique(std.Id))
+                            {
+                                if (!_testingService.SchedulesGroup.ContainsKey(groupId))
+                                {
+                                    StartTimerForStudent(groupId, sendTime);
+                                }
+                            }
+                        }
+                        break;
+                    }
+                case ActionType.testing:
+                    {
                         if (!_dataService.CheckStudentChatIdForUnique(id))
                         {
-                            DateTime sendTime = new DateTime(2023, 05, 27, 2, 50, 0);
-                            int groupId = 5;
-                            
-                            if (!_testingService.SchedulesGroup.ContainsKey(groupId))
-                            {                              
-                                StartTimerForStudent(groupId, sendTime);
+                            StudentModel checkedStudent = _studentModelManager.GetStudentByChatId(id);
 
-                                    EditMessagesWithKeyboard(id, msgId,
-                                    "Ожидайте теста!");
-                            }
-                            else if (_dataService.CheckStudentForPresenceInGroup(id, groupId))
-                                EditMessagesWithKeyboard(id, msgId, 
+                            if (_dataService.CheckStudentForPresenceInGroup(id, checkedStudent.GroupId))
+                                EditMessagesWithKeyboard(id, msgId,
                                     $"{username}, тест начнется {sendTime.ToShortDateString()} в {sendTime.ToShortTimeString()}");
                             else
                                 EditMessagesWithKeyboard(id, msgId,
                                     $"{username}, для вашей группы тестов еще не назначено! \nГлавное меню - /menu");
                         }
                         else
-                            EditMessagesWithKeyboard(id, msgId, 
+                            EditMessagesWithKeyboard(id, msgId,
                                 "Чтобы использовать данную команду, зарегистрируйтесь! \nГлавное меню - /menu");
-
                         break;
                     }
                 case ActionType.groups:
@@ -238,7 +245,7 @@ namespace TelegramTestBot.BL.Service
             {
                 InlineKeyboardButton.WithCallbackData("Зарегистрироваться", "reg"),
                 InlineKeyboardButton.WithCallbackData("Список преподавателей", "teachers"),
-                InlineKeyboardButton.WithCallbackData("Тестирование", "test"),
+                InlineKeyboardButton.WithCallbackData("Тестирование", "testing"),
                 InlineKeyboardButton.WithCallbackData("Группы", "groups")
             });
 
@@ -288,7 +295,7 @@ namespace TelegramTestBot.BL.Service
         {
             if(update.Message != null && update.Message.Text == "/start" || update.Message?.Text == "/menu")
             {
-                MakeActionWithBot(update.Message!.Chat.Id, ActionType.start, update.Message.Chat.Username);
+                MakeActionWithBot(ActionType.start, update.Message!.Chat.Id, update.Message.Chat.Username);
             }
             else if (update.CallbackQuery != null)
             {
@@ -300,7 +307,7 @@ namespace TelegramTestBot.BL.Service
                     {
                         Enum.TryParse(update.CallbackQuery.Data, out ActionType type);
 
-                        MakeActionWithBot(update.CallbackQuery.Message!.Chat.Id, type, 
+                        MakeActionWithBot(type, update.CallbackQuery.Message!.Chat.Id, 
                             update.CallbackQuery.Message.Chat.Username, 
                             msgId: update.CallbackQuery.Message.MessageId);
                     }
@@ -335,11 +342,11 @@ namespace TelegramTestBot.BL.Service
             }
             else if (update.Message?.Text != null && DataService.UserAnswers.ContainsKey(update.Message.Chat.Id))
             {
-                MakeActionWithBot(update.Message!.Chat.Id, ActionType.reg, update.Message.Chat.Username, update.Message.Text);
+                MakeActionWithBot(ActionType.reg, update.Message!.Chat.Id, update.Message.Chat.Username, update.Message.Text);
             }
             else if (update.Message?.Text != null && DataService.UserAnswersForGroup.ContainsKey(update.Message.Chat.Id))
             {
-                MakeActionWithBot(update.Message!.Chat.Id, ActionType.groups, update.Message.Chat.Username, update.Message.Text);
+                MakeActionWithBot(ActionType.groups, update.Message!.Chat.Id, update.Message.Chat.Username, update.Message.Text);
             }
             else if (update.Message != null && update.Message.Type == MessageType.Location && !_dataService.UsersWithGeo.Contains(update.Message.Chat.Id))
             {
