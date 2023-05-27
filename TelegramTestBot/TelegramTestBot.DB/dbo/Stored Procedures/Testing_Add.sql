@@ -1,13 +1,14 @@
 ﻿CREATE PROCEDURE [dbo].[Testing_Add]
 	@Date datetime,
-	@TestId int
+	@TestId int,
+    @GroupId int 
 AS
 BEGIN
 INSERT INTO dbo.[Testing](
 	[Date],
-	TestId)
+	TestId,GroupId)
 VALUES(
 	@Date,
-	@TestId)
+	@TestId,@GroupId)
 SELECT @@IDENTITY
 END

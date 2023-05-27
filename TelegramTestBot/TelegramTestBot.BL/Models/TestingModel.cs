@@ -5,6 +5,7 @@
         public int Id { get; set; }
         public DateTime Date { get; set; }
         public int TestId { get; set; }
+        public int GroupId { get; set; }
 
         public TestingModel()
         {
@@ -25,7 +26,8 @@
 
                 if (testingDTO.Id != this.Id ||
                     testingDTO.Date != this.Date ||
-                    testingDTO.TestId != this.TestId)
+                    testingDTO.TestId != this.TestId ||
+                    testingDTO.GroupId != this.GroupId)
                 {
                     flag = false;
                 }
