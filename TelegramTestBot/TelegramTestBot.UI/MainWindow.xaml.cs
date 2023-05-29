@@ -202,6 +202,10 @@ namespace TelegramTestBot.UI
 
                     List<QuestionModel> creatingQuest = _questionModelManager.GetQuestionByTestId(testId);
                     LB_CreatedQuestion.ItemsSource = creatingQuest;
+                    RB_RightAnswer1.IsChecked = false;
+                    RB_RightAnswer2.IsChecked = false;
+                    RB_RightAnswer3.IsChecked = false;
+                    RB_RightAnswer4.IsChecked = false;
                     Tb_ContentQuestuon.Clear();
                     TB_FirstAnswer.Clear();
                     TB_SecondAnswer.Clear();
@@ -362,6 +366,10 @@ namespace TelegramTestBot.UI
                     List<QuestionModel> creatingQuest = _questionModelManager.GetQuestionByTestId(testId);
                     LB_CreatedQuestion.ItemsSource = creatingQuest;
                     Tb_ContentQuestuon.Clear();
+                    RB_RightAnswer1.IsChecked = false;
+                    RB_RightAnswer2.IsChecked = false;
+                    RB_RightAnswer3.IsChecked = false;
+                    RB_RightAnswer4.IsChecked = false;
                     Tb_ContentQuestuon.Clear();
                     TB_FirstAnswer.Clear();
                     TB_SecondAnswer.Clear();
