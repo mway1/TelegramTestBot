@@ -38,6 +38,7 @@ namespace TelegramTestBot.UI
         private GroupModelManager _groupModelManager = new GroupModelManager();
         private StudentModelManager _studentModelManager = new StudentModelManager();
         private TestingModelManager _testingModelManager = new TestingModelManager();
+        private TestingStudentModelManager _testingStudentModelManager = new TestingStudentModelManager();
         List<AnswerModel> _answersForEditQuest = new List<AnswerModel>();
         private TelegramBotService _telegramBotService;
         private TestService testService = new TestService();
@@ -536,6 +537,15 @@ namespace TelegramTestBot.UI
             _testingModelManager.AddTesting(new TestingModel { Date = datetime,TestId= selectedTestForTesting.Id, GroupId=selectedGroupForTesting.Id });
 
             _telegramBotService.MakeActionWithBot(BL.ActionType.test, groupId: selectedGroupForTesting.Id, sendTime: datetime);
+        }
+
+        private void DG_StudentResult_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (LB_StudentsInGroup.SelectedItem != null)
+            {
+            List<TestingStudentModel> studentResults = _testingStudentModelManager.GetTestingStudentByStudentId(_updatedStudentId);
+            DG_StudentResult.ItemsSource = studentResults;
+            }
         }
     }
 }

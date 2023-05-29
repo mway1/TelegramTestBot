@@ -1,4 +1,4 @@
-﻿namespace TelegramTestBot.DAL.DTOs
+namespace TelegramTestBot.DAL.DTOs
 {
     public class TestingStudentDTO
     {
@@ -7,6 +7,10 @@
         public int TestingId { get; set; }
         public int StudentId { get; set; }
         public bool IsAttendance { get; set; }
+        //public TestingDTO Testing { get; set; }
+        public DateTime DateOfTesting { get; set; }
+        public string SurnameOfStudent { get; set; }
+        public string FirstnameOfStudent { get; set; }
 
         public TestingStudentDTO()
         {

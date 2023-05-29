@@ -1,4 +1,4 @@
-﻿using Dapper;
+using Dapper;
 using System.Data.SqlClient;
 using TelegramTestBot.DAL.DTOs;
 using TelegramTestBot.DAL.Interfaces;
@@ -57,8 +57,8 @@ namespace TelegramTestBot.DAL.Managers
                             newTestingStudent.Id,
                             newTestingStudent.CountAnswers,
                             newTestingStudent.IsAttendance,
-                            newTestingStudent.StudentId,
-                            newTestingStudent.TestingId
+                            StudentId = newTestingStudent.StudentId,
+                            TestingId = newTestingStudent.TestingId
                         },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
@@ -91,6 +91,20 @@ namespace TelegramTestBot.DAL.Managers
                         param: new { id = testingStudentId },
                         commandType: System.Data.CommandType.StoredProcedure
                     );
+            }
+        }
+        public List<TestingStudentDTO> GetTestingStudentByStudentId(int studentId)
+        {
+            using (var connection = new SqlConnection(ServerSettings._connectionString))
+            {
+                connection.Open();
+
+                return connection.Query<TestingStudentDTO>
+                    (
+                        StoredProcedures.Testing_Student_GetByStudentId,
+                        param: new { StudentId = studentId },
+                        commandType: System.Data.CommandType.StoredProcedure
+                    ).ToList();
             }
         }
     }
