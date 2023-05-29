@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Timers;
 using TelegramTestBot.BL.Models;
 using TelegramTestBot.BL.Managers;
 using Telegram.Bot;
@@ -17,15 +17,25 @@ namespace TelegramTestBot.BL.Service
     {
         protected Action<string> _onMessage;
         private DataService _dataService = new DataService();
+        private TestingService _testingService = new TestingService();
+        private LocationTrackingService _locationTrackingService = new LocationTrackingService();
         private StudentModelManager _studentModelManager = new StudentModelManager();
         private TeacherModelManager _techerModelManager = new TeacherModelManager();
         private GroupModelManager _groupModelManager = new GroupModelManager();
+        private TestingModelManager _testingModelManager = new TestingModelManager();
+        private TestingStudentModelManager _testingStudentModelManager = new TestingStudentModelManager();
         private readonly TelegramBotClient _botClient;
 
         public TelegramBotService(Action<string> onMessage)
         {
             _botClient = new TelegramBotClient(_dataService.token);
             _onMessage = onMessage;
+
+            foreach (var timer in _testingService.Timers.Values)
+            {
+                timer.Stop();
+                timer.Dispose();
+            }
         }
 
         public void StartBot(string pass)
@@ -34,22 +44,28 @@ namespace TelegramTestBot.BL.Service
                 _botClient.StartReceiving(HandleUpdateAsync, HandleErrorAsync);
         }
 
-        private void SendExceptionForNull(long id, int msgId)
+        public void StartTestForGroup(int groupId, DateTime sendTime)
         {
-            EditMessagesWithKeyboard(id, msgId, "Произошла ошибочка, попробуйте еще раз! \nГлавное меню - /menu");
+            List<StudentModel> students = _studentModelManager.GetStudentsByGroupId(groupId);
+            int testingId = _testingModelManager.GetLastAddedTestingByGroupId(groupId);
+
+            foreach (var std in students)
+            {
+                if (!_dataService.CheckStudentChatIdForUnique(std.UserChatId))
+                {
+                    if (!_testingService.SchedulesGroup.ContainsKey(groupId))
+                    {
+                        TestingStudentModel testingStudent = new TestingStudentModel()
+                        { StudentId = std.Id, TestingId = testingId };
+                        _testingStudentModelManager.AddTestingStudent(testingStudent);
+                    }
+                }
+            }
+
+            StartTimerForStudent(groupId, sendTime);
         }
 
-        private static InlineKeyboardButton[][] InlineKeyboardMarkupMaker(List<GroupModel> groups, int btnsPerRow = 0)
-        {
-            var buttonsKeyboard = groups.Select(g => InlineKeyboardButton.WithCallbackData(g.Name, $"{g.Id}"));
-
-            if (btnsPerRow == 0)
-                return new InlineKeyboardButton[][] { buttonsKeyboard.ToArray() };
-            else
-                return buttonsKeyboard.Chunk(btnsPerRow).Select(g => g.ToArray()).ToArray();
-        }
-
-        private async void MakeActionWithBot(long id, ActionType type, string username = "User", string msg = " ", int msgId = 0)
+        public async void MakeActionWithBot(ActionType type, long id = 0, string username = "User", string msg = " ", int msgId = 0)
         {
             switch (type)
             {
@@ -111,12 +127,32 @@ namespace TelegramTestBot.BL.Service
                             }
                         }
                         else
-                            SendMessagesForUser(id, username, ", чтобы использовать данную команду, зарегистрируйтесь! \nГлавное меню - /menu");
+                            EditMessagesWithKeyboard(id, msgId, 
+                                "Чтобы использовать данную команду, зарегистрируйтесь! \nГлавное меню - /menu");
 
                         break;
                     }
-                case ActionType.test:
+                case ActionType.testing:
                     {
+                        if (!_dataService.CheckStudentChatIdForUnique(id))
+                        {
+                            StudentModel checkedStudent = _studentModelManager.GetStudentByChatId(id);
+
+                            if (_testingService.SchedulesGroup.ContainsKey(checkedStudent.GroupId) && !_dataService.CheckTestingGroupIdForUnique(checkedStudent.GroupId))
+                            {
+                                int testingId = _testingModelManager.GetLastAddedTestingByGroupId(checkedStudent.GroupId);
+                                TestingModel checkedTestingGroup = _testingModelManager.GetTestingById(testingId);
+                                
+                                EditMessagesWithKeyboard(id, msgId,
+                                    $"{username}, тест начнется {checkedTestingGroup.Date.ToShortDateString()} в {checkedTestingGroup.Date.ToShortTimeString()}");
+                            }
+                            else
+                                EditMessagesWithKeyboard(id, msgId,
+                                    $"{username}, для вашей группы тестов еще не назначено! \nГлавное меню - /menu");
+                        }
+                        else
+                            EditMessagesWithKeyboard(id, msgId,
+                                "Чтобы использовать данную команду, зарегистрируйтесь! \nГлавное меню - /menu");
                         break;
                     }
                 case ActionType.groups:
@@ -152,11 +188,22 @@ namespace TelegramTestBot.BL.Service
                             }                               
                         }
                         else
-                            SendMessagesForUser(id, username, ", чтобы использовать данную команду, зарегистрируйтесь! \nГлавное меню - /menu");
+                            EditMessagesWithKeyboard(id, msgId, 
+                                "Чтобы использовать данную команду, зарегистрируйтесь! \nГлавное меню - /menu");
 
                         break;
                     }
             }
+        }
+
+        public async void SendMessagesForUser(long chatId, string username = "User", string text = " ")
+        {
+            await _botClient.SendTextMessageAsync(new ChatId(chatId), username + text);
+        }
+
+        private void SendExceptionForNull(long id, int msgId)
+        {
+            EditMessagesWithKeyboard(id, msgId, "Произошла ошибочка, попробуйте еще раз! \nГлавное меню - /menu");
         }
 
         private async void EditMessagesWithKeyboard(long chatId, int msgId, string text)
@@ -166,11 +213,29 @@ namespace TelegramTestBot.BL.Service
                       msgId,
                       text,
                       replyMarkup: null);
+        }            
+
+        private static InlineKeyboardButton[][] InlineKeyboardMarkupMaker(List<GroupModel> groups, int btnsPerRow = 0)
+        {
+            var buttonsKeyboard = groups.Select(g => InlineKeyboardButton.WithCallbackData(g.Name, $"{g.Id}"));
+
+            if (btnsPerRow == 0)
+                return new InlineKeyboardButton[][] { buttonsKeyboard.ToArray() };
+            else
+                return buttonsKeyboard.Chunk(btnsPerRow).Select(g => g.ToArray()).ToArray();
         }
 
-        private async void SendMessagesForUser(long chatId, string username = "User", string text = " ")
+        private async void UpdateStudentAfterConfirmAttendance(int studentId, int groupId, long userId)
         {
-            await _botClient.SendTextMessageAsync(new ChatId(chatId), username + text);
+            int testingId = _testingModelManager.GetLastAddedTestingByGroupId(groupId);
+            int testingStudentId = _testingStudentModelManager.GetTestingStudentByStudentIdByTestingId(studentId, testingId);
+            TestingStudentModel test = _testingStudentModelManager.GetTestingStudentById(testingStudentId);
+
+            test.IsAttendance = true;
+
+            _testingStudentModelManager.UpdateTestingStudentById(test);
+
+            await _botClient.SendTextMessageAsync(userId, "Вы прошли тест с геопозицией, можете начать основное тестирование.");
         }
 
         private async void SendRegForm(long id, string? username, int numOfForm = 0)
@@ -205,18 +270,61 @@ namespace TelegramTestBot.BL.Service
             {
                 InlineKeyboardButton.WithCallbackData("Зарегистрироваться", "reg"),
                 InlineKeyboardButton.WithCallbackData("Список преподавателей", "teachers"),
-                InlineKeyboardButton.WithCallbackData("Тестирование", "test"),
+                InlineKeyboardButton.WithCallbackData("Тестирование", "testing"),
                 InlineKeyboardButton.WithCallbackData("Группы", "groups")
             });
 
             await _botClient.SendTextMessageAsync(new ChatId(chatId), "Выберите действие:", replyMarkup: inlineKeyboard);
         }
 
+        private void StartTimerForStudent(int groupId, DateTime sendTime)
+        {
+            _testingService.SchedulesGroup[groupId] = sendTime;
+
+            System.Timers.Timer timer = new System.Timers.Timer();
+            timer.Interval = (sendTime - DateTime.Now).TotalMilliseconds;
+            timer.AutoReset = false;
+            timer.Elapsed += (sender, args) => WaitForScheduleTime(groupId, sendTime);
+            timer.Start();
+
+            _testingService.TimersForGroup[groupId] = timer;
+        }
+
+        private async void WaitForScheduleTime(int groupId, DateTime sendTime)
+        {          
+            List<StudentModel> studentsOfTestGroup = _studentModelManager.GetStudentsByGroupId(groupId);
+
+            if (_testingService.SchedulesGroup.ContainsKey(groupId) && _testingService.SchedulesGroup[groupId] == sendTime)
+            {
+                foreach (var students in studentsOfTestGroup)
+                {
+                    if (_dataService.UsersWithGeo.Contains(students.UserChatId))
+                        _dataService.UsersWithGeo.Remove(students.UserChatId);
+
+                    var geoButton = new ReplyKeyboardMarkup(new[]
+                    {
+                        KeyboardButton.WithRequestLocation(text : "Поделиться местоположением"),
+                    });
+
+                    geoButton.OneTimeKeyboard = true;
+                    geoButton.ResizeKeyboard = true;
+                    
+                    await _botClient.SendTextMessageAsync(students.UserChatId, "Отправь геопозицию для начала теста", replyMarkup: geoButton);
+                }
+            }
+
+            _testingService.SchedulesGroup.Remove(groupId);
+            _testingService.TimersForGroup[groupId].Stop();
+            _testingService.TimersForGroup[groupId].Dispose();
+            _testingService.TimersForGroup.Remove(groupId);
+            //_testingModelManager.DeleteTestingById(testingId);
+        }
+
         private async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
             if(update.Message != null && update.Message.Text == "/start" || update.Message?.Text == "/menu")
             {
-                MakeActionWithBot(update.Message!.Chat.Id, ActionType.start, update.Message.Chat.Username);
+                MakeActionWithBot(ActionType.start, update.Message!.Chat.Id, update.Message.Chat.Username);
             }
             else if (update.CallbackQuery != null)
             {
@@ -228,7 +336,7 @@ namespace TelegramTestBot.BL.Service
                     {
                         Enum.TryParse(update.CallbackQuery.Data, out ActionType type);
 
-                        MakeActionWithBot(update.CallbackQuery.Message!.Chat.Id, type, 
+                        MakeActionWithBot(type, update.CallbackQuery.Message!.Chat.Id, 
                             update.CallbackQuery.Message.Chat.Username, 
                             msgId: update.CallbackQuery.Message.MessageId);
                     }
@@ -263,11 +371,30 @@ namespace TelegramTestBot.BL.Service
             }
             else if (update.Message?.Text != null && DataService.UserAnswers.ContainsKey(update.Message.Chat.Id))
             {
-                MakeActionWithBot(update.Message!.Chat.Id, ActionType.reg, update.Message.Chat.Username, update.Message.Text);
+                MakeActionWithBot(ActionType.reg, update.Message!.Chat.Id, update.Message.Chat.Username, update.Message.Text);
             }
             else if (update.Message?.Text != null && DataService.UserAnswersForGroup.ContainsKey(update.Message.Chat.Id))
             {
-                MakeActionWithBot(update.Message!.Chat.Id, ActionType.groups, update.Message.Chat.Username, update.Message.Text);
+                MakeActionWithBot(ActionType.groups, update.Message!.Chat.Id, update.Message.Chat.Username, update.Message.Text);
+            }
+            else if (update.Message != null && update.Message.Type == MessageType.Location && !_dataService.UsersWithGeo.Contains(update.Message.Chat.Id))
+            {
+                _dataService.UsersWithGeo.Add(update.Message.Chat.Id);
+                Location location = update.Message.Location;
+
+                double latitude = location.Latitude;
+                double longitude = location.Longitude;
+
+                bool isAttendance = _locationTrackingService.CalculateDistance(latitude, longitude);
+
+                if (isAttendance)
+                {
+                    StudentModel studentId = _studentModelManager.GetStudentByChatId(update.Message.Chat.Id);
+                    UpdateStudentAfterConfirmAttendance(studentId.Id, studentId.GroupId, update.Message.Chat.Id);                  
+                }
+                else
+                    await _botClient.SendTextMessageAsync(update.Message.Chat.Id, 
+                        "Вы не прошли тест с геопозицией, основное тестирование не может быть начат!");
             }
             else if (update.Message != null && update.Message.Text != null)
             {

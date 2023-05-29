@@ -48,10 +48,17 @@ namespace TelegramTestBot.BL.Managers
             TestingStudentDTO testingStudent = _testingStudentManager.GetTestingStudentById(testingStudentId);
             return MapperConfigStorage.GetInstance().Map<TestingStudentModel>(testingStudent);
         }
+
         public List<TestingStudentModel> GetTestingStudentByStudentId(int studentId)
         {
             List<TestingStudentDTO> testingStudent = _testingStudentManager.GetTestingStudentByStudentId(studentId);
             return MapperConfigStorage.GetInstance().Map<List<TestingStudentModel>>(testingStudent);
+        }
+
+        public int GetTestingStudentByStudentIdByTestingId(int studentId, int testingId)
+        {
+            int testingStudentId = _testingStudentManager.GetTestingStudentByStudentIdByTestingId(studentId, testingId);
+            return MapperConfigStorage.GetInstance().Map<int>(testingStudentId);
         }
     }
 }

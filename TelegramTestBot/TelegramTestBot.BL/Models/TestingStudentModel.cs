@@ -1,4 +1,4 @@
-﻿namespace TelegramTestBot.BL.Models
+namespace TelegramTestBot.BL.Models
 {
     public class TestingStudentModel
     {

@@ -10,63 +10,82 @@ namespace TelegramTestBot.BL.Service
     {
         public static Dictionary<long, List<string>> UserAnswersForGroup { get; set; } = new Dictionary<long, List<string>>();
         public static Dictionary<long, List<string>> UserAnswers { get; set; } = new Dictionary<long, List<string>>();
+        public List<long> UsersWithGeo { get; set; } = new List<long>();
         public readonly string token = "6237629540:AAErGQgxalLVu5W9RKenTd9UYGpx4tnqVNE";
         private TelegramBotModelManager _telegramBotModelManager = new TelegramBotModelManager();
         private TeacherModelManager _teacherModelManager = new TeacherModelManager();
         private StudentModelManager _studentModelManager = new StudentModelManager();
         private GroupModelManager _groupModelManager = new GroupModelManager();
+        private TestingModelManager _testingModelManager = new TestingModelManager();
 
         public DataService()
         {
             
         }
 
-        public bool CheckStudentChatIdForUnique(long studentChatId)
+        public bool CheckStudentForPresenceInGroup(long id, int groupId)
         {
-            bool IsUnique;
+            List<long> userIds = new List<long>();
+            List<StudentModel> checkedStudents = _studentModelManager.GetStudentsByGroupId(groupId);
 
+            foreach (var students in checkedStudents)
+            {
+                userIds.Add(students.UserChatId);
+            }
+
+            if (userIds.Contains(id))
+                return true;
+
+            return false;
+        }
+
+        public bool CheckTestingGroupIdForUnique(int groupId)
+        {
             try
             {
-                StudentModel checkedStudent = _studentModelManager.GetStudentByChatId(studentChatId);
-                IsUnique = false;
+                int checkedTesting = _testingModelManager.GetLastAddedTestingByGroupId(groupId);
+                return false;
             }
             catch (Exception)
             {
-                IsUnique = true;
+                return true;
             }
+        }
 
-            return IsUnique;
+        public bool CheckStudentChatIdForUnique(long studentChatId)
+        {
+            try
+            {
+                StudentModel checkedStudent = _studentModelManager.GetStudentByChatId(studentChatId);
+                return false;
+            }
+            catch (Exception)
+            {
+                return true;
+            }
         }
 
         public bool CheckTeacherLoginForUnique(string enterredLogin)
         {
-            bool IsUnique;
-
             try
             {
                 TeacherModel approvedTeacher = _teacherModelManager.GetTeacherByLogin(enterredLogin);
-                IsUnique = false;
+                return false;
             }
             catch(Exception)
             {
-                IsUnique = true;
+                return true;
             }
-
-            return IsUnique;
         }
 
         public bool CheckNameOfGroupForUnique(string name)
         {
-            bool IsUnique;
-
             List<GroupModel> checkedGroup = _groupModelManager.GetGroupByEnteredText(name);
             if (checkedGroup.Count > 0)
-                IsUnique = false;
+                return false;
             
             else
-                IsUnique = true;                      
-
-            return IsUnique;
+                return true;                      
         }
 
         public string HashedValue(string value)

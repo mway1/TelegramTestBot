@@ -11,8 +11,8 @@ namespace TelegramTestBot.BL.Service
         private const double EarthRadiusKm = 6371.0;
         public bool CalculateDistance(double latitudeOfUser, double longitudeOfUser)
         {
-            double latitudeOfUniversity = 59.929456743379;  // Широта 
-            double longitudeOfUniversity = 30.29685707311; // Долгота 
+            double latitudeOfUniversity = 59.881627;  // Широта 
+            double longitudeOfUniversity = 30.314824; // Долгота 
 
             var dLat = DegreeToRadian(latitudeOfUser - latitudeOfUniversity);
             var dLon = DegreeToRadian(longitudeOfUser - longitudeOfUniversity);

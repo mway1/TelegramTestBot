@@ -10,5 +10,6 @@ namespace TelegramTestBot.BL.Interfaces
         List<TestingStudentModel> GetAllTestingStudents();
         TestingStudentModel GetTestingStudentById(int testingStudentId);
         List<TestingStudentModel> GetTestingStudentByStudentId(int studentId);
+        int GetTestingStudentByStudentIdByTestingId(int studentId, int testingId);
     }
 }

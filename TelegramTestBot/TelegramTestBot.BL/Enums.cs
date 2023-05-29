@@ -13,5 +13,6 @@
         test,
         next,
         groups,
+        testing,
     }
 }

@@ -256,7 +256,7 @@ namespace TelegramTestBot.UI
 
         private void Button_SignIn_Click(object sender, RoutedEventArgs e)
         {
-            TabControl_Main.SelectedItem = Auth;
+            TabControl_Main.SelectedItem = Auth;            
         }
 
         private void Button_Exit_Click(object sender, RoutedEventArgs e)
@@ -531,10 +531,13 @@ namespace TelegramTestBot.UI
 
         private void StartTesting_Click(object sender, RoutedEventArgs e)
         {
-                GroupModel selectedGroupForTesting = (GroupModel)CB_groupForTesting.SelectedItem;
-                TestModel selectedTestForTesting = (TestModel)CB_allTeacherTests.SelectedItem;
-                DateTime datetime = DateTime.Parse(TB_dateTimeForTesting.Text);
-                _testingModelManager.AddTesting(new TestingModel { Date = datetime,TestId= selectedTestForTesting.Id, GroupId = selectedGroupForTesting.Id });
+            GroupModel selectedGroupForTesting = (GroupModel)CB_groupForTesting.SelectedItem;
+            TestModel selectedTestForTesting = (TestModel)CB_allTeacherTests.SelectedItem;
+            DateTime datetime = DateTime.Parse(TB_dateTimeForTesting.Text);
+
+            _testingModelManager.AddTesting(new TestingModel { Date = datetime,TestId= selectedTestForTesting.Id, GroupId=selectedGroupForTesting.Id });
+
+            _telegramBotService.StartTestForGroup(selectedGroupForTesting.Id, datetime);
         }
 
         private void DG_StudentResult_Loaded(object sender, RoutedEventArgs e)

@@ -30,6 +30,7 @@
         public const string Student_GetById = "Student_GetById";
         public const string Student_GetByGroupId = "Student_GetByGroupId";
         public const string Student_GetByChatId = "Student_GetByChatId";
+        public const string Student_GetStudentsByGroupId = "Student_GetStudentsByGroupId";
         public const string Student_UpdateById = "Student_UpdateById";
 
         public const string Teacher_Add = "Teacher_Add";
@@ -51,6 +52,8 @@
         public const string Testing_DeleteById = "Testing_DeleteById";
         public const string Testing_GetAll = "Testing_GetAll";
         public const string Testing_GetById = "Testing_GetById";
+        public const string Testing_GetByGroupId = "Testing_GetByGroupId";
+        public const string Testing_GetLastAddedByGroupId = "Testing_GetLastAddedByGroupId";
         public const string Testing_UpdateById = "Testing_UpdateById";
 
         public const string Testing_Student_Add = "Testing_Student_Add";
@@ -58,6 +61,7 @@
         public const string Testing_Student_GetAll = "Testing_Student_GetAll";
         public const string Testing_Student_GetById = "Testing_Student_GetById";
         public const string Testing_Student_GetByStudentId = "Testing_Student_GetByStudentId";
+        public const string Testing_Student_GetByStudentIdByTestingId = "Testing_Student_GetByStudentIdByTestingId";
         public const string Testing_Student_UpdateById = "Testing_Student_UpdateById";
 
         public const string TelegramBot_Add = "TelegramBot_Add";

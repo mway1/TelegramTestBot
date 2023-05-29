@@ -1,4 +1,4 @@
-﻿namespace TelegramTestBot.DAL.DTOs
+namespace TelegramTestBot.DAL.DTOs
 {
     public class TestingStudentDTO
     {
