@@ -91,7 +91,22 @@ namespace TelegramTestBot.DAL.Managers
                     );
             }
         }
-        
+
+        public int GetLastAddedTestingByGroupId(int groupId)
+        {
+            using (var connection = new SqlConnection(ServerSettings._connectionString))
+            {
+                connection.Open();
+
+                return connection.QuerySingle<int>
+                    (
+                        StoredProcedures.Testing_GetLastAddedByGroupId,
+                        param: new { GroupId = groupId },
+                        commandType: System.Data.CommandType.StoredProcedure
+                    );
+            }
+        }
+
         public TestingDTO GetTestingByGroupId(int groupId)
         {
             using (var connection = new SqlConnection(ServerSettings._connectionString))
@@ -100,7 +115,7 @@ namespace TelegramTestBot.DAL.Managers
 
                 return connection.QuerySingle<TestingDTO>
                     (
-                        StoredProcedures.Testing_GetById,
+                        StoredProcedures.Testing_GetByGroupId,
                         param: new { GroupId = groupId },
                         commandType: System.Data.CommandType.StoredProcedure
                     );

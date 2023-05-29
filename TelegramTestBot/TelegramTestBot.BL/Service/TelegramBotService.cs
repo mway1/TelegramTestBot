@@ -59,7 +59,41 @@ namespace TelegramTestBot.BL.Service
                 return buttonsKeyboard.Chunk(btnsPerRow).Select(g => g.ToArray()).ToArray();
         }
 
-        public async void MakeActionWithBot(ActionType type, long id = 0, string username = "User", string msg = " ", int msgId = 0, int groupId = 0, DateTime sendTime = default)
+        private async void UpdateStudentAfterConfirmAttendance(int studentId, int groupId, long userId)
+        {
+            int testingId = _testingModelManager.GetLastAddedTestingByGroupId(groupId);
+            int testingStudentId = _testingStudentModelManager.GetTestingStudentByStudentIdByTestingId(studentId, testingId);
+            TestingStudentModel test = _testingStudentModelManager.GetTestingStudentById(testingStudentId);
+
+            test.IsAttendance = true;
+
+            _testingStudentModelManager.UpdateTestingStudentById(test);
+
+            await _botClient.SendTextMessageAsync(userId, "Вы прошли тест с геопозицией, можете начать основное тестирование.");
+        }
+
+        public void StartTestForGroup(int groupId, DateTime sendTime)
+        {
+            List<StudentModel> students = _studentModelManager.GetStudentsByGroupId(groupId);
+            int testingId = _testingModelManager.GetLastAddedTestingByGroupId(groupId);
+
+            foreach (var std in students)
+            {
+                if (!_dataService.CheckStudentChatIdForUnique(std.UserChatId))
+                {
+                    if (!_testingService.SchedulesGroup.ContainsKey(groupId))
+                    {
+                        TestingStudentModel testingStudent = new TestingStudentModel()
+                        { StudentId = std.Id, TestingId = testingId };
+                        _testingStudentModelManager.AddTestingStudent(testingStudent);
+                    }
+                }
+            }
+
+            StartTimerForStudent(groupId, sendTime);
+        }
+
+        public async void MakeActionWithBot(ActionType type, long id = 0, string username = "User", string msg = " ", int msgId = 0)
         {
             switch (type)
             {
@@ -126,26 +160,26 @@ namespace TelegramTestBot.BL.Service
 
                         break;
                     }
-                case ActionType.test:
-                    {
-                        List<StudentModel> students = _studentModelManager.GetStudentsByGroupId(groupId);
-                        int testingId = _testingModelManager.GetTestingByGroupId(groupId).Id;
+                //case ActionType.test:
+                //    {
+                //        List<StudentModel> students = _studentModelManager.GetStudentsByGroupId(groupId);
+                //        int testingId = _testingModelManager.GetTestingByGroupId(groupId).Id;
 
-                        foreach (var std in students)
-                        {
-                            if (!_dataService.CheckStudentChatIdForUnique(std.UserChatId))
-                            {
-                                if (!_testingService.SchedulesGroup.ContainsKey(groupId))
-                                {
-                                    TestingStudentModel testingStudent = new TestingStudentModel() 
-                                    { StudentId = std.Id, TestingId = testingId };
-                                    StartTimerForStudent(groupId, sendTime);
-                                    _testingStudentModelManager.AddTestingStudent(testingStudent);
-                                }
-                            }
-                        }
-                        break;
-                    }
+                //        foreach (var std in students)
+                //        {
+                //            if (!_dataService.CheckStudentChatIdForUnique(std.UserChatId))
+                //            {
+                //                if (!_testingService.SchedulesGroup.ContainsKey(groupId))
+                //                {
+                //                    TestingStudentModel testingStudent = new TestingStudentModel() 
+                //                    { StudentId = std.Id, TestingId = testingId };
+                //                    StartTimerForStudent(groupId, sendTime);
+                //                    _testingStudentModelManager.AddTestingStudent(testingStudent);
+                //                }
+                //            }
+                //        }
+                //        break;
+                //    }
                 case ActionType.testing:
                     {
                         if (!_dataService.CheckStudentChatIdForUnique(id))
@@ -154,7 +188,8 @@ namespace TelegramTestBot.BL.Service
 
                             if (_testingService.SchedulesGroup.ContainsKey(checkedStudent.GroupId) && !_dataService.CheckTestingGroupIdForUnique(checkedStudent.GroupId))
                             {
-                                TestingModel checkedTestingGroup = _testingModelManager.GetTestingByGroupId(checkedStudent.GroupId);
+                                int testingId = _testingModelManager.GetLastAddedTestingByGroupId(checkedStudent.GroupId);
+                                TestingModel checkedTestingGroup = _testingModelManager.GetTestingById(testingId);
                                 
                                 EditMessagesWithKeyboard(id, msgId,
                                     $"{username}, тест начнется {checkedTestingGroup.Date.ToShortDateString()} в {checkedTestingGroup.Date.ToShortTimeString()}");
@@ -374,13 +409,12 @@ namespace TelegramTestBot.BL.Service
 
                 if (isAttendance)
                 {
-                    int studentId = _studentModelManager.GetStudentByChatId(update.Message.Chat.Id).Id;
-                    _testingStudentModelManager.UpdateTestingStudentById(new TestingStudentModel() { Id = studentId, IsAttendance = true });
-
-                    await _botClient.SendTextMessageAsync(update.Message.Chat.Id, "ТЫ ГЕЙ");
+                    StudentModel studentId = _studentModelManager.GetStudentByChatId(update.Message.Chat.Id);
+                    UpdateStudentAfterConfirmAttendance(studentId.Id, studentId.GroupId, update.Message.Chat.Id);                  
                 }
                 else
-                    await _botClient.SendTextMessageAsync(update.Message.Chat.Id, "ТЫ смешарик");
+                    await _botClient.SendTextMessageAsync(update.Message.Chat.Id, 
+                        "Вы не прошли тест с геопозицией, основное тестирование не может быть начат!");
             }
             else if (update.Message != null && update.Message.Text != null)
             {

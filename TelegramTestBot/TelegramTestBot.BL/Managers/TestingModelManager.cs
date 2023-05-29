@@ -49,9 +49,15 @@ namespace TelegramTestBot.BL.Managers
             return MapperConfigStorage.GetInstance().Map<TestingModel>(testing);
         }
         
+        public int GetLastAddedTestingByGroupId(int groupId)
+        {
+            int testingId = _testingManager.GetLastAddedTestingByGroupId(groupId);
+            return MapperConfigStorage.GetInstance().Map<int>(testingId);
+        }
+        
         public TestingModel GetTestingByGroupId(int groupId)
         {
-            TestingDTO testing = _testingManager.GetTestingById(groupId);
+            TestingDTO testing = _testingManager.GetTestingByGroupId(groupId);
             return MapperConfigStorage.GetInstance().Map<TestingModel>(testing);
         }
     }

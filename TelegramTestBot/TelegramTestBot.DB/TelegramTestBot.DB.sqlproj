@@ -128,5 +128,6 @@
     <Build Include="dbo\Stored Procedures\Testing_Student_GetByStudentId.sql" />
     <Build Include="dbo\Stored Procedures\Testing_GetByGroupId.sql" />
     <Build Include="dbo\Stored Procedures\Testing_Student_GetByChatIdByTestingId.sql" />
+    <Build Include="dbo\Stored Procedures\Testing_GetLastAdded.sql" />
   </ItemGroup>
 </Project>

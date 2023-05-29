@@ -534,9 +534,10 @@ namespace TelegramTestBot.UI
             GroupModel selectedGroupForTesting = (GroupModel)CB_groupForTesting.SelectedItem;
             TestModel selectedTestForTesting = (TestModel)CB_allTeacherTests.SelectedItem;
             DateTime datetime = DateTime.Parse(TB_dateTimeForTesting.Text);
+
             _testingModelManager.AddTesting(new TestingModel { Date = datetime,TestId= selectedTestForTesting.Id, GroupId=selectedGroupForTesting.Id });
 
-            _telegramBotService.MakeActionWithBot(BL.ActionType.test, groupId: selectedGroupForTesting.Id, sendTime: datetime);
+            _telegramBotService.StartTestForGroup(selectedGroupForTesting.Id, datetime);
         }
 
         private void DG_StudentResult_Loaded(object sender, RoutedEventArgs e)

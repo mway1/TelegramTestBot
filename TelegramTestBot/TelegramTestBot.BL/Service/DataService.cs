@@ -43,7 +43,7 @@ namespace TelegramTestBot.BL.Service
         {
             try
             {
-                TestingModel checkedTesting = _testingModelManager.GetTestingByGroupId(groupId);
+                int checkedTesting = _testingModelManager.GetLastAddedTestingByGroupId(groupId);
                 return false;
             }
             catch (Exception)
