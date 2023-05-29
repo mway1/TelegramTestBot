@@ -140,7 +140,7 @@
                                 <Label Content="Имя:" HorizontalAlignment="Left" Margin="134,65,0,0" VerticalAlignment="Top"/>
                                 <Label Content="Отчество:" HorizontalAlignment="Left" Margin="106,101,0,0" VerticalAlignment="Top"/>
                                 <Label Content="Username:" HorizontalAlignment="Left" Margin="105,138,0,0" VerticalAlignment="Top"/>
-                                <Label Content="Групаа:" HorizontalAlignment="Left" Margin="118,173,0,0" VerticalAlignment="Top"/>
+                                <Label Content="Група:" HorizontalAlignment="Left" Margin="120,173,0,0" VerticalAlignment="Top"/>
                             </Grid>
                         </TabItem>
                         <TabItem x:Name="TestOfStudent" Header="История">
@@ -149,7 +149,7 @@
                                     <ColumnDefinition/>
                                     <ColumnDefinition Width="582*"/>
                                 </Grid.ColumnDefinitions>
-                                <DataGrid x:Name="DG_StudentResult"  Margin="0,0,22,0" Grid.ColumnSpan="2" AutoGenerateColumns="False" ItemsSource="{Binding TestingStudentModel}" Loaded="DG_StudentResult_Loaded">
+                                <DataGrid x:Name="DG_StudentResult"  Margin="0,0,10,0" Grid.ColumnSpan="2" AutoGenerateColumns="False" ItemsSource="{Binding TestingStudentModel}" Loaded="DG_StudentResult_Loaded">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Фамилия" Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=SurnameOfStudent}"/>
                                         <DataGridTextColumn Header="Имя" Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=FirstnameOfStudent}"/>
@@ -163,15 +163,15 @@
                                                         </Trigger>
                                                         <Trigger Property="Text" Value="True">
                                                             <Setter Property="Background" Value="Green"/>
-                                                        </Trigger>           
+                                                        </Trigger>
                                                     </Style.Triggers>
                                                 </Style>
                                             </DataGridTextColumn.ElementStyle>
                                         </DataGridTextColumn>
                                         <DataGridTextColumn Header="Верных ответов" Binding="{Binding Path=CountAnswers}"/>
                                     </DataGrid.Columns>
-                                    
-                                 </DataGrid>
+
+                                </DataGrid>
                             </Grid>
                         </TabItem>
                     </TabControl>
@@ -179,7 +179,7 @@
                     <ListBox x:Name="LB_StudentsInGroup" DisplayMemberPath="Surname"  Margin="2,71,3,181" SelectionChanged="LB_StudentsInGroup_SelectionChanged"/>
                     <ListBox x:Name="LB_NewUsers" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="2,251,5,55"/>
                     <Label Content="Студенты:" HorizontalAlignment="Center" Margin="0,43,0,0" VerticalAlignment="Top" Width="200"/>
-                    <Label Content="Подключенные пользователи:" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Margin="0,193,0,0"/>
+                    <Label Content="Подключенные пользователи:" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Margin="0,227,0,0"/>
                     <Label Content="Группы:" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Margin="0,-3,0,0"/>
                     <Button x:Name="But_GoStartGroups" Content="На главную" HorizontalAlignment="Left" Margin="10,360,0,0" VerticalAlignment="Top" Height="23" Width="162" Click="But_GoStartGroups_Click"/>
                 </Grid>

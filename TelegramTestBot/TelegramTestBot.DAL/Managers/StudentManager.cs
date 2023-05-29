@@ -57,11 +57,9 @@ namespace TelegramTestBot.DAL.Managers
                         param: new
                         {
                             newStudent.Id,
-                            newStudent.UserChatId,
                             newStudent.Firstname,
                             newStudent.Lastname,
                             newStudent.Surname,
-                            newStudent.Username,
                             newStudent.GroupId
                         },
                         commandType: System.Data.CommandType.StoredProcedure
