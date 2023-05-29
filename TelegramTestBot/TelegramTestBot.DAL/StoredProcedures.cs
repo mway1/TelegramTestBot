@@ -8,6 +8,7 @@
         public const string Answer_GetById = "Answer_GetById";
         public const string Answer_GetByQuestionId = "Answer_GetByQuestionId";
         public const string Answer_UpdateById = "Answer_UpdateById";
+        public const string Answer_GetRightAnswer = "Answer_GetRightAnswer";
 
         public const string Group_Add = "Group_Add";
         public const string Group_DeleteById = "Group_DeleteById";

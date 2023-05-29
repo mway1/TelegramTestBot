@@ -10,5 +10,6 @@ namespace TelegramTestBot.BL.Interfaces
         List<AnswerModel> GetAllAnswers();
         AnswerModel GetAnswerById(int answerId);
         List<AnswerModel> GetAnswerByQuestionId(int answerId);
+        int GetRightAnswer(int questionId);
     }
 }

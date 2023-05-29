@@ -48,6 +48,12 @@ namespace TelegramTestBot.BL.Managers
             AnswerDTO answer = _answerManager.GetAnswerById(answerId);
             return MapperConfigStorage.GetInstance().Map<AnswerModel>(answer);
         }
+        public int GetRightAnswer(int questionId)
+        {
+            int answer = _answerManager.GetRightAnswer(questionId);
+            return MapperConfigStorage.GetInstance().Map<int>(answer);
+        }
+
         public List<AnswerModel> GetAnswerByQuestionId(int questionId)
         {
             List<AnswerDTO> answer = _answerManager.GetAnswerByQuestionId(questionId);

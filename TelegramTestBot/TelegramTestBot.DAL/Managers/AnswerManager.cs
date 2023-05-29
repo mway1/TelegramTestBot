@@ -91,6 +91,20 @@ namespace TelegramTestBot.DAL.Managers
                     );
             }
         }
+        public int GetRightAnswer(int questionId)
+        {
+            using (var connection = new SqlConnection(ServerSettings._connectionString))
+            {
+                connection.Open();
+
+                return connection.QuerySingle<int>
+                    (
+                        StoredProcedures.Answer_GetById,
+                        param: new { QuestionId = questionId },
+                        commandType: System.Data.CommandType.StoredProcedure
+                    );
+            }
+        }
         public List<AnswerDTO> GetAnswerByQuestionId(int questionId)
         {
             using (var connection = new SqlConnection(ServerSettings._connectionString))
