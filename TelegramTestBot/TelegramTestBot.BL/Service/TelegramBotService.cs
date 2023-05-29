@@ -252,7 +252,7 @@ namespace TelegramTestBot.BL.Service
             {
                 var answers = _answerModelManager.GetAnswerByQuestionId(questions[num].Id);
 
-                var inlineKbrd = new InlineKeyboardMarkup(InlineKeyboardMarkupMakerForTest(answers, 4));
+                var inlineKbrd = new InlineKeyboardMarkup(InlineKeyboardMarkupMakerForTest(answers, 2));
 
                 await _botClient.SendTextMessageAsync(new ChatId(id),
                     $"{questions[num].Content}", replyMarkup: inlineKbrd);
@@ -436,7 +436,7 @@ namespace TelegramTestBot.BL.Service
                     }
 
                 }
-                else if (checkForKeyboardNum && _testingService.TestSessions[groupId] == true)
+                else if (_testingService.TestSessions[groupId] == true && checkForKeyboardNum == true)
                 {
                     _testingService.UserAnswersForTest[update.CallbackQuery.Message.Chat.Id].Add(num);
                     int count = _testingService.UserAnswersForTest[update.CallbackQuery.Message.Chat.Id].Count;
@@ -445,7 +445,7 @@ namespace TelegramTestBot.BL.Service
                         "Следующий вопрос:");
                     SendNextQuestionOfTest(update.CallbackQuery.Message.Chat.Id, groupId, count);
                 }
-                else if (checkForKeyboardNum)
+                else
                 {
                     StudentModel editStudent = _studentModelManager.GetStudentByChatId(update.CallbackQuery.Message!.Chat.Id);
 
@@ -463,10 +463,10 @@ namespace TelegramTestBot.BL.Service
                             "Вы уже состоите в группе!" +
                             "\nВ случае ошибочного выбора - обратитесь к преподавателю! \nГлавное меню - /menu");
                 }
-                else
-                {
-                    SendExceptionForNull(update.CallbackQuery.Message!.Chat.Id, update.CallbackQuery.Message.MessageId);
-                }
+                //else
+                //{
+                //    SendExceptionForNull(update.CallbackQuery.Message!.Chat.Id, update.CallbackQuery.Message.MessageId);
+                //}
             }
             else if (update.Message?.Text != null && DataService.UserAnswers.ContainsKey(update.Message.Chat.Id))
             {
