@@ -23,6 +23,9 @@ namespace TelegramTestBot.BL.Service
         private TeacherModelManager _techerModelManager = new TeacherModelManager();
         private GroupModelManager _groupModelManager = new GroupModelManager();
         private TestingModelManager _testingModelManager = new TestingModelManager();
+        private TestModelManager _testModelManager = new TestModelManager();
+        private AnswerModelManager _answerModelManager = new AnswerModelManager();
+        private QuestionModelManager _questionModelManager = new QuestionModelManager();
         private TestingStudentModelManager _testingStudentModelManager = new TestingStudentModelManager();
         private readonly TelegramBotClient _botClient;
 
@@ -31,11 +34,7 @@ namespace TelegramTestBot.BL.Service
             _botClient = new TelegramBotClient(_dataService.token);
             _onMessage = onMessage;
 
-            foreach (var timer in _testingService.Timers.Values)
-            {
-                timer.Stop();
-                timer.Dispose();
-            }
+            _testingService.TestSessions.Clear();
         }
 
         public void StartBot(string pass)
@@ -71,7 +70,7 @@ namespace TelegramTestBot.BL.Service
             {
                 case ActionType.start:
                     {                       
-                        await _botClient.SendTextMessageAsync(new ChatId(id), $"Hello, {username}");
+                        await _botClient.SendTextMessageAsync(new ChatId(id), $"Здравствуйте, {username}");
                         SendActionMenu(id);                         
 
                         break;
@@ -193,7 +192,79 @@ namespace TelegramTestBot.BL.Service
 
                         break;
                     }
+                case ActionType.test:
+                    {
+                        int groupId = _studentModelManager.GetStudentByChatId(id).GroupId;
+
+                        if (_testingService.TestSessions.ContainsKey(groupId))
+                        {
+                            //int testingId = _testingModelManager.GetLastAddedTestingByGroupId(groupId);
+                            //int testId = _testingModelManager.GetTestingById(testingId).TestId;
+                            //List<QuestionModel> questions = _questionModelManager.GetQuestionByTestId(testId);                       
+
+                            EditMessagesWithKeyboard(id, msgId,
+                                    "Выполните тестирование, выбирая кнопку с правильным ответом:");
+                            SendNextQuestionOfTest(id, groupId);
+                        }
+                        else
+                            EditMessagesWithKeyboard(id, msgId,
+                                    "Тест для данной группы не начинался! \nГлавное меню - /menu");
+
+                        break;
+                    }
             }
+        }
+
+        private void CheckUserAnswerForCorrect(long userId, List<QuestionModel> questions, int testingId)
+        {
+            int countOfCorrectAns = 0;
+            int studentId = _studentModelManager.GetStudentByChatId(userId).Id;
+            List<int> answers = new List<int>();
+            int testingStudentId = _testingStudentModelManager.GetTestingStudentByStudentIdByTestingId(studentId, testingId);
+
+            foreach (var quests in questions)
+            {
+                int answerId = _answerModelManager.GetRightAnswer(quests.Id);
+                answers.Add(answerId);
+            }
+
+            for (int i = 0; i < answers.Count; i++)
+            {
+                if (answers[i] == _testingService.UserAnswersForTest[userId][i])
+                {
+                    countOfCorrectAns++;
+                }
+            }
+
+            TestingStudentModel updTestStud = new TestingStudentModel() { 
+                Id = testingStudentId, CountAnswers = countOfCorrectAns };
+
+            _testingStudentModelManager.UpdateTestingStudentById(updTestStud);
+        }
+
+        private async void SendNextQuestionOfTest(long id, int groupId, int num = 0)
+        {
+            int testingId = _testingModelManager.GetLastAddedTestingByGroupId(groupId);
+            int testId = _testingModelManager.GetTestingById(testingId).TestId;
+            List<QuestionModel> questions = _questionModelManager.GetQuestionByTestId(testId);           
+
+            if (num <= questions.Count - 1)
+            {
+                var answers = _answerModelManager.GetAnswerByQuestionId(questions[num].Id);
+
+                var inlineKbrd = new InlineKeyboardMarkup(InlineKeyboardMarkupMakerForTest(answers, 4));
+
+                await _botClient.SendTextMessageAsync(new ChatId(id),
+                    $"{questions[num].Content}", replyMarkup: inlineKbrd);
+            }
+            else
+            {
+                await _botClient.SendTextMessageAsync(new ChatId(id),
+                    "Поздравляем, вы завершили тестирование, ожидайте итоги! \nГлавное меню - menu");
+
+                CheckUserAnswerForCorrect(id, questions, testingId);
+            }
+            
         }
 
         public async void SendMessagesForUser(long chatId, string username = "User", string text = " ")
@@ -213,7 +284,17 @@ namespace TelegramTestBot.BL.Service
                       msgId,
                       text,
                       replyMarkup: null);
-        }            
+        }
+
+        private static InlineKeyboardButton[][] InlineKeyboardMarkupMakerForTest(List<AnswerModel> answers, int btnsPerRow = 0)
+        {
+            var buttonsKeyboard = answers.Select(a => InlineKeyboardButton.WithCallbackData(a.Content, $"{a.Id}"));
+
+            if (btnsPerRow == 0)
+                return new InlineKeyboardButton[][] { buttonsKeyboard.ToArray() };
+            else
+                return buttonsKeyboard.Chunk(btnsPerRow).Select(a => a.ToArray()).ToArray();
+        }
 
         private static InlineKeyboardButton[][] InlineKeyboardMarkupMaker(List<GroupModel> groups, int btnsPerRow = 0)
         {
@@ -235,7 +316,13 @@ namespace TelegramTestBot.BL.Service
 
             _testingStudentModelManager.UpdateTestingStudentById(test);
 
-            await _botClient.SendTextMessageAsync(userId, "Вы прошли тест с геопозицией, можете начать основное тестирование.");
+            var inlineKb = new InlineKeyboardMarkup(new[]
+            {
+                InlineKeyboardButton.WithCallbackData("Начать тестирование", "test")
+            });
+
+            await _botClient.SendTextMessageAsync(userId, 
+                "Вы прошли тест с геопозицией, можете начать основное тестирование.", replyMarkup: inlineKb);
         }
 
         private async void SendRegForm(long id, string? username, int numOfForm = 0)
@@ -296,6 +383,8 @@ namespace TelegramTestBot.BL.Service
 
             if (_testingService.SchedulesGroup.ContainsKey(groupId) && _testingService.SchedulesGroup[groupId] == sendTime)
             {
+                _testingService.TestSessions.Add(groupId, true);
+
                 foreach (var students in studentsOfTestGroup)
                 {
                     if (_dataService.UsersWithGeo.Contains(students.UserChatId))
@@ -328,9 +417,10 @@ namespace TelegramTestBot.BL.Service
             }
             else if (update.CallbackQuery != null)
             {
-                bool checkForKeyboardGroup = int.TryParse(update.CallbackQuery.Data, out int groupId);               
+                bool checkForKeyboardNum = int.TryParse(update.CallbackQuery.Data, out int num);
+                int groupId = _studentModelManager.GetStudentByChatId(update.CallbackQuery.Message!.Chat.Id).GroupId;
 
-                if (!checkForKeyboardGroup)
+                if (!checkForKeyboardNum)
                 {
                     try
                     {
@@ -345,14 +435,23 @@ namespace TelegramTestBot.BL.Service
                         SendExceptionForNull(update.CallbackQuery.Message!.Chat.Id, update.CallbackQuery.Message.MessageId);
                     }
 
-                }              
-                else if (checkForKeyboardGroup)
+                }
+                else if (checkForKeyboardNum && _testingService.TestSessions[groupId] == true)
+                {
+                    _testingService.UserAnswersForTest[update.CallbackQuery.Message.Chat.Id].Add(num);
+                    int count = _testingService.UserAnswersForTest[update.CallbackQuery.Message.Chat.Id].Count;
+
+                    EditMessagesWithKeyboard(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId, 
+                        "Следующий вопрос:");
+                    SendNextQuestionOfTest(update.CallbackQuery.Message.Chat.Id, groupId, count);
+                }
+                else if (checkForKeyboardNum)
                 {
                     StudentModel editStudent = _studentModelManager.GetStudentByChatId(update.CallbackQuery.Message!.Chat.Id);
 
                     if (editStudent.GroupId == 1)
                     {                  
-                        editStudent.GroupId = groupId;
+                        editStudent.GroupId = num;
 
                         _studentModelManager.UpdateStudentById(editStudent);
 
@@ -394,7 +493,7 @@ namespace TelegramTestBot.BL.Service
                 }
                 else
                     await _botClient.SendTextMessageAsync(update.Message.Chat.Id, 
-                        "Вы не прошли тест с геопозицией, основное тестирование не может быть начат!");
+                        "Вы не прошли тест с геопозицией, основное тестирование не может быть начато!");
             }
             else if (update.Message != null && update.Message.Text != null)
             {

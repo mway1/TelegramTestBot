@@ -7,14 +7,14 @@ namespace TelegramTestBot.BL.Service
 {
     public class TestingService
     {
-        public Dictionary<long, DateTime> Schedules { get; set; } = new Dictionary<long, DateTime>();
+        public Dictionary<int, bool> TestSessions { get; set; } = new Dictionary<int, bool>();
+        public Dictionary<long, List<int>> UserAnswersForTest { get; set; } = new Dictionary<long, List<int>>();
         public Dictionary<int, DateTime> SchedulesGroup { get; set; } = new Dictionary<int, DateTime>();
-        public Dictionary<long, System.Timers.Timer> Timers { get; set; } = new Dictionary<long, System.Timers.Timer>();
         public Dictionary<int, System.Timers.Timer> TimersForGroup { get; set; } = new Dictionary<int, System.Timers.Timer>();
 
         public TestingService()
         {
-            foreach (var timer in Timers.Values)
+            foreach (var timer in TimersForGroup.Values)
             {
                 timer.Stop();
                 timer.Dispose();
