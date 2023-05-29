@@ -7,6 +7,10 @@
         public bool IsAttendance { get; set; }
         public int StudentId { get; set; }
         public int TestingId { get; set; }
+        //public TestingModel Testing { get; set; }
+        public DateTime DateOfTesting { get; set; }
+        public string SurnameOfStudent { get; set; }
+        public string FirstnameOfStudent { get; set; }
 
 
         public TestingStudentModel()

@@ -3,11 +3,11 @@
 AS
 BEGIN
 
-	SELECT TS.Id, TS.CountAnswers, S.Surname,S.Firstname, T.[Date],TS.IsAttendance
+	SELECT TS.Id, TS.CountAnswers,TS.IsAttendance,T.[Date] as DateOfTesting,S.Surname as SurnameOfStudent,S.Firstname as FirstnameOfStudent
 	FROM dbo.[Testing_Student] as TS
-    LEFT JOIN dbo.[Student] as S on (S.Id = TS.StudentId)
-	LEFT JOIN dbo.[Testing] as T on (T.Id = TS.TestingId)
-    WHERE StudentId = @StudentId
+    LEFT JOIN dbo.[Testing] as T on (TS.TestingId = T.Id)
+	LEFT JOIN dbo.[Student] as S on (TS.StudentId = S.Id)
+    WHERE TS.StudentId = @StudentId
 
 END
 
