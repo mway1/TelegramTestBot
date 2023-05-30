@@ -54,9 +54,9 @@
                     <TabControl Grid.Row="1" Margin="0,11,0,0">
                         <TabItem Header="Запуск тестов">
                             <Grid >
-                                <Label Content="Выберите группу:" HorizontalAlignment="Left" Margin="22,25,0,0" VerticalAlignment="Top" Width="142" Height="26"/>
-                                <Label Content="Выберите тест:" HorizontalAlignment="Left" Margin="265,25,0,0" VerticalAlignment="Top" Width="142" Height="26"/>
-                                <StackPanel Margin="136,102,158,10">
+                                <Label Content="Выберите группу:" HorizontalAlignment="Left" Margin="22,13,0,0" VerticalAlignment="Top" Width="142" Height="26" FontWeight="Bold"/>
+                                <Label Content="Выберите тест:" HorizontalAlignment="Left" Margin="265,13,0,0" VerticalAlignment="Top" Width="142" Height="26" FontWeight="Bold"/>
+                                <StackPanel Margin="29,115,265,71">
                                     <DatePicker x:Name="DP_selectDate" Width="140" FirstDayOfWeek="Monday" SelectedDateChanged="DP_selectDate_SelectedDateChanged" SelectedDateFormat="Short"/>
                                     <TextBox x:Name="TB_dateTimeForTesting" TextWrapping="Wrap" Text="" Width="140" Margin="0,40,0,0" Height="20"/>
                                     <ComboBox x:Name="CB_timeSelect" Width="140" Height="20" Margin="0,-98,0,0" Opacity="3">
@@ -74,12 +74,35 @@
                                         <ComboBoxItem>21:00</ComboBoxItem>
                                         <ComboBoxItem>22:00</ComboBoxItem>
                                     </ComboBox>
-                                    <Label Content="Введенная дата и время:" Margin="0,-53,0,0" Height="28" />
-                                    <Button x:Name="StartTesting" Content="Запустить" HorizontalAlignment="Center" VerticalAlignment="Top" Width="142" Height="23" Grid.Row="1" Click="StartTesting_Click" Margin="0,6,0,0"/>
+                                    <Label Content="Дата и время начала:" Margin="0,-53,0,0" Height="28" />
 
                                 </StackPanel>
-                                <ComboBox x:Name="CB_groupForTesting" DisplayMemberPath="Name"  HorizontalAlignment="Left" Margin="22,54,0,0" VerticalAlignment="Top" Width="142" Loaded="CB_groupForTesting_Loaded"/>
-                                <ComboBox x:Name="CB_allTeacherTests" DisplayMemberPath="Name" HorizontalAlignment="Left" Margin="265,54,0,0" VerticalAlignment="Top" Width="142" Loaded="CB_allTeacherTests_Loaded"/>
+                                <ComboBox x:Name="CB_groupForTesting" DisplayMemberPath="Name"  HorizontalAlignment="Left" Margin="22,42,0,0" VerticalAlignment="Top" Width="142" Loaded="CB_groupForTesting_Loaded"/>
+                                <ComboBox x:Name="CB_allTeacherTests" DisplayMemberPath="Name" HorizontalAlignment="Left" Margin="265,42,0,0" VerticalAlignment="Top" Width="142" Loaded="CB_allTeacherTests_Loaded"/>
+                                <Button x:Name="StartTesting" Content="Запустить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="241" Height="23" Click="StartTesting_Click" Margin="113,252,0,0"/>
+                                <StackPanel Margin="261,112,33,71">
+                                    <DatePicker x:Name="DP_selectDate_stop" Width="140" FirstDayOfWeek="Monday" SelectedDateChanged="DP_selectDate_stop_SelectedDateChanged" SelectedDateFormat="Short"/>
+                                    <TextBox x:Name="TB_dateTimeForTesting_stop" TextWrapping="Wrap" Text="" Width="140" Margin="0,40,0,0" Height="20"/>
+                                    <ComboBox x:Name="CB_timeSelect_stop" Width="140" Height="20" Margin="0,-98,0,0" Opacity="3">
+                                        <ComboBoxItem Content="10:00"/>
+                                        <ComboBoxItem Content="11:00"/>
+                                        <ComboBoxItem Content="12:00"/>
+                                        <ComboBoxItem Content="13:00"/>
+                                        <ComboBoxItem Content="14:00"/>
+                                        <ComboBoxItem Content="15:00"/>
+                                        <ComboBoxItem Content="16:00"/>
+                                        <ComboBoxItem Content="17:00"/>
+                                        <ComboBoxItem Content="18:00"/>
+                                        <ComboBoxItem Content="19:00"/>
+                                        <ComboBoxItem Content="20:00"/>
+                                        <ComboBoxItem Content="21:00"/>
+                                        <ComboBoxItem Content="22:00"/>
+                                    </ComboBox>
+                                    <Label Content="Дата и время окончания:" Margin="0,-53,0,0" Height="28" />
+
+                                </StackPanel>
+                                <Label Content="Введите дату и время начала:" HorizontalAlignment="Left" Margin="22,86,0,0" VerticalAlignment="Top" Width="187" Height="26" FontWeight="Bold"/>
+                                <Label Content="Введите дату и время конца:" HorizontalAlignment="Left" Margin="248,86,0,0" VerticalAlignment="Top" Width="182" Height="26" FontWeight="Bold"/>
                             </Grid>
                         </TabItem>
                         <TabItem Header="Активные тесты">
@@ -88,7 +111,7 @@
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Дата теста"  Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=Date}"/>
                                         <DataGridTextColumn Header="Название теста"  Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=Testname}"/>
-                                        <DataGridTextColumn Header="Група"  Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=Groupname}"/>
+                                        <DataGridTextColumn Header="Группа"  Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=Groupname}"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </Grid>
@@ -112,7 +135,7 @@
                     <Button Grid.Column="1" Grid.Row="8" x:Name="Button_SignIn" Content="Вход" HorizontalAlignment="Left"  VerticalAlignment="Center" Height="26" Width="98" Click="Button_SignIn_Click" Margin="159,0,0,0"/>
                     <PasswordBox x:Name="PasswordForRegister"  Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left"  VerticalAlignment="Center" Width="212" Height="25"  Margin="110,0,0,0"/>
                     <PasswordBox x:Name="PasswordForRegister_Copy"  Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left"  VerticalAlignment="Center" Width="212" Height="25"  Margin="110,0,0,0"/>
-                    <Label Grid.Column="1" Grid.Row="1"  Content="Введите фамилию:" HorizontalAlignment="Left"  VerticalAlignment="Center"/>
+                    <Label Grid.Column="1" Grid.Row="1"  Content="Введите Фамилию:" HorizontalAlignment="Left"  VerticalAlignment="Center"/>
                     <Label Grid.Column="1" Grid.Row="2" Content="Введите Имя:" HorizontalAlignment="Left" VerticalAlignment="Center" />
                     <Label Grid.Column="1" Grid.Row="3" Content="Введите Отчество:" HorizontalAlignment="Left"  VerticalAlignment="Center"/>
                     <Label Grid.Column="1" Grid.Row="4" Content="Введите email:" HorizontalAlignment="Left"  VerticalAlignment="Center"/>
