@@ -56,7 +56,8 @@ namespace TelegramTestBot.DAL.Managers
                             newTesting.Id,
                             newTesting.Date,
                             newTesting.TestId,
-                            newTesting.GroupId
+                            newTesting.GroupId,
+                            newTesting.isActive
                         },
                         commandType: System.Data.CommandType.StoredProcedure
                     );

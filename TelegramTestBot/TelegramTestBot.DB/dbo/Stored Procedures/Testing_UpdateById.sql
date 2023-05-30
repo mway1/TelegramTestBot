@@ -2,7 +2,8 @@
 	@Id int,
 	@Date datetime,
 	@TestId int,
-	@GroupId int
+	@GroupId int,
+	@isActive bit
 
 AS
 BEGIN
@@ -10,7 +11,8 @@ BEGIN
 UPDATE dbo.[Testing]
 SET [Date] = @Date,
 	TestId = @TestId,
-	GroupId = @GroupId
+	GroupId = @GroupId,
+	isActive = @isActive
 
 WHERE Id = @Id
 
