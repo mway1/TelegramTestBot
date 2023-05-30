@@ -200,13 +200,9 @@ namespace TelegramTestBot.BL.Service
 
                         if (_testingService.TestSessions.ContainsKey(groupId))
                         {
-                            //int testingId = _testingModelManager.GetLastAddedTestingByGroupId(groupId);
-                            //int testId = _testingModelManager.GetTestingById(testingId).TestId;
-                            //List<QuestionModel> questions = _questionModelManager.GetQuestionByTestId(testId);                       
-
                             EditMessagesWithKeyboard(id, msgId,
                                     "Выполните тестирование, выбирая кнопку с правильным ответом:");
-                            SendNextQuestionOfTest(id, groupId);
+                            SendNextQuestionOfTest(id, groupId, msgId: msgId);
                         }
                         else
                             EditMessagesWithKeyboard(id, msgId,
@@ -244,7 +240,7 @@ namespace TelegramTestBot.BL.Service
             _testingStudentModelManager.UpdateTestingStudentById(updTestStud);
         }
 
-        private async void SendNextQuestionOfTest(long id, int groupId, int num = 0)
+        private async void SendNextQuestionOfTest(long id, int groupId, int msgId, int num = 0)
         {
             int testingId = _testingModelManager.GetLastAddedTestingByGroupId(groupId);
             int testId = _testingModelManager.GetTestingById(testingId).TestId;
@@ -256,12 +252,12 @@ namespace TelegramTestBot.BL.Service
 
                 var inlineKbrd = new InlineKeyboardMarkup(InlineKeyboardMarkupMakerForTest(answers, 2));
 
-                await _botClient.SendTextMessageAsync(new ChatId(id),
+                await _botClient.EditMessageTextAsync(new ChatId(id), msgId,
                     $"{questions[num].Content}", replyMarkup: inlineKbrd);
             }
             else
             {
-                await _botClient.SendTextMessageAsync(new ChatId(id),
+                await _botClient.EditMessageTextAsync(new ChatId(id), msgId,
                     "Поздравляем, вы завершили тестирование, ожидайте итоги! \nГлавное меню - /menu");
 
                 CheckUserAnswerForCorrect(id, questions, testingId);
@@ -385,8 +381,6 @@ namespace TelegramTestBot.BL.Service
 
             if (_testingService.SchedulesGroup.ContainsKey(groupId) && _testingService.SchedulesGroup[groupId] == sendTime)
             {
-                //_testingService.TestSessions.Add(groupId, true);
-
                 foreach (var students in studentsOfTestGroup)
                 {
                     if (_dataService.UsersWithGeo.Contains(students.UserChatId))
@@ -408,7 +402,6 @@ namespace TelegramTestBot.BL.Service
             _testingService.TimersForGroup[groupId].Stop();
             _testingService.TimersForGroup[groupId].Dispose();
             _testingService.TimersForGroup.Remove(groupId);
-            //_testingModelManager.DeleteTestingById(testingId);
         }
 
         private async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
@@ -422,65 +415,46 @@ namespace TelegramTestBot.BL.Service
                 int groupId = _studentModelManager.GetStudentByChatId(update.CallbackQuery.Message!.Chat.Id).GroupId;
                 bool checkForKeyboardNum = int.TryParse(update.CallbackQuery.Data, out int num);
 
-                //if (_testingService.TestSessions.ContainsKey(groupId) && _testingService.TestSessions[groupId] == true && checkForKeyboardNum)
-                //{
-                //    _testingService.UserAnswersForTest[update.CallbackQuery.Message.Chat.Id].Add(num);
-                //    int count = _testingService.UserAnswersForTest[update.CallbackQuery.Message.Chat.Id].Count;
-
-                //    EditMessagesWithKeyboard(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId,
-                //        "Следующий вопрос:");
-                //    SendNextQuestionOfTest(update.CallbackQuery.Message.Chat.Id, groupId, count);
-                //}
-                //else
-                //{
-                    if (!checkForKeyboardNum)
+                if (!checkForKeyboardNum)
+                {
+                    try
                     {
-                        try
-                        {
-                            Enum.TryParse(update.CallbackQuery.Data, out ActionType type);
+                        Enum.TryParse(update.CallbackQuery.Data, out ActionType type);
 
-                            MakeActionWithBot(type, update.CallbackQuery.Message!.Chat.Id,
-                                update.CallbackQuery.Message.Chat.Username,
-                                msgId: update.CallbackQuery.Message.MessageId);
-                        }
-                        catch (Exception)
-                        {
-                            SendExceptionForNull(update.CallbackQuery.Message!.Chat.Id, update.CallbackQuery.Message.MessageId);
-                        }
-
+                        MakeActionWithBot(type, update.CallbackQuery.Message!.Chat.Id,
+                              update.CallbackQuery.Message.Chat.Username,
+                              msgId: update.CallbackQuery.Message.MessageId);
                     }
-                    else if (checkForKeyboardNum && _testingService.TestSessions.ContainsKey(groupId) && _testingService.TestSessions[groupId] == true)
+                    catch (Exception)
                     {
-                        _testingService.UserAnswersForTest[update.CallbackQuery.Message.Chat.Id].Add(num);
-                        int count = _testingService.UserAnswersForTest[update.CallbackQuery.Message.Chat.Id].Count;
+                        SendExceptionForNull(update.CallbackQuery.Message!.Chat.Id, update.CallbackQuery.Message.MessageId);
+                    }
+                }
+                else if (checkForKeyboardNum && _testingService.TestSessions.ContainsKey(groupId) && _testingService.TestSessions[groupId] == true)
+                {
+                    _testingService.UserAnswersForTest[update.CallbackQuery.Message.Chat.Id].Add(num);
+                    int count = _testingService.UserAnswersForTest[update.CallbackQuery.Message.Chat.Id].Count;
+
+                    SendNextQuestionOfTest(update.CallbackQuery.Message.Chat.Id, groupId, update.CallbackQuery.Message.MessageId, count);
+                }
+                else
+                {
+                    StudentModel editStudent = _studentModelManager.GetStudentByChatId(update.CallbackQuery.Message!.Chat.Id);
+
+                    if (editStudent.GroupId == 1)
+                    {
+                        editStudent.GroupId = num;
+
+                        _studentModelManager.UpdateStudentById(editStudent);
 
                         EditMessagesWithKeyboard(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId,
-                            "Следующий вопрос:");
-                        SendNextQuestionOfTest(update.CallbackQuery.Message.Chat.Id, groupId, count);
+                            "Поздравляем, вы добавлены в группу! \nГлавное меню - /menu");
                     }
                     else
-                    {
-                        StudentModel editStudent = _studentModelManager.GetStudentByChatId(update.CallbackQuery.Message!.Chat.Id);
-
-                        if (editStudent.GroupId == 1)
-                        {
-                            editStudent.GroupId = num;
-
-                            _studentModelManager.UpdateStudentById(editStudent);
-
-                            EditMessagesWithKeyboard(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId,
-                                "Поздравляем, вы добавлены в группу! \nГлавное меню - /menu");
-                        }
-                        else
-                            EditMessagesWithKeyboard(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId,
-                                "Вы уже состоите в группе!" +
-                                "\nВ случае ошибочного выбора - обратитесь к преподавателю! \nГлавное меню - /menu");
-                    }
-                //    else
-                //    {
-                //        SendExceptionForNull(update.CallbackQuery.Message!.Chat.Id, update.CallbackQuery.Message.MessageId);
-                //    }
-                //}
+                        EditMessagesWithKeyboard(update.CallbackQuery.Message.Chat.Id, update.CallbackQuery.Message.MessageId,
+                            "Вы уже состоите в группе!" +
+                            "\nВ случае ошибочного выбора - обратитесь к преподавателю! \nГлавное меню - /menu");
+                }
             }
             else if (update.Message?.Text != null && DataService.UserAnswers.ContainsKey(update.Message.Chat.Id))
             {
