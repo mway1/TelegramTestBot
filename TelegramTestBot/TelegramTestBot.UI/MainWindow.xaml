@@ -166,12 +166,13 @@
                                     <ColumnDefinition/>
                                     <ColumnDefinition Width="582*"/>
                                 </Grid.ColumnDefinitions>
-                                <DataGrid x:Name="DG_StudentResult"  Margin="0,0,10,0" Grid.ColumnSpan="2" AutoGenerateColumns="False" ItemsSource="{Binding TestingStudentModel}" Loaded="DG_StudentResult_Loaded">
+                                <DataGrid x:Name="DG_StudentResult" Grid.ColumnSpan="2" AutoGenerateColumns="False" ItemsSource="{Binding TestingStudentModel}" Loaded="DG_StudentResult_Loaded">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Фамилия" Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=SurnameOfStudent}"/>
-                                        <DataGridTextColumn Header="Имя" Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=FirstnameOfStudent}"/>
-                                        <DataGridTextColumn Header="Дата" Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=DateOfTesting}"/>
-                                        <DataGridTextColumn Header="Присутсвие" Binding="{Binding Path=IsAttendance}">
+                                        <DataGridTextColumn Header="Фамилия:" Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=SurnameOfStudent}"/>
+                                        <DataGridTextColumn Header="Имя:" Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=FirstnameOfStudent}"/>
+                                        <DataGridTextColumn Header="Дата:" Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=DateOfTesting}"/>
+                                        <DataGridTextColumn Header="Тест:" Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=Testname}"/>
+                                        <DataGridTextColumn Header="Присутсвие:" Binding="{Binding Path=IsAttendance}">
                                             <DataGridTextColumn.ElementStyle>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Style.Triggers>
@@ -186,6 +187,7 @@
                                             </DataGridTextColumn.ElementStyle>
                                         </DataGridTextColumn>
                                         <DataGridTextColumn Header="Верных ответов" Binding="{Binding Path=CountAnswers}"/>
+                                        <DataGridTextColumn Header="Всего вопросов:" Binding="{Binding Path=CountQuestions}"/>
                                     </DataGrid.Columns>
 
                                 </DataGrid>
