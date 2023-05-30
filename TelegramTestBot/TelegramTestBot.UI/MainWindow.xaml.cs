@@ -174,7 +174,7 @@ namespace TelegramTestBot.UI
                     }
                     else if (RB_RightAnswer2.IsChecked == true)
                     {
-                        firstRB = true;
+                        firstRB = false;
                         secondRB = true;
                         thirdRB = false;
                         fourthRB = false;
@@ -337,7 +337,7 @@ namespace TelegramTestBot.UI
                     }
                     else if (RB_RightAnswer2.IsChecked == true)
                     {
-                        firstRB = true;
+                        firstRB = false;
                         secondRB = true;
                         thirdRB = false;
                         fourthRB = false;
@@ -548,6 +548,11 @@ namespace TelegramTestBot.UI
             _testingModelManager.AddTesting(new TestingModel { Date = datetime,TestId= selectedTestForTesting.Id, GroupId=selectedGroupForTesting.Id });
 
             _telegramBotService.StartTestForGroup(selectedGroupForTesting.Id, datetime);
+
+                CB_groupForTesting.SelectedIndex = -1;
+                CB_allTeacherTests.SelectedIndex = -1;
+                TB_dateTimeForTesting.Clear();
+                CB_timeSelect.SelectedIndex = -1;
             }
             else
             {

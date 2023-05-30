@@ -32,62 +32,70 @@
             <TabItem x:Name="TabItem_StartPage" Header="Главная страница">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="127*"/>
-                        <RowDefinition Height="277*"/>
+                        <RowDefinition Height="71*"/>
+                        <RowDefinition Height="333*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="227*"/>
                         <ColumnDefinition Width="170*"/>
                     </Grid.ColumnDefinitions>
                     <Button Grid.Column="1" x:Name="Button_Exit" Content="Выйти из аккаунта" HorizontalAlignment="Left" Margin="228,9,0,0" VerticalAlignment="Top" Height="26" Width="106" Click="Button_Exit_Click"/>
-                    <Button Grid.Column="1" x:Name="Button_GoToTest" Content="Работа с тестами" HorizontalAlignment="Left" Margin="10,226,0,0" VerticalAlignment="Top" Height="32" Width="142" Click="Button_GoToTest_Click" Grid.Row="1"/>
-                    <Button Grid.Column="1" x:Name="Button_GoToGroups" Content="Работа с группами" HorizontalAlignment="Left" Margin="188,226,0,0" VerticalAlignment="Top" Height="32" Width="142" Click="Button_GoToGroups_Click" Grid.Row="1"/>
-                    <Label Grid.Column="1" Grid.Row="0" Content="Создание группы:" HorizontalAlignment="Left" Margin="43,57,0,0" VerticalAlignment="Top" Width="127" FontWeight="Bold" Height="26" />
-                    <TextBox Grid.Column="1" Grid.Row="0" x:Name="TB_newGroup" HorizontalAlignment="Left" Margin="32,87,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="165" Height="26"/>
-                    <Button Grid.Column="1" Grid.Row="0" x:Name="Button_AddGroup" Content="+" FontSize="15" HorizontalAlignment="Left" Margin="197,87,0,0" VerticalAlignment="Top" Height="26" Width="28" FontWeight="Bold" FontStretch="Normal" Click="Button_AddGroup_Click"/>
-                    <Label Grid.Column="1" Content="Созданные группы:" HorizontalAlignment="Left" Margin="43,20,0,0" VerticalAlignment="Top" Width="127" FontWeight="Bold" Height="26" Grid.Row="1" />
-                    <ListBox x:Name="LB_AllGroups" DisplayMemberPath="Name"  Margin="39,51,81,113" Loaded="LB_AllGroups_Loaded" Grid.Row="1" Grid.Column="1"/>
-                    <Button Grid.Column="1" x:Name="Button_EditGroup" Content="Изменить" HorizontalAlignment="Left" Margin="39,164,0,0" VerticalAlignment="Top" Width="109" Click="Button_EditGroup_Click" Height="23" Grid.Row="1"/>
-                    <Button Grid.Column="1" x:Name="Button_DeleteGroup" Content="Удалить" HorizontalAlignment="Left" Margin="150,164,0,0" VerticalAlignment="Top" Width="109" Click="Button_DeleteGroup_Click" Height="23" Grid.Row="1"/>
-                    <Button Grid.Column="1" Grid.Row="0" x:Name="Button_UpdateGroupName" Content="Изменить" FontSize="10" HorizontalAlignment="Left" Margin="227,87,0,0" VerticalAlignment="Top" Height="26" Width="54" FontWeight="Bold" FontStretch="Normal" Click="Button_UpdateGroupName_Click"/>
+                    <Button Grid.Column="1" x:Name="Button_GoToTest" Content="Работа с тестами" HorizontalAlignment="Left" Margin="10,270,0,0" VerticalAlignment="Top" Height="32" Width="142" Click="Button_GoToTest_Click" Grid.Row="1"/>
+                    <Button Grid.Column="1" x:Name="Button_GoToGroups" Content="Работа с группами" HorizontalAlignment="Left" Margin="188,271,0,0" VerticalAlignment="Top" Height="32" Width="142" Click="Button_GoToGroups_Click" Grid.Row="1"/>
+                    <Label Grid.Column="1" Grid.Row="1" Content="Создание группы:" HorizontalAlignment="Left" Margin="43,4,0,0" VerticalAlignment="Top" Width="127" FontWeight="Bold" Height="26" />
+                    <TextBox Grid.Column="1" Grid.Row="1" x:Name="TB_newGroup" HorizontalAlignment="Left" Margin="32,25,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="165" Height="26"/>
+                    <Button Grid.Column="1" Grid.Row="1" x:Name="Button_AddGroup" Content="+" FontSize="15" HorizontalAlignment="Left" Margin="197,25,0,0" VerticalAlignment="Top" Height="26" Width="28" FontWeight="Bold" FontStretch="Normal" Click="Button_AddGroup_Click"/>
+                    <Label Grid.Column="1" Content="Созданные группы:" HorizontalAlignment="Left" Margin="43,57,0,0" VerticalAlignment="Top" Width="127" FontWeight="Bold" Height="26" Grid.Row="1" />
+                    <ListBox x:Name="LB_AllGroups" DisplayMemberPath="Name"  Margin="39,83,81,96" Loaded="LB_AllGroups_Loaded" Grid.Row="1" Grid.Column="1"/>
+                    <Button Grid.Column="1" x:Name="Button_EditGroup" Content="Изменить" HorizontalAlignment="Left" Margin="39,237,0,0" VerticalAlignment="Top" Width="109" Click="Button_EditGroup_Click" Height="23" Grid.Row="1"/>
+                    <Button Grid.Column="1" x:Name="Button_DeleteGroup" Content="Удалить" HorizontalAlignment="Left" Margin="150,237,0,0" VerticalAlignment="Top" Width="109" Click="Button_DeleteGroup_Click" Height="23" Grid.Row="1"/>
+                    <Button Grid.Column="1" Grid.Row="1" x:Name="Button_UpdateGroupName" Content="Изменить" FontSize="10" HorizontalAlignment="Left" Margin="227,25,0,0" VerticalAlignment="Top" Height="26" Width="54" FontWeight="Bold" FontStretch="Normal" Click="Button_UpdateGroupName_Click"/>
                     <Label x:Name="Label_helloForTeacher" Content="Здравствуйте, " HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="422" FontWeight="Bold" FontSize="15" Height="30" />
-                    <Label Content="Выберите группу:" HorizontalAlignment="Left" Margin="11,65,0,0" VerticalAlignment="Top" Width="142" Height="26"/>
-                    <Label Content="Выберите тест:" HorizontalAlignment="Left" Margin="279,65,0,0" VerticalAlignment="Top" Width="142" Height="26"/>
-                    <ComboBox x:Name="CB_groupForTesting" DisplayMemberPath="Name" Margin="11,91,297,10" Grid.Column="0" Grid.Row="0" Loaded="CB_groupForTesting_Loaded"/>
-                    <ComboBox x:Name="CB_allTeacherTests" DisplayMemberPath="Name" Margin="279,91,29,10" Grid.Column="0" Grid.Row="0" Loaded="CB_allTeacherTests_Loaded"/>
-                    <Label Content="Выберите дату и время:" HorizontalAlignment="Left" Margin="30,20,0,0" VerticalAlignment="Top" Width="142" Height="26" Grid.Row="1"/>
-                    <Label Content="Запуск теста для студентов" HorizontalAlignment="Left" Margin="132,40,0,0" VerticalAlignment="Top" Width="198" FontSize="14"/>
+                    <TabControl Grid.Row="1" Margin="0,11,0,0">
+                        <TabItem Header="Запуск тестов">
+                            <Grid >
+                                <Label Content="Выберите группу:" HorizontalAlignment="Left" Margin="22,25,0,0" VerticalAlignment="Top" Width="142" Height="26"/>
+                                <Label Content="Выберите тест:" HorizontalAlignment="Left" Margin="265,25,0,0" VerticalAlignment="Top" Width="142" Height="26"/>
+                                <StackPanel Margin="136,102,158,10">
+                                    <DatePicker x:Name="DP_selectDate" Width="140" FirstDayOfWeek="Monday" SelectedDateChanged="DP_selectDate_SelectedDateChanged" SelectedDateFormat="Short"/>
+                                    <TextBox x:Name="TB_dateTimeForTesting" TextWrapping="Wrap" Text="" Width="140" Margin="0,40,0,0" Height="20"/>
+                                    <ComboBox x:Name="CB_timeSelect" Width="140" Height="20" Margin="0,-98,0,0" Opacity="3">
+                                        <ComboBoxItem>10:00</ComboBoxItem>
+                                        <ComboBoxItem>11:00</ComboBoxItem>
+                                        <ComboBoxItem>12:00</ComboBoxItem>
+                                        <ComboBoxItem>13:00</ComboBoxItem>
+                                        <ComboBoxItem>14:00</ComboBoxItem>
+                                        <ComboBoxItem>15:00</ComboBoxItem>
+                                        <ComboBoxItem>16:00</ComboBoxItem>
+                                        <ComboBoxItem>17:00</ComboBoxItem>
+                                        <ComboBoxItem>18:00</ComboBoxItem>
+                                        <ComboBoxItem>19:00</ComboBoxItem>
+                                        <ComboBoxItem>20:00</ComboBoxItem>
+                                        <ComboBoxItem>21:00</ComboBoxItem>
+                                        <ComboBoxItem>22:00</ComboBoxItem>
+                                    </ComboBox>
+                                    <Label Content="Введенная дата и время:" Margin="0,-53,0,0" Height="28" />
+                                    <Button x:Name="StartTesting" Content="Запустить" HorizontalAlignment="Center" VerticalAlignment="Top" Width="142" Height="23" Grid.Row="1" Click="StartTesting_Click" Margin="0,6,0,0"/>
 
-                    <StackPanel Grid.Row="1" Margin="22,51,282,95">
-                        <DatePicker x:Name="DP_selectDate" Width="140" FirstDayOfWeek="Monday" SelectedDateChanged="DP_selectDate_SelectedDateChanged" SelectedDateFormat="Short"/>
-                        <TextBox x:Name="TB_dateTimeForTesting" TextWrapping="Wrap" Text="" Width="140" Margin="0,40,0,0" Height="20"/>
-                        <ComboBox x:Name="CB_timeSelect" Width="140" Height="20" Margin="0,-98,0,0" Opacity="3">
-                            <ComboBoxItem>10:00</ComboBoxItem>
-                            <ComboBoxItem>11:00</ComboBoxItem>
-                            <ComboBoxItem>12:00</ComboBoxItem>
-                            <ComboBoxItem>13:00</ComboBoxItem>
-                            <ComboBoxItem>14:00</ComboBoxItem>
-                            <ComboBoxItem>15:00</ComboBoxItem>
-                            <ComboBoxItem>16:00</ComboBoxItem>
-                            <ComboBoxItem>17:00</ComboBoxItem>
-                            <ComboBoxItem>18:00</ComboBoxItem>
-                            <ComboBoxItem>19:00</ComboBoxItem>
-                            <ComboBoxItem>20:00</ComboBoxItem>
-                            <ComboBoxItem>21:00</ComboBoxItem>
-                            <ComboBoxItem>22:00</ComboBoxItem>
-                        </ComboBox>
-                        <Label Content="Введенная дата и время:" Margin="0,-53,0,0" Height="28" />
-                        <Button x:Name="StartTesting" Content="Запустить" HorizontalAlignment="Center" VerticalAlignment="Top" Width="142" Height="23" Grid.Row="1" Click="StartTesting_Click" Margin="0,6,0,0"/>
+                                </StackPanel>
+                                <ComboBox x:Name="CB_groupForTesting" DisplayMemberPath="Name"  HorizontalAlignment="Left" Margin="22,54,0,0" VerticalAlignment="Top" Width="142" Loaded="CB_groupForTesting_Loaded"/>
+                                <ComboBox x:Name="CB_allTeacherTests" DisplayMemberPath="Name" HorizontalAlignment="Left" Margin="265,54,0,0" VerticalAlignment="Top" Width="142" Loaded="CB_allTeacherTests_Loaded"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Активные тесты">
+                            <Grid>
+                                <DataGrid x:Name="DG_StartingTeacherTestings"  AutoGenerateColumns="False" ItemsSource="{Binding TestingModel}" Loaded="DG_StartingTeacherTestings_Loaded">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Дата теста"  Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=Date}"/>
+                                        <DataGridTextColumn Header="Название теста"  Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=Testname}"/>
+                                        <DataGridTextColumn Header="Група"  Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=Groupname}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
 
-                    </StackPanel>
-                    <DataGrid  Margin="177,51,0,0" x:Name="DG_StartingTeacherTestings"  Grid.Row="1" Grid.Column="0" AutoGenerateColumns="False" ItemsSource="{Binding TestingModel}" Loaded="DG_StartingTeacherTestings_Loaded">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Дата теста"  Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=Date}"/>
-                            <DataGridTextColumn Header="Название теста"  Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=Testname}"/>
-                            <DataGridTextColumn Header="Група"  Binding="{Binding UpdateSourceTrigger=PropertyChanged, Path=Groupname}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    <Label Content="Запущенные тесты:" HorizontalAlignment="Left" Margin="284,20,0,0" VerticalAlignment="Top" Width="142" Height="26" Grid.Row="1"/>
+
 
 
                 </Grid>
@@ -225,7 +233,7 @@
                                 <RadioButton x:Name="RB_RightAnswer3" Content="" HorizontalAlignment="Left" Margin="327,0,0,0" VerticalAlignment="Center" Width="17" Height="17"/>
                                 <RadioButton x:Name="RB_RightAnswer4" Content="" HorizontalAlignment="Left" Margin="327,205,0,0" VerticalAlignment="Top" Width="17" Height="16"/>
                                 <Label x:Name="Label_CorrectAnswer" Content="Правильный ответ:" HorizontalAlignment="Left" Margin="340,237,0,0" VerticalAlignment="Top" Height="31" Width="166" FontSize="12" FontWeight="Bold"/>
-                                <TextBox x:Name="TB_RightAnswerForQuest" HorizontalAlignment="Left" Margin="342,268,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+                                <TextBox x:Name="TB_RightAnswerForQuest" HorizontalAlignment="Left" Margin="342,268,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
                                 <Label x:Name="Label_NameOfTest" Content="Создание/редактирование теста:" HorizontalAlignment="Left" Margin="8,17,0,0" VerticalAlignment="Top" Height="31" Width="244" FontSize="14" FontWeight="Bold" Grid.Column="1"/>
                                 <TextBlock x:Name="TBox_CreateEdittTest" HorizontalAlignment="Left" Margin="247,22,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="31"  FontSize="14" Width="183"/>
                                 <Button  x:Name="But_EndTest" Content="Добавить вопрос" HorizontalAlignment="Left" Margin="75,301,0,0" VerticalAlignment="Top" Height="28" Width="173" Click="But_EndTest_Click"/>
