@@ -11,5 +11,6 @@ namespace TelegramTestBot.DAL.Interfaces
         TestingDTO GetTestingById(int testingId);
         int GetLastAddedTestingByGroupId(int groupId);
         TestingDTO GetTestingByGroupId(int groupId);
+        List<TestingDTO> GetLastAddedTestingByTeacherId(int teacherId);
     }
 }

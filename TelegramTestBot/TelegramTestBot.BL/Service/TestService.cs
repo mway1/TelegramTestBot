@@ -141,10 +141,13 @@ public class TestService
             _answersForEditQuest[2].Content = content3Answer;
             _answersForEditQuest[3].Content = content4Answer;
         }
-        List<AnswerModel> answers = _answersForEditQuest;
-        foreach (var answer in answers)
+        foreach (var answer in _answersForEditQuest)
         {
-        _answerModelManager.UpdateAnswerById(new AnswerModel { Id = answer.Id, QuestionId = questionId, Content = answer.Content,IsCorrect=answer.IsCorrect});
+            AnswerModel updatedAnswer = _answerModelManager.GetAnswerById(answer.Id);
+            updatedAnswer.QuestionId = questionId;
+            updatedAnswer.Content = answer.Content;
+            updatedAnswer.IsCorrect = answer.IsCorrect;
+            _answerModelManager.UpdateAnswerById(updatedAnswer);
         }
     }
 

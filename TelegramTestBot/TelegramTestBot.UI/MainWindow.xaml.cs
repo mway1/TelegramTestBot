@@ -174,7 +174,7 @@ namespace TelegramTestBot.UI
                     }
                     else if (RB_RightAnswer2.IsChecked == true)
                     {
-                        firstRB = true;
+                        firstRB = false;
                         secondRB = true;
                         thirdRB = false;
                         fourthRB = false;
@@ -202,6 +202,10 @@ namespace TelegramTestBot.UI
 
                     List<QuestionModel> creatingQuest = _questionModelManager.GetQuestionByTestId(testId);
                     LB_CreatedQuestion.ItemsSource = creatingQuest;
+                    RB_RightAnswer1.IsChecked = false;
+                    RB_RightAnswer2.IsChecked = false;
+                    RB_RightAnswer3.IsChecked = false;
+                    RB_RightAnswer4.IsChecked = false;
                     Tb_ContentQuestuon.Clear();
                     TB_FirstAnswer.Clear();
                     TB_SecondAnswer.Clear();
@@ -333,7 +337,7 @@ namespace TelegramTestBot.UI
                     }
                     else if (RB_RightAnswer2.IsChecked == true)
                     {
-                        firstRB = true;
+                        firstRB = false;
                         secondRB = true;
                         thirdRB = false;
                         fourthRB = false;
@@ -362,6 +366,10 @@ namespace TelegramTestBot.UI
                     List<QuestionModel> creatingQuest = _questionModelManager.GetQuestionByTestId(testId);
                     LB_CreatedQuestion.ItemsSource = creatingQuest;
                     Tb_ContentQuestuon.Clear();
+                    RB_RightAnswer1.IsChecked = false;
+                    RB_RightAnswer2.IsChecked = false;
+                    RB_RightAnswer3.IsChecked = false;
+                    RB_RightAnswer4.IsChecked = false;
                     Tb_ContentQuestuon.Clear();
                     TB_FirstAnswer.Clear();
                     TB_SecondAnswer.Clear();
@@ -531,6 +539,8 @@ namespace TelegramTestBot.UI
 
         private void StartTesting_Click(object sender, RoutedEventArgs e)
         {
+            if (TB_dateTimeForTesting.Text.Length > 0 && CB_groupForTesting.SelectedItem!=null && CB_allTeacherTests.SelectedItem!=null)
+            {
             GroupModel selectedGroupForTesting = (GroupModel)CB_groupForTesting.SelectedItem;
             TestModel selectedTestForTesting = (TestModel)CB_allTeacherTests.SelectedItem;
             DateTime datetime = DateTime.Parse(TB_dateTimeForTesting.Text);
@@ -538,6 +548,16 @@ namespace TelegramTestBot.UI
             _testingModelManager.AddTesting(new TestingModel { Date = datetime,TestId= selectedTestForTesting.Id, GroupId=selectedGroupForTesting.Id });
 
             _telegramBotService.StartTestForGroup(selectedGroupForTesting.Id, datetime);
+
+                CB_groupForTesting.SelectedIndex = -1;
+                CB_allTeacherTests.SelectedIndex = -1;
+                TB_dateTimeForTesting.Clear();
+                CB_timeSelect.SelectedIndex = -1;
+            }
+            else
+            {
+                MessageBox.Show("Выберите время для теста");
+            }
         }
 
         private void DG_StudentResult_Loaded(object sender, RoutedEventArgs e)
@@ -547,6 +567,15 @@ namespace TelegramTestBot.UI
             List<TestingStudentModel> studentResults = _testingStudentModelManager.GetTestingStudentByStudentId(_updatedStudentId);
             DG_StudentResult.ItemsSource = studentResults;
             }
+        }
+
+        private void DG_StartingTeacherTestings_Loaded(object sender, RoutedEventArgs e)
+        {
+            //if(DG_StartingTeacherTestings.SelectedItem != null)
+            //{
+            List<TestingModel> teacherTestings = _testingModelManager.GetLastAddedTestingByTeacherId(_authorizedTeacher);
+            DG_StartingTeacherTestings.ItemsSource = teacherTestings;
+            //}
         }
     }
 }
