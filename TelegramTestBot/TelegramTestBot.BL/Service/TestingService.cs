@@ -12,6 +12,7 @@ namespace TelegramTestBot.BL.Service
         public Dictionary<int, DateTime> SchedulesGroup { get; set; } = new Dictionary<int, DateTime>();
         public Dictionary<int, System.Timers.Timer> TimersForGroup { get; set; } = new Dictionary<int, System.Timers.Timer>();
         public Dictionary<int, System.Timers.Timer> TimersForTestSession { get; set; } = new Dictionary<int, System.Timers.Timer>();
+        TestingModelManager _testingModelManager = new TestingModelManager();
         
 
         public TestingService()
@@ -26,33 +27,24 @@ namespace TelegramTestBot.BL.Service
             }
         }
 
-        //public void StartTimerForStudent(long id, DateTime sendTime)
-        //{
-        //    Schedules[id] = sendTime;
+        public void StartTimerForTest(int groupId, int testingId, DateTime finishTime)
+        {
+            System.Timers.Timer timer = new System.Timers.Timer();
+            timer.Interval = (finishTime - DateTime.Now).TotalMilliseconds;
+            timer.AutoReset = false;
+            timer.Elapsed += (sender, args) => WaitForFinishTime(groupId, testingId, finishTime);
+            timer.Start();
 
-        //    System.Timers.Timer timer = new System.Timers.Timer();
-        //    timer.Interval = (sendTime - DateTime.Now).TotalMilliseconds;
-        //    timer.AutoReset = false;
-        //    timer.Elapsed += (sender, args) => WaitForScheduleTime(id, sendTime);
-        //    timer.Start();
+            TimersForTestSession[groupId] = timer;
+        }
 
-        //    Timers[id] = timer;
-        //}
+        public void WaitForFinishTime(int groupId, int testingId, DateTime finishTime)
+        {
+            TimersForTestSession[groupId].Stop();
+            TimersForTestSession[groupId].Dispose();
+            TimersForTestSession.Remove(groupId);
 
-        //public bool WaitForScheduleTime(long id, DateTime sendTime)
-        //{
-        //    bool IsTimeForSend = false;
-        //    if (Schedules.ContainsKey(id) && Schedules[id] == sendTime)
-        //    {
-        //        IsTimeForSend = true;
-        //    }
-
-        //    Schedules.Remove(id);
-        //    Timers[id].Stop();
-        //    Timers[id].Dispose();
-        //    Timers.Remove(id);
-
-        //    return IsTimeForSend;
-        //}
+            
+        }
     }
 }

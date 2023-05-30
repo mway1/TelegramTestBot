@@ -41,7 +41,7 @@ namespace TelegramTestBot.BL.Service
                 _botClient.StartReceiving(HandleUpdateAsync, HandleErrorAsync);
         }
 
-        public void StartTestForGroup(int groupId, DateTime sendTime)
+        public void StartTestForGroup(int groupId, DateTime sendTime, DateTime finishTime)
         {
             List<StudentModel> students = _studentModelManager.GetStudentsByGroupId(groupId);
             int testingId = _testingModelManager.GetLastAddedTestingByGroupId(groupId);
@@ -59,7 +59,7 @@ namespace TelegramTestBot.BL.Service
                 }
             }
 
-            StartTimerForStudent(groupId, sendTime);
+            StartTimerForStudent(groupId, testingId, sendTime, finishTime);
         }
 
         public async void MakeActionWithBot(ActionType type, long id = 0, string username = "User", string msg = " ", int msgId = 0)
@@ -362,20 +362,20 @@ namespace TelegramTestBot.BL.Service
             await _botClient.SendTextMessageAsync(new ChatId(chatId), "Выберите действие:", replyMarkup: inlineKeyboard);
         }
 
-        private void StartTimerForStudent(int groupId, DateTime sendTime)
+        private void StartTimerForStudent(int groupId, int testingId, DateTime sendTime, DateTime finishTime)
         {
             _testingService.SchedulesGroup[groupId] = sendTime;
 
             System.Timers.Timer timer = new System.Timers.Timer();
             timer.Interval = (sendTime - DateTime.Now).TotalMilliseconds;
             timer.AutoReset = false;
-            timer.Elapsed += (sender, args) => WaitForScheduleTime(groupId, sendTime);
+            timer.Elapsed += (sender, args) => WaitForScheduleTime(groupId, testingId, sendTime, finishTime);
             timer.Start();
 
             _testingService.TimersForGroup[groupId] = timer;
         }
 
-        private async void WaitForScheduleTime(int groupId, DateTime sendTime)
+        private async void WaitForScheduleTime(int groupId, int testingId, DateTime sendTime, DateTime finishTime)
         {          
             List<StudentModel> studentsOfTestGroup = _studentModelManager.GetStudentsByGroupId(groupId);
 
@@ -402,6 +402,7 @@ namespace TelegramTestBot.BL.Service
             _testingService.TimersForGroup[groupId].Stop();
             _testingService.TimersForGroup[groupId].Dispose();
             _testingService.TimersForGroup.Remove(groupId);
+            _testingService.StartTimerForTest(groupId, testingId, finishTime);
         }
 
         private async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
