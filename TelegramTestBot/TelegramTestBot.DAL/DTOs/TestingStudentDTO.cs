@@ -11,6 +11,8 @@ namespace TelegramTestBot.DAL.DTOs
         public DateTime DateOfTesting { get; set; }
         public string SurnameOfStudent { get; set; }
         public string FirstnameOfStudent { get; set; }
+        public int CountQuestions { get; set; }
+        public string Testname { get; set; }
 
         public TestingStudentDTO()
         {
