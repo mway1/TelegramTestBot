@@ -6,6 +6,8 @@
         public DateTime Date { get; set; }
         public int TestId { get; set; }
         public int GroupId { get; set; }
+        public string Testname { get; set; }
+        public string Groupname { get; set; }
 
         public TestingModel()
         {

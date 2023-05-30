@@ -56,6 +56,7 @@
         public const string Testing_GetByGroupId = "Testing_GetByGroupId";
         public const string Testing_GetLastAddedByGroupId = "Testing_GetLastAddedByGroupId";
         public const string Testing_UpdateById = "Testing_UpdateById";
+        public const string Testing_GetLastAddedByTeacherId = "Testing_GetLastAddedByTeacherId";
 
         public const string Testing_Student_Add = "Testing_Student_Add";
         public const string Testing_Student_DeleteById = "Testing_Student_DeleteById";

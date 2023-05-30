@@ -539,6 +539,8 @@ namespace TelegramTestBot.UI
 
         private void StartTesting_Click(object sender, RoutedEventArgs e)
         {
+            if (TB_dateTimeForTesting.Text.Length > 0 && CB_groupForTesting.SelectedItem!=null && CB_allTeacherTests.SelectedItem!=null)
+            {
             GroupModel selectedGroupForTesting = (GroupModel)CB_groupForTesting.SelectedItem;
             TestModel selectedTestForTesting = (TestModel)CB_allTeacherTests.SelectedItem;
             DateTime datetime = DateTime.Parse(TB_dateTimeForTesting.Text);
@@ -546,6 +548,11 @@ namespace TelegramTestBot.UI
             _testingModelManager.AddTesting(new TestingModel { Date = datetime,TestId= selectedTestForTesting.Id, GroupId=selectedGroupForTesting.Id });
 
             _telegramBotService.StartTestForGroup(selectedGroupForTesting.Id, datetime);
+            }
+            else
+            {
+                MessageBox.Show("Выберите время для теста");
+            }
         }
 
         private void DG_StudentResult_Loaded(object sender, RoutedEventArgs e)
@@ -555,6 +562,15 @@ namespace TelegramTestBot.UI
             List<TestingStudentModel> studentResults = _testingStudentModelManager.GetTestingStudentByStudentId(_updatedStudentId);
             DG_StudentResult.ItemsSource = studentResults;
             }
+        }
+
+        private void DG_StartingTeacherTestings_Loaded(object sender, RoutedEventArgs e)
+        {
+            //if(DG_StartingTeacherTestings.SelectedItem != null)
+            //{
+            List<TestingModel> teacherTestings = _testingModelManager.GetLastAddedTestingByTeacherId(_authorizedTeacher);
+            DG_StartingTeacherTestings.ItemsSource = teacherTestings;
+            //}
         }
     }
 }
