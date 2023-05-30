@@ -11,6 +11,8 @@ namespace TelegramTestBot.BL.Service
         public Dictionary<long, List<int>> UserAnswersForTest { get; set; } = new Dictionary<long, List<int>>();
         public Dictionary<int, DateTime> SchedulesGroup { get; set; } = new Dictionary<int, DateTime>();
         public Dictionary<int, System.Timers.Timer> TimersForGroup { get; set; } = new Dictionary<int, System.Timers.Timer>();
+        public Dictionary<int, System.Timers.Timer> TimersForTestSession { get; set; } = new Dictionary<int, System.Timers.Timer>();
+        
 
         public TestingService()
         {
