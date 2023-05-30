@@ -528,35 +528,49 @@ namespace TelegramTestBot.UI
             ComboBoxItem CBitem = CB_timeSelect.SelectedItem as ComboBoxItem;
             if (CBitem.Content != null)
             {
-                GroupModel selectedGroupForTesting = (GroupModel)CB_groupForTesting.SelectedItem;
-                TestModel selectedTestForTesting = (TestModel)CB_allTeacherTests.SelectedItem;
                 string time = CBitem.Content.ToString();
                 string date = DP_selectDate.Text;
                 DateTime datetime = DateTime.Parse(date + " " + time);
                 TB_dateTimeForTesting.Text = datetime.ToString();
             }
         }
+        private void DP_selectDate_stop_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBoxItem CBitem = CB_timeSelect_stop.SelectedItem as ComboBoxItem;
+            if (CBitem.Content != null)
+            {
+                string time = CBitem.Content.ToString();
+                string date = DP_selectDate_stop.Text;
+                DateTime datetime = DateTime.Parse(date + " " + time);
+                TB_dateTimeForTesting_stop.Text = datetime.ToString();
+            }
+        }
 
         private void StartTesting_Click(object sender, RoutedEventArgs e)
         {
-            if (TB_dateTimeForTesting.Text.Length > 0 && CB_groupForTesting.SelectedItem!=null && CB_allTeacherTests.SelectedItem!=null)
+            if (TB_dateTimeForTesting.Text.Length > 0 && CB_groupForTesting.SelectedItem!=null && CB_allTeacherTests.SelectedItem!=null && TB_dateTimeForTesting_stop.Text.Length>0)
             {
             GroupModel selectedGroupForTesting = (GroupModel)CB_groupForTesting.SelectedItem;
             TestModel selectedTestForTesting = (TestModel)CB_allTeacherTests.SelectedItem;
-            DateTime datetime = DateTime.Parse(TB_dateTimeForTesting.Text);
+            DateTime datetimeOfStart = DateTime.Parse(TB_dateTimeForTesting.Text);
+            DateTime datetimeOfStop = DateTime.Parse(TB_dateTimeForTesting_stop.Text);
 
-            _testingModelManager.AddTesting(new TestingModel { Date = datetime,TestId= selectedTestForTesting.Id, GroupId=selectedGroupForTesting.Id });
+            _testingModelManager.AddTesting(new TestingModel { Date = datetimeOfStart, TestId= selectedTestForTesting.Id, GroupId=selectedGroupForTesting.Id });
 
-            _telegramBotService.StartTestForGroup(selectedGroupForTesting.Id, datetime);
+            _telegramBotService.StartTestForGroup(selectedGroupForTesting.Id, datetimeOfStart);
 
                 CB_groupForTesting.SelectedIndex = -1;
                 CB_allTeacherTests.SelectedIndex = -1;
-                TB_dateTimeForTesting.Clear();
+                DP_selectDate.Text = null;
+                DP_selectDate_stop.Text = null;
                 CB_timeSelect.SelectedIndex = -1;
+                TB_dateTimeForTesting.Clear();
+                TB_dateTimeForTesting_stop.Clear();
+                CB_timeSelect_stop.SelectedIndex = -1;
             }
             else
             {
-                MessageBox.Show("Выберите время для теста");
+                MessageBox.Show("Для запуска теста выберите тест, группу и дату начала/конца теста");
             }
         }
 
