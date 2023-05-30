@@ -99,7 +99,7 @@ namespace TelegramTestBot.DAL.Managers
 
                 return connection.QuerySingle<int>
                     (
-                        StoredProcedures.Answer_GetById,
+                        StoredProcedures.Answer_GetRightAnswer,
                         param: new { QuestionId = questionId },
                         commandType: System.Data.CommandType.StoredProcedure
                     );

@@ -14,6 +14,9 @@ namespace TelegramTestBot.BL.Service
 
         public TestingService()
         {
+            TestSessions.Clear();
+            UserAnswersForTest.Clear();
+
             foreach (var timer in TimersForGroup.Values)
             {
                 timer.Stop();
