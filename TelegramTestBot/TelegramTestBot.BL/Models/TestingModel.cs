@@ -6,6 +6,7 @@
         public DateTime Date { get; set; }
         public int TestId { get; set; }
         public int GroupId { get; set; }
+        public bool isActive { get; set; }
         public string Testname { get; set; }
         public string Groupname { get; set; }
 
@@ -29,6 +30,7 @@
                 if (testingDTO.Id != this.Id ||
                     testingDTO.Date != this.Date ||
                     testingDTO.TestId != this.TestId ||
+                    testingDTO.isActive != this.isActive ||
                     testingDTO.GroupId != this.GroupId)
                 {
                     flag = false;
