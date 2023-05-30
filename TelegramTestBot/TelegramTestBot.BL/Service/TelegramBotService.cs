@@ -193,12 +193,10 @@ namespace TelegramTestBot.BL.Service
                 case ActionType.test:
                     {
                         int groupId = _studentModelManager.GetStudentByChatId(id).GroupId;
+                        int testingId = _testingModelManager.GetLastAddedTestingByGroupId(groupId);
                         _testingService.UserAnswersForTest.Add(id, new List<int>());
 
-                        if(!_testingService.TestSessions.ContainsKey(groupId))
-                            _testingService.TestSessions.Add(groupId, true);
-
-                        if (_testingService.TestSessions.ContainsKey(groupId))
+                        if (_testingModelManager.GetStatusOfTestById(testingId))
                         {
                             EditMessagesWithKeyboard(id, msgId,
                                     "Выполните тестирование, выбирая кнопку с правильным ответом:");
@@ -244,25 +242,31 @@ namespace TelegramTestBot.BL.Service
         {
             int testingId = _testingModelManager.GetLastAddedTestingByGroupId(groupId);
             int testId = _testingModelManager.GetTestingById(testingId).TestId;
-            List<QuestionModel> questions = _questionModelManager.GetQuestionByTestId(testId);           
+            List<QuestionModel> questions = _questionModelManager.GetQuestionByTestId(testId);
 
-            if (num <= questions.Count - 1)
+            if (_testingModelManager.GetStatusOfTestById(testingId))
             {
-                var answers = _answerModelManager.GetAnswerByQuestionId(questions[num].Id);
+                if (num <= questions.Count - 1)
+                {
+                    var answers = _answerModelManager.GetAnswerByQuestionId(questions[num].Id);
 
-                var inlineKbrd = new InlineKeyboardMarkup(InlineKeyboardMarkupMakerForTest(answers, 2));
+                    var inlineKbrd = new InlineKeyboardMarkup(InlineKeyboardMarkupMakerForTest(answers, 2));
 
-                await _botClient.EditMessageTextAsync(new ChatId(id), msgId,
-                    $"{questions[num].Content}", replyMarkup: inlineKbrd);
+                    await _botClient.EditMessageTextAsync(new ChatId(id), msgId,
+                        $"{questions[num].Content}", replyMarkup: inlineKbrd);
+                }
+                else
+                {
+                    await _botClient.EditMessageTextAsync(new ChatId(id), msgId,
+                        "Поздравляем, вы завершили тестирование, ожидайте итоги! \nГлавное меню - /menu");
+
+                    CheckUserAnswerForCorrect(id, questions, testingId);
+                }
             }
             else
-            {
                 await _botClient.EditMessageTextAsync(new ChatId(id), msgId,
-                    "Поздравляем, вы завершили тестирование, ожидайте итоги! \nГлавное меню - /menu");
+                        "Время тестирования вышло! \nГлавное меню - /menu");
 
-                CheckUserAnswerForCorrect(id, questions, testingId);
-            }
-            
         }
 
         public async void SendMessagesForUser(long chatId, string username = "User", string text = " ")
@@ -378,6 +382,7 @@ namespace TelegramTestBot.BL.Service
         private async void WaitForScheduleTime(int groupId, int testingId, DateTime sendTime, DateTime finishTime)
         {          
             List<StudentModel> studentsOfTestGroup = _studentModelManager.GetStudentsByGroupId(groupId);
+            TestingModel updTesting = _testingModelManager.GetTestingById(testingId);
 
             if (_testingService.SchedulesGroup.ContainsKey(groupId) && _testingService.SchedulesGroup[groupId] == sendTime)
             {
@@ -398,10 +403,12 @@ namespace TelegramTestBot.BL.Service
                 }
             }
 
+            updTesting.isActive = true;
             _testingService.SchedulesGroup.Remove(groupId);
             _testingService.TimersForGroup[groupId].Stop();
             _testingService.TimersForGroup[groupId].Dispose();
             _testingService.TimersForGroup.Remove(groupId);
+            _testingModelManager.UpdateTestingById(updTesting);
             _testingService.StartTimerForTest(groupId, testingId, finishTime);
         }
 
@@ -414,6 +421,7 @@ namespace TelegramTestBot.BL.Service
             else if (update.CallbackQuery != null)
             {
                 int groupId = _studentModelManager.GetStudentByChatId(update.CallbackQuery.Message!.Chat.Id).GroupId;
+                int testingId = _testingModelManager.GetLastAddedTestingByGroupId(groupId);
                 bool checkForKeyboardNum = int.TryParse(update.CallbackQuery.Data, out int num);
 
                 if (!checkForKeyboardNum)
@@ -431,7 +439,7 @@ namespace TelegramTestBot.BL.Service
                         SendExceptionForNull(update.CallbackQuery.Message!.Chat.Id, update.CallbackQuery.Message.MessageId);
                     }
                 }
-                else if (checkForKeyboardNum && _testingService.TestSessions.ContainsKey(groupId) && _testingService.TestSessions[groupId] == true)
+                else if (checkForKeyboardNum && _testingModelManager.GetStatusOfTestById(testingId))
                 {
                     _testingService.UserAnswersForTest[update.CallbackQuery.Message.Chat.Id].Add(num);
                     int count = _testingService.UserAnswersForTest[update.CallbackQuery.Message.Chat.Id].Count;

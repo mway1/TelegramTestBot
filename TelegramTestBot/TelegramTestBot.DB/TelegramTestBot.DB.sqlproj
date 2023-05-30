@@ -131,5 +131,6 @@
     <Build Include="dbo\Stored Procedures\Testing_GetLastAdded.sql" />
     <Build Include="dbo\Stored Procedures\Answer_GetRightAnswer.sql" />
     <Build Include="dbo\Stored Procedures\Testing_GetLastAddedByTeacherId.sql" />
+    <Build Include="dbo\Stored Procedures\Testing_GetStatusOfTestById.sql" />
   </ItemGroup>
 </Project>

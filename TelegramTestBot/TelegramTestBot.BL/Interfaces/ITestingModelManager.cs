@@ -11,6 +11,7 @@ namespace TelegramTestBot.BL.Interfaces
         List<TestingModel> GetLastAddedTestingByTeacherId(int teacherId);
         TestingModel GetTestingById(int testingId);
         int GetLastAddedTestingByGroupId(int groupId);
+        bool GetStatusOfTestById(int testingId);
         TestingModel GetTestingByGroupId(int groupId);
     }
 }
