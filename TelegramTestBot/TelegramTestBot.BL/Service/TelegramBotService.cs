@@ -224,9 +224,9 @@ namespace TelegramTestBot.BL.Service
                 answers.Add(answerId);
             }
 
-            for (int i = 0; i < answers.Count; i++)
+            for (int i = 0; i < _testingService.UserAnswersForTest[userId].Count; i++)
             {
-                if (answers[i] == _testingService.UserAnswersForTest[userId][i])
+                if (_testingService.UserAnswersForTest[userId][i] == answers[i])
                 {
                     countOfCorrectAns++;
                 }
@@ -259,13 +259,18 @@ namespace TelegramTestBot.BL.Service
                 {
                     await _botClient.EditMessageTextAsync(new ChatId(id), msgId,
                         "Поздравляем, вы завершили тестирование, ожидайте итоги! \nГлавное меню - /menu");
-
                     CheckUserAnswerForCorrect(id, questions, testingId);
+                    _testingService.UserAnswersForTest.Remove(id);
                 }
             }
             else
+            {
+                CheckUserAnswerForCorrect(id, questions, testingId);
+                _testingService.UserAnswersForTest.Remove(id);
+
                 await _botClient.EditMessageTextAsync(new ChatId(id), msgId,
                         "Время тестирования вышло! \nГлавное меню - /menu");
+            }
 
         }
 

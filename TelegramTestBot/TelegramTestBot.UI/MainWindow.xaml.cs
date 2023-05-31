@@ -550,14 +550,14 @@ namespace TelegramTestBot.UI
         {
             if (TB_dateTimeForTesting.Text.Length > 0 && CB_groupForTesting.SelectedItem!=null && CB_allTeacherTests.SelectedItem!=null && TB_dateTimeForTesting_stop.Text.Length>0)
             {
-            GroupModel selectedGroupForTesting = (GroupModel)CB_groupForTesting.SelectedItem;
-            TestModel selectedTestForTesting = (TestModel)CB_allTeacherTests.SelectedItem;
-            DateTime datetimeOfStart = DateTime.Parse(TB_dateTimeForTesting.Text);
-            DateTime datetimeOfStop = DateTime.Parse(TB_dateTimeForTesting_stop.Text);
+                GroupModel selectedGroupForTesting = (GroupModel)CB_groupForTesting.SelectedItem;
+                TestModel selectedTestForTesting = (TestModel)CB_allTeacherTests.SelectedItem;
+                DateTime datetimeOfStart = DateTime.Parse(TB_dateTimeForTesting.Text);
+                DateTime datetimeOfStop = DateTime.Parse(TB_dateTimeForTesting_stop.Text);
 
-            _testingModelManager.AddTesting(new TestingModel { Date = datetimeOfStart, TestId= selectedTestForTesting.Id, GroupId=selectedGroupForTesting.Id });
+                _testingModelManager.AddTesting(new TestingModel { Date = datetimeOfStart, TestId= selectedTestForTesting.Id, GroupId=selectedGroupForTesting.Id });
 
-            _telegramBotService.StartTestForGroup(selectedGroupForTesting.Id, datetimeOfStart);
+                _telegramBotService.StartTestForGroup(selectedGroupForTesting.Id, datetimeOfStart, datetimeOfStop);
 
                 CB_groupForTesting.SelectedIndex = -1;
                 CB_allTeacherTests.SelectedIndex = -1;

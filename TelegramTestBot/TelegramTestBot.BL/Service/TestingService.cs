@@ -38,14 +38,14 @@ namespace TelegramTestBot.BL.Service
                 System.Timers.Timer timer = new System.Timers.Timer();
                 timer.Interval = (finishTime - DateTime.Now).TotalMilliseconds;
                 timer.AutoReset = false;
-                timer.Elapsed += (sender, args) => WaitForFinishTime(groupId, testingId, finishTime);
+                timer.Elapsed += (sender, args) => WaitForFinishTime(groupId, testingId);
                 timer.Start();
 
                 TimersForTestSession[groupId] = timer;
             }
         }
 
-        public void WaitForFinishTime(int groupId, int testingId, DateTime finishTime)
+        public void WaitForFinishTime(int groupId, int testingId)
         {
             if (TimersForTestSession.ContainsKey(groupId))
             {
