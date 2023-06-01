@@ -7,47 +7,57 @@ namespace TelegramTestBot.BL.Service
 {
     public class TestingService
     {
-        public Dictionary<long, DateTime> Schedules { get; set; } = new Dictionary<long, DateTime>();
+        public Dictionary<long, List<int>> UserAnswersForTest { get; set; } = new Dictionary<long, List<int>>();
         public Dictionary<int, DateTime> SchedulesGroup { get; set; } = new Dictionary<int, DateTime>();
-        public Dictionary<long, System.Timers.Timer> Timers { get; set; } = new Dictionary<long, System.Timers.Timer>();
         public Dictionary<int, System.Timers.Timer> TimersForGroup { get; set; } = new Dictionary<int, System.Timers.Timer>();
+        public Dictionary<int, System.Timers.Timer> TimersForTestSession { get; set; } = new Dictionary<int, System.Timers.Timer>();
+        TestingModelManager _testingModelManager = new TestingModelManager();
+        
 
         public TestingService()
         {
-            foreach (var timer in Timers.Values)
+            UserAnswersForTest.Clear();
+
+            foreach (var timer in TimersForGroup.Values)
+            {
+                timer.Stop();
+                timer.Dispose();
+            }
+
+            foreach(var timer in TimersForTestSession.Values)
             {
                 timer.Stop();
                 timer.Dispose();
             }
         }
 
-        //public void StartTimerForStudent(long id, DateTime sendTime)
-        //{
-        //    Schedules[id] = sendTime;
+        public void StartTimerForTest(int groupId, int testingId, DateTime finishTime)
+        {
+            if (_testingModelManager.GetStatusOfTestById(testingId))
+            {
+                System.Timers.Timer timer = new System.Timers.Timer();
+                timer.Interval = (finishTime - DateTime.Now).TotalMilliseconds;
+                timer.AutoReset = false;
+                timer.Elapsed += (sender, args) => WaitForFinishTime(groupId, testingId);
+                timer.Start();
 
-        //    System.Timers.Timer timer = new System.Timers.Timer();
-        //    timer.Interval = (sendTime - DateTime.Now).TotalMilliseconds;
-        //    timer.AutoReset = false;
-        //    timer.Elapsed += (sender, args) => WaitForScheduleTime(id, sendTime);
-        //    timer.Start();
+                TimersForTestSession[groupId] = timer;
+            }
+        }
 
-        //    Timers[id] = timer;
-        //}
+        public void WaitForFinishTime(int groupId, int testingId)
+        {
+            if (TimersForTestSession.ContainsKey(groupId))
+            {
+                TimersForTestSession[groupId].Stop();
+                TimersForTestSession[groupId].Dispose();
+                TimersForTestSession.Remove(groupId);
+            }
 
-        //public bool WaitForScheduleTime(long id, DateTime sendTime)
-        //{
-        //    bool IsTimeForSend = false;
-        //    if (Schedules.ContainsKey(id) && Schedules[id] == sendTime)
-        //    {
-        //        IsTimeForSend = true;
-        //    }
+            TestingModel updTesting = _testingModelManager.GetTestingById(testingId);
+            updTesting.isActive = false;
 
-        //    Schedules.Remove(id);
-        //    Timers[id].Stop();
-        //    Timers[id].Dispose();
-        //    Timers.Remove(id);
-
-        //    return IsTimeForSend;
-        //}
+            _testingModelManager.UpdateTestingById(updTesting);
+        }
     }
 }

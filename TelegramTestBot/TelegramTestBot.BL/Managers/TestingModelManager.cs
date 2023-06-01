@@ -60,6 +60,12 @@ namespace TelegramTestBot.BL.Managers
             return MapperConfigStorage.GetInstance().Map<int>(testingId);
         }
         
+        public bool GetStatusOfTestById(int testingId)
+        {
+            bool isActive = _testingManager.GetStatusOfTestById(testingId);
+            return MapperConfigStorage.GetInstance().Map<bool>(isActive);
+        }
+        
         public TestingModel GetTestingByGroupId(int groupId)
         {
             TestingDTO testing = _testingManager.GetTestingByGroupId(groupId);

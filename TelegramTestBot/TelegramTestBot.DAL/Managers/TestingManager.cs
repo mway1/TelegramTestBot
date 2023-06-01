@@ -92,6 +92,21 @@ namespace TelegramTestBot.DAL.Managers
                     );
             }
         }
+        
+        public bool GetStatusOfTestById(int testingId)
+        {
+            using (var connection = new SqlConnection(ServerSettings._connectionString))
+            {
+                connection.Open();
+
+                return connection.QuerySingle<bool>
+                    (
+                        StoredProcedures.Testing_GetStatusOfTestById,
+                        param: new { id = testingId },
+                        commandType: System.Data.CommandType.StoredProcedure
+                    );
+            }
+        }
 
         public int GetLastAddedTestingByGroupId(int groupId)
         {

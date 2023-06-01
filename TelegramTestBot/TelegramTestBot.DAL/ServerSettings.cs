@@ -2,6 +2,6 @@
 {
     public class ServerSettings
     {
-        public const string _connectionString = @"Server=LAPTOP-8Q8D808N;Database=TelegramTestBot.DB;Trusted_Connection=True;";
+        public const string _connectionString = @"Server=DESKTOP-UK4ULTF;Database=TelegramBot.DB;Trusted_Connection=True;";
     }
 }
