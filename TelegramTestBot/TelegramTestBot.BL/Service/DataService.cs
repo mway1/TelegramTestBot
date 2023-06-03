@@ -64,6 +64,18 @@ namespace TelegramTestBot.BL.Service
                 return true;
             }
         }
+        
+        public bool CheckStatusOfTesting(int testingId)
+        {
+            try
+            {              
+                return _testingModelManager.GetStatusOfTestById(testingId);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
 
         public bool CheckTeacherLoginForUnique(string enterredLogin)
         {
