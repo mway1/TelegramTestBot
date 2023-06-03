@@ -425,8 +425,15 @@ namespace TelegramTestBot.BL.Service
             }
             else if (update.CallbackQuery != null)
             {
-                int groupId = _studentModelManager.GetStudentByChatId(update.CallbackQuery.Message!.Chat.Id).GroupId;
-                int testingId = _testingModelManager.GetLastAddedTestingByGroupId(groupId);
+                int groupId = 1;
+                int testingId = 1;
+
+                if (!_dataService.CheckStudentChatIdForUnique(update.CallbackQuery.Message.Chat.Id))
+                {
+                    groupId = _studentModelManager.GetStudentByChatId(update.CallbackQuery.Message!.Chat.Id).GroupId;
+                    testingId = _testingModelManager.GetLastAddedTestingByGroupId(groupId);
+                }
+
                 bool checkForKeyboardNum = int.TryParse(update.CallbackQuery.Data, out int num);
 
                 if (!checkForKeyboardNum)
