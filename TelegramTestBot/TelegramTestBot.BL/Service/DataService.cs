@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using System.Security.Cryptography;
 using TelegramTestBot.BL.Managers;
 using TelegramTestBot.BL.Models;
@@ -11,7 +11,7 @@ namespace TelegramTestBot.BL.Service
         public static Dictionary<long, List<string>> UserAnswersForGroup { get; set; } = new Dictionary<long, List<string>>();
         public static Dictionary<long, List<string>> UserAnswers { get; set; } = new Dictionary<long, List<string>>();
         public List<long> UsersWithGeo { get; set; } = new List<long>();
-        public readonly string token = "6417872595:AAF7Wd6NVE4mbKi4-F-O3R-UlR4MLEu23Sw";
+        public readonly string token = "";
         private TelegramBotModelManager _telegramBotModelManager = new TelegramBotModelManager();
         private TeacherModelManager _teacherModelManager = new TeacherModelManager();
         private StudentModelManager _studentModelManager = new StudentModelManager();
