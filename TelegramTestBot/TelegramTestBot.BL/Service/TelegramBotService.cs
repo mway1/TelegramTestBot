@@ -10,6 +10,7 @@ using Telegram.Bot.Args;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
+using Microsoft.VisualBasic;
 
 namespace TelegramTestBot.BL.Service
 {
@@ -329,7 +330,7 @@ namespace TelegramTestBot.BL.Service
             });
 
             await _botClient.SendTextMessageAsync(userId, 
-                "Вы прошли тест с геопозицией, можете начать основное тестирование.", replyMarkup: inlineKb);
+                "Все отлично, Вы можете начать основное тестирование.", replyMarkup: inlineKb);
         }
 
         private async void SendRegForm(long id, string? username, int numOfForm = 0)
@@ -396,15 +397,16 @@ namespace TelegramTestBot.BL.Service
                     if (_dataService.UsersWithGeo.Contains(students.UserChatId))
                         _dataService.UsersWithGeo.Remove(students.UserChatId);
 
-                    var geoButton = new ReplyKeyboardMarkup(new[]
+                    var confirmButton = new ReplyKeyboardMarkup(new[]
                     {
-                        KeyboardButton.WithRequestLocation(text : "Поделиться местоположением"),
+                        KeyboardButton.WithRequestUser(text : "Подтвердите присутствие", 
+                            requestUser: new KeyboardButtonRequestUser{ UserIsBot = true } ),
                     });
 
-                    geoButton.OneTimeKeyboard = true;
-                    geoButton.ResizeKeyboard = true;
-                    
-                    await _botClient.SendTextMessageAsync(students.UserChatId, "Отправь геопозицию для начала теста", replyMarkup: geoButton);
+                    confirmButton.OneTimeKeyboard = true;
+                    confirmButton.ResizeKeyboard = true;
+
+                    await _botClient.SendTextMessageAsync(students.UserChatId, "Для начала тестирования подтвердите Ваше присутствие!" , replyMarkup: confirmButton);
                 }
             }
 
@@ -487,24 +489,24 @@ namespace TelegramTestBot.BL.Service
             {
                 MakeActionWithBot(ActionType.groups, update.Message!.Chat.Id, update.Message.Chat.Username, update.Message.Text);
             }
-            else if (update.Message != null && update.Message.Type == MessageType.Location && !_dataService.UsersWithGeo.Contains(update.Message.Chat.Id))
+            else if (update.Message != null && update.Message.Type == MessageType.UserShared && !_dataService.UsersWithGeo.Contains(update.Message.Chat.Id))
             {
-                _dataService.UsersWithGeo.Add(update.Message.Chat.Id);
-                Location location = update.Message.Location;
+                //_dataService.UsersWithGeo.Add(update.Message.Chat.Id);
+                //Location location = update.Message.Location;
 
-                double latitude = location.Latitude;
-                double longitude = location.Longitude;
+                //double latitude = location.Latitude;
+                //double longitude = location.Longitude;
 
-                bool isAttendance = _locationTrackingService.CalculateDistance(latitude, longitude);
+                bool isAttendance = true;
 
                 if (isAttendance)
                 {
                     StudentModel studentId = _studentModelManager.GetStudentByChatId(update.Message.Chat.Id);
-                    UpdateStudentAfterConfirmAttendance(studentId.Id, studentId.GroupId, update.Message.Chat.Id);                  
+                    UpdateStudentAfterConfirmAttendance(studentId.Id, studentId.GroupId, update.Message.Chat.Id);
                 }
                 else
-                    await _botClient.SendTextMessageAsync(update.Message.Chat.Id, 
-                        "Вы не прошли тест с геопозицией, основное тестирование не может быть начато!");
+                    await _botClient.SendTextMessageAsync(update.Message.Chat.Id,
+                        "Вы не подтвердили свое присутствие, основное тестирование не может быть начато!");
             }
             else if (update.Message != null && update.Message.Text != null)
             {
