@@ -32,11 +32,32 @@ namespace TelegramTestBot.BL.Service
                             continue;
                         }
 
+                        //If the page unsearchable then save the page as high-res image
+                        PdfDrawOptions options = PdfDrawOptions.Create();
+                        options.BackgroundColor = new PdfRgbColor(255, 255, 255);
+                        options.HorizontalResolution = 300;
+                        options.VerticalResolution = 300;
 
+                        string pageImage = $"page_{i}.png";
+                        page.Save(pageImage,options);
+
+                        //Perform OCR
+                        using (Pix img = Pix.LoadFromFile(pageImage))
+                        {
+                            using (Page recognizedPage = engine.Process(img))
+                            {
+                                string recognizedText = recognizedPage.GetText();
+                                documentText.Append(recognizedText);
+                            }
+                        }
+
+                        File.Delete(pageImage);
 
                     }
                 }
             }
+            using (var writer = new StreamWriter("res.txt"))
+                writer.Write(documentText.ToString());
         }
 
     }
